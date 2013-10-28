@@ -1,0 +1,25 @@
+{
+	"name": "turanct/forkmodule",
+	"description": "Forkmodule skeleton generator",
+	"type": "application",
+	"homepage": "http://github.com/turanct/forkmodule",
+	"license": "MIT",
+	"authors": [
+		{
+			"name": "Toon Daelman",
+			"email": "spinnewebber_toon@hotmail.com",
+			"homepage": "http://turanct.wordpress.com",
+			"role": "Developer"
+		}
+	],
+	"require": {
+		"pimple/pimple": "dev-master",
+		"twig/twig": "dev-master"
+	},
+	"minimum-stability": "dev",
+	"autoload": {
+		"psr-0": {
+			"Forkmodule": "src"
+		}
+	}
+}
