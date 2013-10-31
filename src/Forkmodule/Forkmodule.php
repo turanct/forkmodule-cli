@@ -37,6 +37,7 @@ class Forkmodule {
 		$this->app['output']('Creating frontend directories.', 'title');
 
 		$this->app['module.dir.frontend'] = $this->app['forkdir'] . '/frontend/modules/' . $this->app['module.name'] . '/';
+		mkdir($this->app['module.dir.frontend']);
 
 		$directories = array(
 			'actions',
@@ -83,6 +84,7 @@ class Forkmodule {
 		$this->app['output']('Creating backend directories.', 'title');
 
 		$this->app['module.dir.backend'] = $this->app['forkdir'] . '/backend/modules/' . $this->app['module.name'] . '/';
+		mkdir($this->app['module.dir.backend']);
 
 		$directories = array(
 			'actions',
