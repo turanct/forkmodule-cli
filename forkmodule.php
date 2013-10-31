@@ -7,6 +7,10 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $app = new Pimple();
 
 
+// Set template directory
+$app['themedir'] = __DIR__ . '/src/templates';
+
+
 /**
  * Services
  */
@@ -21,8 +25,8 @@ $app['twig'] = $app->share(function() use ($app) {
 });
 
 // Create forkmodule object
-$app['forkmodule'] = $app->share(function($name) use ($app) {
-	return new Forkmodule\Forkmodule($app, $name);
+$app['forkmodule'] = $app->share(function() use ($app) {
+	return new Forkmodule\Forkmodule($app);
 });
 
 
@@ -64,7 +68,7 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 	 */
 	// Did we get a name on the command line?
 	if (isset($argv[1]) && trim($argv[1]) !== '') {
-		$app['module.name'] = trim($argv[1]);
+		$app['module.name'] = mb_strtolower(trim($argv[1]));
 	}
 
 	// Ask for it
@@ -72,7 +76,7 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 		$app['output']('Name of the module:', 'notice');
 		$answer = stream_get_line(STDIN, 1024, PHP_EOL);
 		if (trim($answer) !== '') {
-			$app['module.name'] = trim($answer);
+			$app['module.name'] = mb_strtolower(trim($answer));
 		}
 		else {
 			$app['module.name'] = 'demo';
@@ -145,7 +149,7 @@ $app['run'] = $app->protect(function() use ($app) {
 
 	// Create the module
 	$app['output']('Creating directory structure...', 'title');
-	$app['forkmodule']($app['name']);
+	$app['forkmodule']();
 });
 
 
