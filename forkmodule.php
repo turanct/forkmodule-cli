@@ -122,6 +122,25 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 
 
 	/**
+	 * Which actions and widgets should we create?
+	 */
+	foreach (array('frontend', 'backend') as $application) {
+		foreach (array('actions', 'widgets') as $controller) {
+			$app[$application.'.'.$controller] = array();
+			$answer = 'index';
+
+			while (!empty($answer)) {
+				$app['output']('Create '.$application.' '.$controller.' (Empty answer to continue):', 'notice');
+				$answer = stream_get_line(STDIN, 1024, PHP_EOL);
+				if (trim($answer) !== '') {
+					$app[$application.'.'.$controller] = array_merge($app[$application.'.'.$controller], array(mb_strtolower(trim($answer))));
+				}
+			}
+		}
+	}
+
+
+	/**
 	 * Create a summary
 	 */
 	$app['output']('Summary', 'title');

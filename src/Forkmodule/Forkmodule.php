@@ -62,13 +62,13 @@ class Forkmodule {
 		$content = $this->app['twig']->render('frontend.engine.model.php', array('moduleName' => $this->app['module.name']));
 		file_put_contents($this->app['module.dir.frontend'] . 'engine/model.php', $content);
 
-		foreach ($app['frontend.actions'] as $action) {
-			$currentAction = new Forkmodule\Frontend\Action($this->app, $action);
+		foreach ($this->app['frontend.actions'] as $action) {
+			$currentAction = new Frontend\Action($this->app, $action);
 			$currentAction->create();
 		}
 
-		foreach ($app['frontend.widgets'] as $widget) {
-			$currentWidget = new Forkmodule\Frontend\Widget($this->app, $action);
+		foreach ($this->app['frontend.widgets'] as $widget) {
+			$currentWidget = new Frontend\Widget($this->app, $action);
 			$currentWidget->create();
 		}
 	}
@@ -122,13 +122,13 @@ class Forkmodule {
 		));
 		file_put_contents($this->app['module.dir.backend'] . 'installer/installer.php', $content);
 
-		foreach ($app['backend.actions'] as $action) {
-			$currentAction = new Forkmodule\Backend\Action($this->app, $action);
+		foreach ($this->app['backend.actions'] as $action) {
+			$currentAction = new Backend\Action($this->app, $action);
 			$currentAction->create();
 		}
 
-		foreach ($app['backend.widgets'] as $widget) {
-			$currentWidget = new Forkmodule\Backend\Widget($this->app, $action);
+		foreach ($this->app['backend.widgets'] as $widget) {
+			$currentWidget = new Backend\Widget($this->app, $action);
 			$currentWidget->create();
 		}
 	}
