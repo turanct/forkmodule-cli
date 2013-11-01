@@ -25,7 +25,7 @@ $app['twig'] = $app->share(function() use ($app) {
 });
 
 // Create forkmodule object
-$app['forkmodule'] = $app->share(function() use ($app) {
+$app['forkmodule'] = $app->protect(function() use ($app) {
 	return new Forkmodule\Forkmodule($app);
 });
 
