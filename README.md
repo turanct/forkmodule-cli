@@ -27,6 +27,12 @@ Assuming you're on Mac OSX or GNU/Linux with `git`, `php` and `curl` installed:
 
 	FORKMOD_PWD=`pwd` && git clone https://github.com/turanct/forkmodule-cli.git /usr/local/forkmodule-cli && cd /usr/local/forkmodule-cli && curl -sS https://getcomposer.org/installer | php && php composer.phar install && ln -s /usr/local/forkmodule-cli/forkmodule.php /usr/local/bin/forkmodule && cd $FORKMOD_PWD
 
+Or you could just do this:
+
+	curl https://raw.github.com/turanct/forkmodule-cli/master/install.sh | sh
+
+You can now run the `forkmodule` command from your command line.
+
 
 
 4. License
