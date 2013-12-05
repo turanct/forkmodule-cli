@@ -29,6 +29,12 @@ class {{ moduleName|capitalize }}Installer extends ModuleInstaller
 		$this->setNavigation($navigation{{ moduleName|capitalize }}Id, '{{ action|capitalize }}', '{{ moduleName }}/{{ action }}');
 {% endfor %}
 
+		// Set rights
+		$this->setModuleRights(1, '{{ moduleName }}');
+{% for action in backendActions %}
+		$this->setActionRights(1, '{{ moduleName }}', '{{ action }}');
+{% endfor %}
+
 
 		// Insert backend widgets
 		$widgetSettings = array(
