@@ -35,7 +35,18 @@ You can now run the `forkmodule` command from your command line.
 
 
 
-4. License
+4. Updating to the latest version
+----------------------------------------
+
+Run this in your terminal, assuming you used the installer to install forkmodule-cli
+
+	cd /usr/local/forkmodule-cli/ && git pull origin master && cd -
+
+This will fetch the latest commits on the master branch of this repo.
+
+
+
+5. License
 ----------------------------------------
 
 Forkmodule-cli is licensed under the *MIT License*
