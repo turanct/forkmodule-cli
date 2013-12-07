@@ -15,12 +15,18 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
     {
         parent::execute();
 
+{% if action == 'index' %}
         $this->loadDataGrids();
+{% elseif action in ['add', 'edit'] %}
+        $this->loadForm();
+        $this->validateForm();
+{% endif %}
         $this->parse();
         $this->display();
     }
 
 
+{% if action == 'index' %}
     /**
      * Loads the datagrids
      */
@@ -28,6 +34,41 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
     {
 
     }
+{% elseif action in ['add', 'edit'] %}
+    /**
+     * Load form
+     */
+    public function loadForm()
+    {
+        // Create the form
+        $this->frm = new BackendForm('{{ action }}');
+
+        // Add fields
+    }
+
+
+    /**
+     * Validate form
+     */
+    public function validateForm()
+    {
+        // Submitted?
+        if ($this->frm->isSubmitted()) {
+            // Check fields
+
+            // Correct?
+            if ($this->frm->isCorrect()) {
+                // Build item
+
+                // Save
+
+                // Redirect
+                $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}ed';
+            }
+        }
+    }
+{% endif %}
+
 
     /**
      * Parse method
