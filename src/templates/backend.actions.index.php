@@ -2,7 +2,11 @@
 /**
  * Backend {{ moduleName }} {{ action }} action
  */
+{% if action in ['index', 'add', 'edit', 'delete'] %}
+class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendBaseAction{{ action|capitalize }}
+{% else %}
 class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendBaseAction
+{% endif %}
 {
     /**
      * Execute the action
