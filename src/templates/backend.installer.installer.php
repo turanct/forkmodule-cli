@@ -26,7 +26,22 @@ class {{ moduleName|capitalize }}Installer extends ModuleInstaller
         $navigation{{ moduleName|capitalize }}Id = $this->setNavigation($navigationModulesId, '{{ moduleName|capitalize }}', '{{ moduleName }}/index');
 
 {% for action in backendActions %}
+{% if action == 'index' %}
+        $this->setNavigation(
+            $navigation{{ moduleName|capitalize }}Id,
+            '{{ action|capitalize }}',
+            '{{ moduleName }}/{{ action }}',
+            array(
+{% for otheraction in backendActions %}
+{% if otheraction != 'index' %}
+                '{{ moduleName }}/{{ otheraction }}',
+{% endif %}
+{% endfor %}
+            )
+        );
+{% else %}
         $this->setNavigation($navigation{{ moduleName|capitalize }}Id, '{{ action|capitalize }}', '{{ moduleName }}/{{ action }}');
+{% endif %}
 {% endfor %}
 
         // Set rights
