@@ -68,7 +68,7 @@ class Forkmodule {
 		}
 
 		foreach ($this->app['frontend.widgets'] as $widget) {
-			$currentWidget = new Frontend\Widget($this->app, $action);
+			$currentWidget = new Frontend\Widget($this->app, $widget);
 			$currentWidget->create();
 		}
 	}
