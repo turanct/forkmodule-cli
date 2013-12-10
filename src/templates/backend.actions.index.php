@@ -63,7 +63,7 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
                 // Save
 
                 // Redirect
-                $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}ed';
+                $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}ed');
             }
         }
     }
