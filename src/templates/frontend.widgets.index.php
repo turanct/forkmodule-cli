@@ -17,7 +17,7 @@ class Frontend{{ moduleName|capitalize }}Widget{{ widget|capitalize }} extends F
     /**
      * Parse
      */
-    private function parse()
+    protected function parse()
     {
 
     }

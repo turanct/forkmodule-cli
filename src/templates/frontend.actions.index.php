@@ -18,7 +18,7 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
     /**
      * Load the data, don't forget to validate the incoming data
      */
-    private function getData()
+    protected function getData()
     {
 
     }
@@ -26,7 +26,7 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
     /**
      * Parse the data into the template
      */
-    private function parse()
+    protected function parse()
     {
 
     }

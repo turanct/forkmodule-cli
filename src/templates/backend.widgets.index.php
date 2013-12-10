@@ -19,7 +19,7 @@ class Backend{{ moduleName|capitalize }}Widget{{ widget }} extends BackendBaseWi
     /**
      * Load the data
      */
-    private function loadData()
+    protected function loadData()
     {
 
     }
@@ -27,7 +27,7 @@ class Backend{{ moduleName|capitalize }}Widget{{ widget }} extends BackendBaseWi
     /**
      * Parse into template
      */
-    private function parse()
+    protected function parse()
     {
 
     }

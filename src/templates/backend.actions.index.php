@@ -30,7 +30,7 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
     /**
      * Loads the datagrids
      */
-    private function loadDataGrids()
+    protected function loadDataGrids()
     {
 
     }
@@ -38,7 +38,7 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
     /**
      * Load form
      */
-    public function loadForm()
+    protected function loadForm()
     {
         // Create the form
         $this->frm = new BackendForm('{{ action }}');
@@ -50,7 +50,7 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
     /**
      * Validate form
      */
-    public function validateForm()
+    protected function validateForm()
     {
         // Submitted?
         if ($this->frm->isSubmitted()) {
