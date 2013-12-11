@@ -122,6 +122,9 @@ class Forkmodule {
 		));
 		file_put_contents($this->app['module.dir.backend'] . 'installer/installer.php', $content);
 
+		$content = $this->app['twig']->render('backend.installer.data.locale.xml', array('moduleName' => $this->app['module.name']));
+		file_put_contents($this->app['module.dir.backend'] . 'installer/data/locale.xml', $content);
+
 		foreach ($this->app['backend.actions'] as $action) {
 			$currentAction = new Backend\Action($this->app, $action);
 			$currentAction->create();

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+    <backend>
+        <core>
+            <item type="label" name="{{ moduleName|capitalize }}">
+                <translation language="nl"><![CDATA[{{ moduleName }}]]></translation>
+                <translation language="en"><![CDATA[{{ moduleName }}]]></translation>
+                <translation language="fr"><![CDATA[{{ moduleName }}]]></translation>
+            </item>
+        </core>
+        <{{ moduleName }}>
+            <item type="label" name="Overview">
+                <translation language="nl"><![CDATA[overzicht]]></translation>
+                <translation language="en"><![CDATA[overview]]></translation>
+                <translation language="fr"><![CDATA[overview]]></translation>
+            </item>
+        </{{ moduleName }}>
+    </backend>
+</locale>
