@@ -17,3 +17,6 @@ php composer.phar install
 
 # Symlink to $PREFIX/bin
 ln -s $PREFIX/forkmodule-cli/forkmodule.php $PREFIX/bin/forkmodule
+
+# Get back to where we once belonged
+cd -

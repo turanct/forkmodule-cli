@@ -25,9 +25,9 @@ When you run forkmodule-cli, it will ask you everything it needs to know.
 
 Assuming you're on Mac OSX or GNU/Linux with `git`, `php` and `curl` installed:
 
-	FORKMOD_PWD=`pwd` && git clone https://github.com/turanct/forkmodule-cli.git /usr/local/forkmodule-cli && cd /usr/local/forkmodule-cli && curl -sS https://getcomposer.org/installer | php && php composer.phar install && ln -s /usr/local/forkmodule-cli/forkmodule.php /usr/local/bin/forkmodule && cd $FORKMOD_PWD
+	git clone https://github.com/turanct/forkmodule-cli.git /usr/local/forkmodule-cli && cd /usr/local/forkmodule-cli && curl -sS https://getcomposer.org/installer | php && php composer.phar install && ln -s /usr/local/forkmodule-cli/forkmodule.php /usr/local/bin/forkmodule && cd -
 
-Or you could just do this:
+Or you could use the installer, do this (the installer will allow you to use a prefix):
 
 	curl https://raw.github.com/turanct/forkmodule-cli/master/install.sh | sh
 
