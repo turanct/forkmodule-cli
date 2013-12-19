@@ -50,6 +50,7 @@ class {{ moduleName|capitalize }}Installer extends ModuleInstaller
         $this->setActionRights(1, '{{ moduleName }}', '{{ action }}');
 {% endfor %}
 
+{% if backendWidgets %}
 
         // Insert backend widgets
         $widgetSettings = array(
@@ -63,6 +64,7 @@ class {{ moduleName|capitalize }}Installer extends ModuleInstaller
         $this->insertDashboardWidget('{{ moduleName }}', '{{ widget }}', $widgetSettings);
 {% endfor %}
 
+{% endif %}
 
         // Insert extras
         $Id = $this->insertExtra('{{ moduleName }}', 'block', '{{ moduleName|capitalize }}', null, null, 'N', 1000);
