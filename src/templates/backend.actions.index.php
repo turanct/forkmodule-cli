@@ -17,6 +17,10 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
     {
         parent::execute();
 
+{% if action in ['edit', 'delete'] %}
+        $this->id = $this->getParameter('id', 'int');
+{% endif %}
+
 {% if action == 'index' %}
         $this->loadDataGrids();
 {% elseif action in ['add', 'edit'] %}
