@@ -44,10 +44,15 @@ class {{ moduleName|capitalize }}Installer extends ModuleInstaller
 {% endif %}
 {% endfor %}
 
-        // Set rights
+        // Set rights for admin
         $this->setModuleRights(1, '{{ moduleName }}');
 {% for action in backendActions %}
         $this->setActionRights(1, '{{ moduleName }}', '{{ action }}');
+{% endfor %}
+        // Set rights for users
+        $this->setModuleRights(2, '{{ moduleName }}');
+{% for action in backendActions %}
+        $this->setActionRights(2, '{{ moduleName }}', '{{ action }}');
 {% endfor %}
 
 {% if backendWidgets %}
