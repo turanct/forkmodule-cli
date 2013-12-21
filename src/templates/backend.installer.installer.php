@@ -6,6 +6,8 @@ class {{ moduleName|capitalize }}Installer extends ModuleInstaller
 {
     /**
      * Install the module
+     *
+     * @return void
      */
     public function install()
     {

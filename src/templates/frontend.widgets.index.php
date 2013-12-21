@@ -6,6 +6,8 @@ class Frontend{{ moduleName|capitalize }}Widget{{ widget|capitalize }} extends F
 {
     /**
      * Execute the extra
+     *
+     * @return void
      */
     public function execute()
     {
@@ -16,6 +18,8 @@ class Frontend{{ moduleName|capitalize }}Widget{{ widget|capitalize }} extends F
 
     /**
      * Parse
+     *
+     * @return void
      */
     protected function parse()
     {

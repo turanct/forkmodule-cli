@@ -6,6 +6,8 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
 {
     /**
      * Execute the extra
+     *
+     * @return void
      */
     public function execute()
     {
@@ -17,6 +19,8 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
 
     /**
      * Load the data, don't forget to validate the incoming data
+     *
+     * @return void
      */
     protected function getData()
     {
@@ -25,6 +29,8 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
 
     /**
      * Parse the data into the template
+     *
+     * @return void
      */
     protected function parse()
     {

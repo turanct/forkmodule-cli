@@ -10,6 +10,8 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
 {
     /**
      * Execute the action
+     *
+     * @return void
      */
     public function execute()
     {
@@ -29,6 +31,8 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
 {% if action == 'index' %}
     /**
      * Loads the datagrids
+     *
+     * @return void
      */
     protected function loadDataGrids()
     {
@@ -37,6 +41,8 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
 {% elseif action in ['add', 'edit'] %}
     /**
      * Load form
+     *
+     * @return void
      */
     protected function loadForm()
     {
@@ -49,6 +55,8 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
 
     /**
      * Validate form
+     *
+     * @return void
      */
     protected function validateForm()
     {
@@ -72,6 +80,8 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
 
     /**
      * Parse method
+     *
+     * @return void
      */
     protected function parse()
     {
