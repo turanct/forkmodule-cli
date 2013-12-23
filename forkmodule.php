@@ -64,10 +64,18 @@ $app['output'] = $app->protect(function($string, $mode = 'normal') use ($app) {
  */
 $app['init'] = $app->protect(function() use ($app, $argv) {
 	/**
-	 * Get the module name
+	 * Get command line arguments
 	 */
-	// Did we get a name on the command line?
-	if (isset($argv[1]) && trim($argv[1]) !== '') {
+	// Should we update?
+	if (isset($argv[1]) && $argv[1] == '--update') {
+		// Update
+		$app['update']();
+
+		// Stop executing
+		exit;
+	}
+	// Did we get a module name on the command line?
+	elseif (isset($argv[1]) && trim($argv[1]) !== '') {
 		$app['module.name'] = mb_strtolower(trim($argv[1]));
 	}
 
@@ -152,6 +160,15 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 		$app['output']('Aborting...', 'error');
 		exit;
 	}
+});
+
+
+/**
+ * Update the application
+ */
+$app['update'] = $app->protect(function() use ($app) {
+	// Passthrough the update command
+	passthru('cd ' . realpath(__DIR__) . ' && git pull origin master && cd -');
 });
 
 
