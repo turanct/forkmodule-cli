@@ -168,7 +168,7 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
  */
 $app['update'] = $app->protect(function() use ($app) {
 	// Passthrough the update command
-	passthru('cd ' . realpath(__DIR__) . ' && git pull origin master && cd -');
+	passthru('cd ' . realpath(__DIR__) . ' && git pull origin master && git remote update && cd -');
 });
 
 
