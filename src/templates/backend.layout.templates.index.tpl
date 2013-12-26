@@ -3,7 +3,7 @@
 
 <div class="pageTitle">
 	<h2>
-		{$lbl{{ moduleName|capitalize }}|ucfirst}: {lblOverview}
+		{$lbl{{ moduleName|capitalize }}|ucfirst}: {$lblOverview}
 	</h2>
 
 	<div class="buttonHolderRight">
