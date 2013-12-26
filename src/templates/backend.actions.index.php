@@ -40,7 +40,7 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
      */
     protected function loadDataGrids()
     {
-
+        $this->dataGrid = new BackendDataGridDB();
     }
 {% elseif action in ['add', 'edit'] %}
     /**
@@ -90,5 +90,8 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
     protected function parse()
     {
         parent::parse();
+{% if action == 'index' %}
+        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+{% endif %}
     }
 }
