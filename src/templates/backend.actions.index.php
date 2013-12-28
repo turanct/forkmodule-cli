@@ -82,6 +82,7 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
 {% endif %}
 
 
+{% if action != 'delete' %}
     /**
      * Parse method
      *
@@ -94,4 +95,5 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
         $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
 {% endif %}
     }
+{% endif %}
 }
