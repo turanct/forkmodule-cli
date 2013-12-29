@@ -41,7 +41,7 @@ class {{ moduleName|capitalize }}Installer extends ModuleInstaller
 {% endfor %}
             )
         );
-{% else %}
+{% elseif action not in ['index', 'add', 'edit', 'delete'] %}
         $this->setNavigation($navigation{{ moduleName|capitalize }}Id, '{{ action|capitalize }}', '{{ moduleName }}/{{ action }}');
 {% endif %}
 {% endfor %}
