@@ -113,16 +113,18 @@ class Forkmodule {
 		$content = $this->app['twig']->render('backend.engine.model.php', array('moduleName' => $this->app['module.name']));
 		file_put_contents($this->app['module.dir.backend'] . 'engine/model.php', $content);
 
-		$content = $this->app['twig']->render('backend.installer.installer.php', array(
+		$installerData = array(
 			'moduleName' => $this->app['module.name'],
 			'backendActions' => $this->app['backend.actions'],
 			'backendWidgets' => $this->app['backend.widgets'],
 			'frontendActions' => $this->app['frontend.actions'],
 			'frontendWidgets' => $this->app['frontend.widgets'],
-		));
+		);
+
+		$content = $this->app['twig']->render('backend.installer.installer.php', $installerData);
 		file_put_contents($this->app['module.dir.backend'] . 'installer/installer.php', $content);
 
-		$content = $this->app['twig']->render('backend.installer.data.locale.xml', array('moduleName' => $this->app['module.name']));
+		$content = $this->app['twig']->render('backend.installer.data.locale.xml', $installerData);
 		file_put_contents($this->app['module.dir.backend'] . 'installer/data/locale.xml', $content);
 
 		$content = $this->app['twig']->render('backend.installer.data.install.sql', array('moduleName' => $this->app['module.name']));

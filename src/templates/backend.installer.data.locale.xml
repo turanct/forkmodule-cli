@@ -14,6 +14,29 @@
                 <translation language="en"><![CDATA[overview]]></translation>
                 <translation language="fr"><![CDATA[overview]]></translation>
             </item>
+{% for action in backendActions if action != 'index' %}
+            <item type="label" name="{{ action|capitalize }}">
+                <translation language="nl"><![CDATA[{{ action }}]]></translation>
+                <translation language="en"><![CDATA[{{ action }}]]></translation>
+                <translation language="fr"><![CDATA[{{ action }}]]></translation>
+            </item>
+{% endfor %}
         </{{ moduleName }}>
     </backend>
+    <frontend>
+        <{{ moduleName }}>
+            <item type="label" name="{{ moduleName|capitalize }}">
+                <translation language="nl"><![CDATA[{{ moduleName }}]]></translation>
+                <translation language="en"><![CDATA[{{ moduleName }}]]></translation>
+                <translation language="fr"><![CDATA[{{ moduleName }}]]></translation>
+            </item>
+{% for action in frontendActions if action != 'index' %}
+            <item type="label" name="{{ action|capitalize }}">
+                <translation language="nl"><![CDATA[{{ action }}]]></translation>
+                <translation language="en"><![CDATA[{{ action }}]]></translation>
+                <translation language="fr"><![CDATA[{{ action }}]]></translation>
+            </item>
+{% endfor %}
+        </{{ moduleName }}>
+    </frontend>
 </locale>
