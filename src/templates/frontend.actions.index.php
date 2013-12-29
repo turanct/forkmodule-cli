@@ -34,6 +34,16 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
      */
     protected function parse()
     {
-
+        // Breadcrumbs
+        $this->breadcrumb->addElement(
+            SpoonFilter::ucfirst(FL::lbl('{{ moduleName|capitalize }}')),
+            FrontendNavigation::getBackendURLForBlock('index', '{{ moduleName }}')
+        );
+{% if action != 'index' %}
+        $this->breadcrumb->addElement(
+            SpoonFilter::ucfirst(FL::lbl('{{ action|capitalize }}')),
+            FrontendNavigation::getBackendURLForBlock('{{ action }}', '{{ moduleName }}')
+        );
+{% endif %}
     }
 }
