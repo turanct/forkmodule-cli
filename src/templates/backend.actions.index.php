@@ -54,6 +54,16 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
         $this->frm = new BackendForm('{{ action }}');
 
         // Add fields
+
+        // Meta
+{% if action == 'add' %}
+        $this->meta = new BackendMeta($this->frm, null, 'title', true);
+{% elseif action == 'edit' %}
+        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+
+        // Set callback for generating a unique URL
+        $this->meta->setUrlCallback('Backend{{ moduleName|capitalize }}Model', 'getURL', array($this->record['id']));
+{% endif %}
     }
 
 
@@ -93,6 +103,15 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
         parent::parse();
 {% if action == 'index' %}
         $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+{% elseif action in ['add', 'edit'] %}
+        // Get url
+        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
+        $url404 = BackendModel::getURL(404);
+
+        // Parse additional variables
+        if ($url404 != $url) {
+            $this->tpl->assign('detailURL', SITE_URL . $url);
+        }
 {% endif %}
     }
 {% endif %}
