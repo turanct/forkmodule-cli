@@ -17,6 +17,7 @@ class Frontend{{ moduleName|capitalize }}Widget{{ widget|capitalize }} extends F
         $this->parse();
     }
 
+
     /**
      * Load the data, don't forget to validate the incoming data
      *
@@ -26,6 +27,7 @@ class Frontend{{ moduleName|capitalize }}Widget{{ widget|capitalize }} extends F
     {
 
     }
+
 
     /**
      * Parse

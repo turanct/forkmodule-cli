@@ -17,6 +17,7 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
         $this->parse();
     }
 
+
     /**
      * Load the data, don't forget to validate the incoming data
      *
@@ -26,6 +27,7 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
     {
 
     }
+
 
     /**
      * Parse the data into the template
