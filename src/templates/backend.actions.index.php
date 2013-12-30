@@ -30,9 +30,9 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
         $this->parse();
         $this->display();
     }
-
-
 {% if action == 'index' %}
+
+
     /**
      * Loads the datagrids
      *
@@ -43,6 +43,8 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
         $this->dataGrid = new BackendDataGridDB();
     }
 {% elseif action in ['add', 'edit'] %}
+
+
     /**
      * Load form
      *
@@ -90,9 +92,9 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
         }
     }
 {% endif %}
-
-
 {% if action != 'delete' %}
+
+
     /**
      * Parse method
      *
