@@ -8,20 +8,28 @@ class Backend{{ moduleName|capitalize }}Model
      * Create an item
      *
      * @param array $item The item that we want to create
+{% if tags %}
      * @param mixed $tags The tags for this item
+{% endif %}
      *
      * @return int The insert id
      */
+{% if tags %}
     public static function create($item, $tags)
+{% else %}
+    public static function create($item)
+{% endif %}
     {
         /** @var SpoonDatabase $db */
         $db = BackendModel::get('database');
 
         // Insert into the database
         $id = $db->insert('{{ moduleName }}', $item);
+{% if tags %}
 
         // Insert tags
         BackendTagsModel::saveTags($id, $tags, '{{ moduleName }}');
+{% endif %}
 
         return $id;
     }
@@ -45,9 +53,11 @@ class Backend{{ moduleName|capitalize }}Model
             WHERE i.id = :id',
             array('id' => (int) $id)
         );
+{% if tags %}
 
         // Get tags
         $item['tags'] = BackendTagsModel::getTags('{{ moduleName }}', $id);
+{% endif %}
 
         return $item;
     }
@@ -57,11 +67,17 @@ class Backend{{ moduleName|capitalize }}Model
      * Update an item
      *
      * @param array $item The item that we want to update
+{% if tags %}
      * @param mixed $tags The tags for this item
+{% endif %}
      *
      * @return int The number of affected rows
      */
+{% if tags %}
     public static function update($item, $tags)
+{% else %}
+    public static function update($item)
+{% endif %}
     {
         /** @var SpoonDatabase $db */
         $db = BackendModel::get('database');
@@ -72,9 +88,11 @@ class Backend{{ moduleName|capitalize }}Model
 
         // Insert into the database
         $result = $db->update('{{ moduleName }}', $item, 'id = ?', array((int) $item['id']));
+{% if tags %}
 
         // Insert tags
         BackendTagsModel::saveTags($id, $tags, '{{ moduleName }}');
+{% endif %}
 
         return $result;
     }
@@ -91,9 +109,11 @@ class Backend{{ moduleName|capitalize }}Model
     {
         /** @var SpoonDatabase $db */
         $db = BackendModel::get('database');
+{% if tags %}
 
         // Remove tags
         BackendTagsModel::saveTags($id, array(), '{{ moduleName }}');
+{% endif %}
 
         // Remove meta
         self::deleteMeta($id);

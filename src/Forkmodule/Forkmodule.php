@@ -110,7 +110,7 @@ class Forkmodule {
 		$content = $this->app['twig']->render('backend.config.php', array('moduleName' => $this->app['module.name']));
 		file_put_contents($this->app['module.dir.backend'] . 'config.php', $content);
 
-		$content = $this->app['twig']->render('backend.engine.model.php', array('moduleName' => $this->app['module.name']));
+		$content = $this->app['twig']->render('backend.engine.model.php', array('moduleName' => $this->app['module.name'], 'tags' => $this->app['settings.tags']));
 		file_put_contents($this->app['module.dir.backend'] . 'engine/model.php', $content);
 
 		$installerData = array(
