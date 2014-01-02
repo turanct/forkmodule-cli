@@ -150,7 +150,7 @@ class Backend{{ moduleName|capitalize }}Model
      *
      * @return string
      */
-    public static function getURL($url, $id)
+    public static function getURL($url, $id = null)
     {
         /** @var SpoonDatabase $db */
         $db = BackendModel::get('database');
