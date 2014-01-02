@@ -25,7 +25,19 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
      */
     protected function getData()
     {
+{% if action == 'detail' %}
+        // Get slug
+        $this->slug = $this->URL->getParameter(1);
+        if ($this->slug === null) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
 
+        // Get item
+        $this->item = Frontend{{ moduleName|capitalize }}Model::getByURL($this->slug);
+        if (empty($this->item)) {
+            $this->redirect(FrontendNavigation::getURL(404));
+        }
+{% endif %}
     }
 
 
@@ -46,6 +58,25 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
             SpoonFilter::ucfirst(FL::lbl('{{ action|capitalize }}')),
             FrontendNavigation::getBackendURLForBlock('{{ action }}', '{{ moduleName }}')
         );
+{% endif %}
+{% if action == 'detail' %}
+
+        // SEO
+        $this->header->setPageTitle(
+            $this->item['meta_title'],
+            ($this->item['meta_title_overwrite'] == 'Y')
+        );
+        $this->header->addMetaDescription(
+            $this->item['meta_description'],
+            ($this->item['meta_description_overwrite'] == 'Y')
+        );
+        $this->header->addMetaKeywords(
+            $this->item['meta_keywords'],
+            ($this->item['meta_keywords_overwrite'] == 'Y')
+        );
+
+        // Assign item
+        $this->tpl->assign('item', $this->item);
 {% endif %}
     }
 }
