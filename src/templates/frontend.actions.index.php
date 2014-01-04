@@ -75,6 +75,28 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
             ($this->item['meta_keywords_overwrite'] == 'Y')
         );
 
+        // Open Graph-data: add images from content
+        $this->header->extractOpenGraphImages($this->item['meta_description']);
+
+        // Open Graph-data: add additional OpenGraph data
+        $this->header->addOpenGraphData('title', $this->item['title'], true);
+        $this->header->addOpenGraphData('type', 'article', true);
+        $this->header->addOpenGraphData(
+            'url',
+            SITE_URL . FrontendNavigation::getURLForBlock('{{ moduleName }}', 'detail') . '/' . $this->item['url'],
+            true
+        );
+        $this->header->addOpenGraphData(
+            'site_name',
+            FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE),
+            true
+        );
+        $this->header->addOpenGraphData(
+            'description',
+            ($this->item['meta_description_overwrite'] == 'Y') ? $this->item['meta_description'] : $this->item['title'],
+            true
+        );
+
         // Assign item
         $this->tpl->assign('item', $this->item);
 {% endif %}
