@@ -40,7 +40,11 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
      */
     protected function loadDataGrids()
     {
-        $this->dataGrid = new BackendDataGridDB();
+        // Create datagrid
+        $this->dataGrid = new BackendDataGridDB($query, $params);
+
+        // Add buttons
+        $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), 'edit?id=[id]', BL::lbl('Edit'));
     }
 {% elseif action in ['add', 'edit'] %}
 

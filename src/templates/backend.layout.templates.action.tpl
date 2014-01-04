@@ -44,6 +44,17 @@
     </div>
 
     <div class="fullwidthOptions">
+{% if action == 'edit' %}
+        <a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+            <span>{$lblDelete|ucfirst}</span>
+        </a>
+
+        <div id="confirmDelete" title="{$lblDelete|ucfirst}?" style="display: none;">
+            <p>
+                {$msgAreYouSure|ucfirst}
+            </p>
+        </div>
+{% endif %}
         <div class="buttonHolderRight">
             <div class="form-action">
                 <input type="submit" class="inputButton button mainButton" name="ok" value="{$lblSave|ucfirst}">
