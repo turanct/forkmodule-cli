@@ -21,6 +21,11 @@
                 <translation language="fr"><![CDATA[{{ action }}]]></translation>
             </item>
 {% endfor %}
+            <item type="message" name="AreYouSure">
+                <translation language="nl"><![CDATA[Bent u zeker?]]></translation>
+                <translation language="en"><![CDATA[Are you sure?]]></translation>
+                <translation language="fr"><![CDATA[Êtes-vous sûr?]]></translation>
+            </item>
         </{{ moduleName }}>
     </backend>
     <frontend>
