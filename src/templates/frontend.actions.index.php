@@ -51,12 +51,12 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
         // Breadcrumbs
         $this->breadcrumb->addElement(
             SpoonFilter::ucfirst(FL::lbl('{{ moduleName|capitalize }}')),
-            FrontendNavigation::getURLForBlock('index', '{{ moduleName }}')
+            FrontendNavigation::getURLForBlock('{{ moduleName }}', 'index')
         );
 {% if action != 'index' %}
         $this->breadcrumb->addElement(
             SpoonFilter::ucfirst(FL::lbl('{{ action|capitalize }}')),
-            FrontendNavigation::getURLForBlock('{{ action }}', '{{ moduleName }}')
+            FrontendNavigation::getURLForBlock('{{ moduleName }}', '{{ action }}')
         );
 {% endif %}
 {% if action == 'detail' %}
