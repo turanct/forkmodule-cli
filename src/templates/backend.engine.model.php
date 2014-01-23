@@ -137,7 +137,7 @@ class Backend{{ moduleName|capitalize }}Model
         // Get the item details
         $item = self::get($id);
 
-        // Delete remaining files
+        // Delete remaining meta records
         $db->delete('meta', 'id = :metaid', array('metaid' => (int) $item['meta_id']));
     }
 
