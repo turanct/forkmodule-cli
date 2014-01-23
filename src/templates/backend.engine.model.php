@@ -163,7 +163,7 @@ class Backend{{ moduleName|capitalize }}Model
         $params = array($url);
 
         if ($id !== null) {
-            $q .= ' AND r.id != ?';
+            $q .= ' AND i.id != ?';
             $params[] = $id;
         }
 
