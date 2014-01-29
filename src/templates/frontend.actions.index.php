@@ -2,7 +2,7 @@
 /**
  * Frontend {{ moduleName }} {{ action }} action
  */
-class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends FrontendBaseBlock
+class Frontend{{ moduleNameSafe|capitalize }}{{ action|capitalize }} extends FrontendBaseBlock
 {
     /**
      * Execute the extra
@@ -33,7 +33,7 @@ class Frontend{{ moduleName|capitalize }}{{ action|capitalize }} extends Fronten
         }
 
         // Get item
-        $this->item = Frontend{{ moduleName|capitalize }}Model::getByURL($this->slug);
+        $this->item = Frontend{{ moduleNameSafe|capitalize }}Model::getByURL($this->slug);
         if (empty($this->item)) {
             $this->redirect(FrontendNavigation::getURL(404));
         }

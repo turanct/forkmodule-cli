@@ -3,7 +3,7 @@
 
 <div class="pageTitle">
 	<h2>
-		{$lbl{{ moduleName|capitalize }}|ucfirst}: {$lblOverview}
+		{$lbl{{ moduleNameSafe|capitalize }}|ucfirst}: {$lblOverview}
 	</h2>
 
 	<div class="buttonHolderRight">
@@ -16,7 +16,7 @@
 {option:dataGrid}
 	<div class="dataGridHolder">
 		<div class="tableHeading">
-			<h3>{$lbl{{ moduleName|capitalize }}|ucfirst}</h3>
+			<h3>{$lbl{{ moduleNameSafe|capitalize }}|ucfirst}</h3>
 		</div>
 		{$dataGrid}
 	</div>

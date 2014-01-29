@@ -1,4 +1,4 @@
-<div id="{{ moduleName }}">
+<div id="{{ moduleNameSafe }}">
 
 {* Your content goes here *}
 

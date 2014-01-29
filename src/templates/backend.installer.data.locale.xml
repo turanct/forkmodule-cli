@@ -2,10 +2,10 @@
 <locale>
     <backend>
         <core>
-            <item type="label" name="{{ moduleName|capitalize }}">
-                <translation language="nl"><![CDATA[{{ moduleName }}]]></translation>
-                <translation language="en"><![CDATA[{{ moduleName }}]]></translation>
-                <translation language="fr"><![CDATA[{{ moduleName }}]]></translation>
+            <item type="label" name="{{ moduleNameSafe|capitalize }}">
+                <translation language="nl"><![CDATA[{{ moduleNameSafe }}]]></translation>
+                <translation language="en"><![CDATA[{{ moduleNameSafe }}]]></translation>
+                <translation language="fr"><![CDATA[{{ moduleNameSafe }}]]></translation>
             </item>
         </core>
         <{{ moduleName }}>
@@ -29,11 +29,11 @@
         </{{ moduleName }}>
     </backend>
     <frontend>
-        <{{ moduleName }}>
-            <item type="label" name="{{ moduleName|capitalize }}">
-                <translation language="nl"><![CDATA[{{ moduleName }}]]></translation>
-                <translation language="en"><![CDATA[{{ moduleName }}]]></translation>
-                <translation language="fr"><![CDATA[{{ moduleName }}]]></translation>
+        <core>
+            <item type="label" name="{{ moduleNameSafe|capitalize }}">
+                <translation language="nl"><![CDATA[{{ moduleNameSafe }}]]></translation>
+                <translation language="en"><![CDATA[{{ moduleNameSafe }}]]></translation>
+                <translation language="fr"><![CDATA[{{ moduleNameSafe }}]]></translation>
             </item>
 {% for action in frontendActions if action != 'index' %}
             <item type="label" name="{{ action|capitalize }}">
@@ -42,6 +42,6 @@
                 <translation language="fr"><![CDATA[{{ action }}]]></translation>
             </item>
 {% endfor %}
-        </{{ moduleName }}>
+        </core>
     </frontend>
 </locale>

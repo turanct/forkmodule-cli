@@ -2,7 +2,7 @@
 /**
  * Backend {{ moduleName }} config
  */
-class Backend{{ moduleName|capitalize }}Config extends BackendBaseConfig
+class Backend{{ moduleNameSafe|capitalize }}Config extends BackendBaseConfig
 {
     /**
      * The default action

@@ -3,9 +3,9 @@
  * Backend {{ moduleName }} {{ action }} action
  */
 {% if action in ['index', 'add', 'edit', 'delete'] %}
-class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendBaseAction{{ action|capitalize }}
+class Backend{{ moduleNameSafe|capitalize }}{{ action|capitalize }} extends BackendBaseAction{{ action|capitalize }}
 {% else %}
-class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendBaseAction
+class Backend{{ moduleNameSafe|capitalize }}{{ action|capitalize }} extends BackendBaseAction
 {% endif %}
 {
     /**
@@ -68,7 +68,7 @@ class Backend{{ moduleName|capitalize }}{{ action|capitalize }} extends BackendB
         $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
 
         // Set callback for generating a unique URL
-        $this->meta->setUrlCallback('Backend{{ moduleName|capitalize }}Model', 'getURL', array($this->record['id']));
+        $this->meta->setUrlCallback('Backend{{ moduleNameSafe|capitalize }}Model', 'getURL', array($this->record['id']));
 {% endif %}
     }
 

@@ -2,7 +2,7 @@
 /**
  * Backend {{ moduleName }} installer
  */
-class {{ moduleName|capitalize }}Installer extends ModuleInstaller
+class {{ moduleNameSafe|capitalize }}Installer extends ModuleInstaller
 {
     /**
      * Install the module
@@ -25,12 +25,12 @@ class {{ moduleName|capitalize }}Installer extends ModuleInstaller
 
         // Set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
-        $navigation{{ moduleName|capitalize }}Id = $this->setNavigation($navigationModulesId, '{{ moduleName|capitalize }}', '{{ moduleName }}/index');
+        $navigation{{ moduleNameSafe|capitalize }}Id = $this->setNavigation($navigationModulesId, '{{ moduleNameSafe|capitalize }}', '{{ moduleName }}/index');
 
 {% for action in backendActions %}
 {% if action == 'index' %}
         $this->setNavigation(
-            $navigation{{ moduleName|capitalize }}Id,
+            $navigation{{ moduleNameSafe|capitalize }}Id,
             '{{ action|capitalize }}',
             '{{ moduleName }}/{{ action }}',
             array(
@@ -42,7 +42,7 @@ class {{ moduleName|capitalize }}Installer extends ModuleInstaller
             )
         );
 {% elseif action not in ['index', 'add', 'edit', 'delete'] %}
-        $this->setNavigation($navigation{{ moduleName|capitalize }}Id, '{{ action|capitalize }}', '{{ moduleName }}/{{ action }}');
+        $this->setNavigation($navigation{{ moduleNameSafe|capitalize }}Id, '{{ action|capitalize }}', '{{ moduleName }}/{{ action }}');
 {% endif %}
 {% endfor %}
 
@@ -74,7 +74,7 @@ class {{ moduleName|capitalize }}Installer extends ModuleInstaller
 {% endif %}
 
         // Insert extras
-        $Id = $this->insertExtra('{{ moduleName }}', 'block', '{{ moduleName|capitalize }}', null, null, 'N', 1000);
+        $Id = $this->insertExtra('{{ moduleName }}', 'block', '{{ moduleNameSafe|capitalize }}', null, null, 'N', 1000);
 
 {% for widget in frontendWidgets %}
         $this->insertExtra('{{ moduleName }}', 'widget', '{{ widget|capitalize }}', '{{ widget }}', null, 'N', 1001);
