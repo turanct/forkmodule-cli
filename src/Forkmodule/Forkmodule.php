@@ -107,14 +107,15 @@ class Forkmodule {
 		/**
 		 * Files
 		 */
-		$content = $this->app['twig']->render('backend.config.php', array('moduleName' => $this->app['module.name']));
+		$content = $this->app['twig']->render('backend.config.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
 		file_put_contents($this->app['module.dir.backend'] . 'config.php', $content);
 
-		$content = $this->app['twig']->render('backend.engine.model.php', array('moduleName' => $this->app['module.name'], 'tags' => $this->app['settings.tags']));
+		$content = $this->app['twig']->render('backend.engine.model.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe'], 'tags' => $this->app['settings.tags']));
 		file_put_contents($this->app['module.dir.backend'] . 'engine/model.php', $content);
 
 		$installerData = array(
 			'moduleName' => $this->app['module.name'],
+			'moduleNameSafe' => $this->app['module.name.safe'],
 			'backendActions' => $this->app['backend.actions'],
 			'backendWidgets' => $this->app['backend.widgets'],
 			'frontendActions' => $this->app['frontend.actions'],
@@ -127,7 +128,7 @@ class Forkmodule {
 		$content = $this->app['twig']->render('backend.installer.data.locale.xml', $installerData);
 		file_put_contents($this->app['module.dir.backend'] . 'installer/data/locale.xml', $content);
 
-		$content = $this->app['twig']->render('backend.installer.data.install.sql', array('moduleName' => $this->app['module.name']));
+		$content = $this->app['twig']->render('backend.installer.data.install.sql', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
 		file_put_contents($this->app['module.dir.backend'] . 'installer/data/install.sql', $content);
 
 		foreach ($this->app['backend.actions'] as $action) {
