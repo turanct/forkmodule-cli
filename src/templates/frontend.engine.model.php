@@ -16,7 +16,7 @@ class Frontend{{ moduleName|capitalize }}Model
         /** @var SpoonDatabase $db */
         $db = FrontendModel::get('database');
 
-        $item = $db->getRecords(
+        $item = $db->getRecord(
             'SELECT i.*,
             m.url AS url,
             m.title AS meta_title,
@@ -47,7 +47,7 @@ class Frontend{{ moduleName|capitalize }}Model
         /** @var SpoonDatabase $db */
         $db = FrontendModel::get('database');
 
-        $item = $db->getRecords(
+        $item = $db->getRecord(
             'SELECT i.*,
             m.url AS url,
             m.title AS meta_title,

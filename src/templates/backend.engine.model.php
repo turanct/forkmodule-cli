@@ -137,7 +137,7 @@ class Backend{{ moduleName|capitalize }}Model
         // Get the item details
         $item = self::get($id);
 
-        // Delete remaining files
+        // Delete remaining meta records
         $db->delete('meta', 'id = :metaid', array('metaid' => (int) $item['meta_id']));
     }
 
@@ -163,7 +163,7 @@ class Backend{{ moduleName|capitalize }}Model
         $params = array($url);
 
         if ($id !== null) {
-            $q .= ' AND r.id != ?';
+            $q .= ' AND i.id != ?';
             $params[] = $id;
         }
 
