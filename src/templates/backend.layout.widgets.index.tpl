@@ -1,6 +1,6 @@
-<div class="box" id="widget{{ moduleNameSafe|capitalize }}{{ widget|capitalize }}">
+<div class="box" id="widget{{ moduleNameSafe }}{{ widget|capitalize }}">
 	<div class="heading">
-		<h3><a href="{$var|geturl:'index':'{{ moduleName }}'}">{$lbl{{ moduleNameSafe|capitalize }}|ucfirst}: {$lbl{{ widget|capitalize }}|ucfirst}</a></h3>
+		<h3><a href="{$var|geturl:'index':'{{ moduleName }}'}">{$lbl{{ moduleNameSafe }}|ucfirst}: {$lbl{{ widget|capitalize }}|ucfirst}</a></h3>
 	</div>
 
 	{* Content goes here *}

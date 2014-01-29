@@ -2,7 +2,7 @@
 <locale>
     <backend>
         <core>
-            <item type="label" name="{{ moduleNameSafe|capitalize }}">
+            <item type="label" name="{{ moduleNameSafe }}">
                 <translation language="nl"><![CDATA[{{ moduleNameSafe }}]]></translation>
                 <translation language="en"><![CDATA[{{ moduleNameSafe }}]]></translation>
                 <translation language="fr"><![CDATA[{{ moduleNameSafe }}]]></translation>
@@ -30,7 +30,7 @@
     </backend>
     <frontend>
         <core>
-            <item type="label" name="{{ moduleNameSafe|capitalize }}">
+            <item type="label" name="{{ moduleNameSafe }}">
                 <translation language="nl"><![CDATA[{{ moduleNameSafe }}]]></translation>
                 <translation language="en"><![CDATA[{{ moduleNameSafe }}]]></translation>
                 <translation language="fr"><![CDATA[{{ moduleNameSafe }}]]></translation>

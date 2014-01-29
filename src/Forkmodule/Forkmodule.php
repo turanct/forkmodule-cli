@@ -56,10 +56,10 @@ class Forkmodule {
 		/**
 		 * Files
 		 */
-		$content = $this->app['twig']->render('frontend.config.php', array('moduleName' => $this->app['module.name']));
+		$content = $this->app['twig']->render('frontend.config.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
 		file_put_contents($this->app['module.dir.frontend'] . 'config.php', $content);
 
-		$content = $this->app['twig']->render('frontend.engine.model.php', array('moduleName' => $this->app['module.name']));
+		$content = $this->app['twig']->render('frontend.engine.model.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
 		file_put_contents($this->app['module.dir.frontend'] . 'engine/model.php', $content);
 
 		foreach ($this->app['frontend.actions'] as $action) {

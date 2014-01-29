@@ -2,7 +2,7 @@
 /**
  * Frontend {{ moduleName }} config
  */
-class Frontend{{ moduleNameSafe|capitalize }}Config extends FrontendBaseConfig
+class Frontend{{ moduleNameSafe }}Config extends FrontendBaseConfig
 {
     /**
      * The default action

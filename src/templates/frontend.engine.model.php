@@ -2,7 +2,7 @@
 /**
  * Frontend {{ moduleName }} model
  */
-class Frontend{{ moduleNameSafe|capitalize }}Model
+class Frontend{{ moduleNameSafe }}Model
 {
     /**
      * Get one item by id

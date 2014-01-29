@@ -2,7 +2,7 @@
 /**
  * Backend {{ moduleName }} model
  */
-class Backend{{ moduleNameSafe|capitalize }}Model
+class Backend{{ moduleNameSafe }}Model
 {
     /**
      * Create an item

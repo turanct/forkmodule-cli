@@ -1,4 +1,4 @@
-<div id="widget{{ moduleNameSafe|capitalize }}{{ widget|capitalize }}">
+<div id="widget{{ moduleNameSafe }}{{ widget|capitalize }}">
 
 {* Your content goes here *}
 

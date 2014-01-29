@@ -2,7 +2,7 @@
 /**
  * Frontend {{ moduleName }} {{ action }} action
  */
-class Frontend{{ moduleNameSafe|capitalize }}{{ action|capitalize }} extends FrontendBaseBlock
+class Frontend{{ moduleNameSafe }}{{ action|capitalize }} extends FrontendBaseBlock
 {
     /**
      * Execute the extra
@@ -33,7 +33,7 @@ class Frontend{{ moduleNameSafe|capitalize }}{{ action|capitalize }} extends Fro
         }
 
         // Get item
-        $this->item = Frontend{{ moduleNameSafe|capitalize }}Model::getByURL($this->slug);
+        $this->item = Frontend{{ moduleNameSafe }}Model::getByURL($this->slug);
         if (empty($this->item)) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
@@ -50,7 +50,7 @@ class Frontend{{ moduleNameSafe|capitalize }}{{ action|capitalize }} extends Fro
     {
         // Breadcrumbs
         $this->breadcrumb->addElement(
-            SpoonFilter::ucfirst(FL::lbl('{{ moduleName|capitalize }}')),
+            SpoonFilter::ucfirst(FL::lbl('{{ moduleNameSafe }}')),
             FrontendNavigation::getURLForBlock('{{ moduleName }}', 'index')
         );
 {% if action != 'index' %}
