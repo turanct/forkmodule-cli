@@ -152,7 +152,7 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 	 * Settings
 	 */
 	$app['output']('Do you want to use tags in your module? (Y/n)', 'notice');
-	$app['settings.tags'] = (stream_get_line(STDIN, 1024, PHP_EOL) === 'Y') ? true : false;	
+	$app['settings.tags'] = (strtoupper(stream_get_line(STDIN, 1024, PHP_EOL)) !== 'N') ? true : false;
 
 
 	/**
@@ -163,7 +163,7 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 	$app['output']('Fork directory: ' . $app['forkdir'], 'normal');
 	$app['output']('Is this info correct? (Y/n)', 'notice');
 	$answer = stream_get_line(STDIN, 1024, PHP_EOL);
-	if ($answer !== 'Y') {
+	if (strtoupper($answer) === 'N') {
 		$app['output']('Aborting...', 'error');
 		exit;
 	}
