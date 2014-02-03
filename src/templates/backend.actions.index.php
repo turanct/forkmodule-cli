@@ -44,7 +44,13 @@ class Backend{{ moduleNameSafe }}{{ action|capitalize }} extends BackendBaseActi
         $this->dataGrid = new BackendDataGridDB($query, $params);
 
         // Add buttons
-        $this->dataGrid->addColumn('edit', null, BL::lbl('Edit'), 'edit?id=[id]', BL::lbl('Edit'));
+        $this->dataGrid->addColumn(
+            'edit',
+            null,
+            BL::lbl('Edit'),
+            BackendModel::createURLForAction('edit') . '&id=[id]',
+            BL::lbl('Edit')
+        );
     }
 {% elseif action in ['add', 'edit'] %}
 
