@@ -72,10 +72,12 @@ class {{ moduleNameSafe }}Installer extends ModuleInstaller
 {% endfor %}
 
 {% endif %}
+{% if frontendActions or frontendWidgets %}
 
         // Insert extras
         $Id = $this->insertExtra('{{ moduleName }}', 'block', '{{ moduleNameSafe }}', null, null, 'N', 1000);
 
+{% endif %}
 {% for widget in frontendWidgets %}
         $this->insertExtra('{{ moduleName }}', 'widget', '{{ widget|capitalize }}', '{{ widget }}', null, 'N', 1001);
 {% endfor %}
