@@ -11,10 +11,26 @@ class Action extends Forkcontroller {
 	 * Create method
 	 */
 	public function create() {
-		$content = $this->app['twig']->render('frontend.actions.index.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe'], 'action' => $this->name));
+		$content = $this->app['twig']->render(
+			'frontend.actions.index.php',
+			array(
+				'moduleName' => $this->app['module.name'],
+				'moduleNameSafe' => $this->app['module.name.safe'],
+				'action' => $this->name,
+				'actionSafe' => $this->safeName,
+			)
+		);
 		file_put_contents($this->app['module.dir.frontend'] . 'actions/'.$this->name.'.php', $content);
 
-		$content = $this->app['twig']->render('frontend.layout.templates.index.tpl', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe'], 'action' => $this->name));
+		$content = $this->app['twig']->render(
+			'frontend.layout.templates.index.tpl',
+			array(
+				'moduleName' => $this->app['module.name'],
+				'moduleNameSafe' => $this->app['module.name.safe'],
+				'action' => $this->name,
+				'actionSafe' => $this->safeName,
+			)
+		);
 		file_put_contents($this->app['module.dir.frontend'] . 'layout/templates/'.$this->name.'.tpl', $content);
 	}
 }

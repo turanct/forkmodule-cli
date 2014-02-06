@@ -14,11 +14,11 @@
                 <translation language="en"><![CDATA[overview]]></translation>
                 <translation language="fr"><![CDATA[overview]]></translation>
             </item>
-{% for action in backendActions if action != 'index' %}
-            <item type="label" name="{{ action|capitalize }}">
-                <translation language="nl"><![CDATA[{{ action }}]]></translation>
-                <translation language="en"><![CDATA[{{ action }}]]></translation>
-                <translation language="fr"><![CDATA[{{ action }}]]></translation>
+{% for action in backendActions if action.name != 'index' %}
+            <item type="label" name="{{ action.safe }}">
+                <translation language="nl"><![CDATA[{{ action.name }}]]></translation>
+                <translation language="en"><![CDATA[{{ action.name }}]]></translation>
+                <translation language="fr"><![CDATA[{{ action.name }}]]></translation>
             </item>
 {% endfor %}
             <item type="message" name="AreYouSure">
@@ -35,11 +35,11 @@
                 <translation language="en"><![CDATA[{{ moduleNameSafe }}]]></translation>
                 <translation language="fr"><![CDATA[{{ moduleNameSafe }}]]></translation>
             </item>
-{% for action in frontendActions if action != 'index' %}
-            <item type="label" name="{{ action|capitalize }}">
-                <translation language="nl"><![CDATA[{{ action }}]]></translation>
-                <translation language="en"><![CDATA[{{ action }}]]></translation>
-                <translation language="fr"><![CDATA[{{ action }}]]></translation>
+{% for action in frontendActions if action.name != 'index' %}
+            <item type="label" name="{{ action.safe }}">
+                <translation language="nl"><![CDATA[{{ action.name }}]]></translation>
+                <translation language="en"><![CDATA[{{ action.name }}]]></translation>
+                <translation language="fr"><![CDATA[{{ action.name }}]]></translation>
             </item>
 {% endfor %}
         </core>

@@ -2,7 +2,7 @@
 /**
  * Backend {{ moduleName }} {{ widget }} widget
  */
-class Backend{{ moduleNameSafe }}Widget{{ widget }} extends BackendBaseWidget
+class Backend{{ moduleNameSafe }}Widget{{ widgetSafe }} extends BackendBaseWidget
 {
     /**
      * Execute the widget

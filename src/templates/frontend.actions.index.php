@@ -2,7 +2,7 @@
 /**
  * Frontend {{ moduleName }} {{ action }} action
  */
-class Frontend{{ moduleNameSafe }}{{ action|capitalize }} extends FrontendBaseBlock
+class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
 {
     /**
      * Execute the extra
@@ -55,7 +55,7 @@ class Frontend{{ moduleNameSafe }}{{ action|capitalize }} extends FrontendBaseBl
         );
 {% if action != 'index' %}
         $this->breadcrumb->addElement(
-            SpoonFilter::ucfirst(FL::lbl('{{ action|capitalize }}')),
+            SpoonFilter::ucfirst(FL::lbl('{{ actionSafe }}')),
             FrontendNavigation::getURLForBlock('{{ moduleName }}', '{{ action }}')
         );
 {% endif %}

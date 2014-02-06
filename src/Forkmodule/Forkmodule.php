@@ -116,10 +116,10 @@ class Forkmodule {
 		$installerData = array(
 			'moduleName' => $this->app['module.name'],
 			'moduleNameSafe' => $this->app['module.name.safe'],
-			'backendActions' => $this->app['backend.actions'],
-			'backendWidgets' => $this->app['backend.widgets'],
-			'frontendActions' => $this->app['frontend.actions'],
-			'frontendWidgets' => $this->app['frontend.widgets'],
+			'backendActions' => $this->safeNames($this->app['backend.actions']),
+			'backendWidgets' => $this->safeNames($this->app['backend.widgets']),
+			'frontendActions' => $this->safeNames($this->app['frontend.actions']),
+			'frontendWidgets' => $this->safeNames($this->app['frontend.widgets']),
 		);
 
 		$content = $this->app['twig']->render('backend.installer.installer.php', $installerData);
@@ -140,5 +140,29 @@ class Forkmodule {
 			$currentWidget = new Backend\Widget($this->app, $action);
 			$currentWidget->create();
 		}
+	}
+
+
+	/**
+	 * Get safe names for an array of controllers
+	 *
+	 * @param array $controllers An array of controller names
+	 *
+	 * @return array
+	 */
+	protected function safeNames($controllers) {
+		foreach ($controllers as $key => $value) {
+			// Create a safe action name
+			$safe = explode('_', $value);
+			$safe = array_map('ucfirst', $safe);
+			$safe = implode($safe);
+
+			$controllers[$key] = array(
+				'name' => $value,
+				'safe' => $safe,
+			);
+		}
+
+		return $controllers;
 	}
 }

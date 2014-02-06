@@ -3,9 +3,9 @@
  * Backend {{ moduleName }} {{ action }} action
  */
 {% if action in ['index', 'add', 'edit', 'delete'] %}
-class Backend{{ moduleNameSafe }}{{ action|capitalize }} extends BackendBaseAction{{ action|capitalize }}
+class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction{{ actionSafe }}
 {% else %}
-class Backend{{ moduleNameSafe }}{{ action|capitalize }} extends BackendBaseAction
+class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 {% endif %}
 {
     /**

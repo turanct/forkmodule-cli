@@ -2,7 +2,7 @@
 /**
  * Frontend {{ moduleName }} {{ widget }} widget
  */
-class Frontend{{ moduleNameSafe }}Widget{{ widget|capitalize }} extends FrontendBaseWidget
+class Frontend{{ moduleNameSafe }}Widget{{ widgetSafe }} extends FrontendBaseWidget
 {
     /**
      * Execute the extra

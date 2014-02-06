@@ -2,7 +2,7 @@
 {include:{$BACKEND_CORE_PATH}/layout/templates/structure_start_module.tpl}
 
 <div class="pageTitle">
-    <h2>{$lbl{{ moduleNameSafe }}|ucfirst}: {$lbl{{ action|capitalize }}}</h2>
+    <h2>{$lbl{{ moduleNameSafe }}|ucfirst}: {$lbl{{ actionSafe }}}</h2>
 </div>
 
 <div class="formHolder">
