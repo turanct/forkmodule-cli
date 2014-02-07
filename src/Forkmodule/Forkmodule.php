@@ -59,7 +59,14 @@ class Forkmodule {
 		$content = $this->app['twig']->render('frontend.config.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
 		file_put_contents($this->app['module.dir.frontend'] . 'config.php', $content);
 
-		$content = $this->app['twig']->render('frontend.engine.model.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
+		$content = $this->app['twig']->render(
+			'frontend.engine.model.php',
+			array(
+				'moduleName' => $this->app['module.name'],
+				'moduleNameSafe' => $this->app['module.name.safe'],
+				'searchable' => $this->app['settings.searchable'],
+			)
+		);
 		file_put_contents($this->app['module.dir.frontend'] . 'engine/model.php', $content);
 
 		foreach ($this->app['frontend.actions'] as $action) {
@@ -110,7 +117,15 @@ class Forkmodule {
 		$content = $this->app['twig']->render('backend.config.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
 		file_put_contents($this->app['module.dir.backend'] . 'config.php', $content);
 
-		$content = $this->app['twig']->render('backend.engine.model.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe'], 'tags' => $this->app['settings.tags']));
+		$content = $this->app['twig']->render(
+			'backend.engine.model.php',
+			array(
+				'moduleName' => $this->app['module.name'],
+				'moduleNameSafe' => $this->app['module.name.safe'],
+				'tags' => $this->app['settings.tags'],
+				'searchable' => $this->app['settings.searchable'],
+			)
+		);
 		file_put_contents($this->app['module.dir.backend'] . 'engine/model.php', $content);
 
 		$installerData = array(

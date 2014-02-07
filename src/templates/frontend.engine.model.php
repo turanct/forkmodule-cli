@@ -64,4 +64,38 @@ class Frontend{{ moduleNameSafe }}Model
 
         return $item;
     }
+{% if searchable %}
+
+
+    /**
+     * Parse the search results for this module
+     *
+     * Note: a module's search function should always:
+     *      - accept an array of entry id's
+     *      - return only the entries that are allowed to be displayed, with their array's index being the entry's id
+     *
+     * @param array $ids The ids of the found results.
+     *
+     * @return array An array of search results
+     */
+    public static function search(array $ids)
+    {
+        /** @var SpoonDatabase $db */
+        $db = FrontendModel::get('database');
+
+        $items = (array) $db->getRecords(
+            'SELECT i.id, i.title, i.description as text, m.url
+            FROM {{ moduleName }} i
+            INNER JOIN meta m ON m.id = i.meta_id
+            WHERE i.id IN (' . implode(',', $ids) . ')'
+        );
+
+        $returnItems = array();
+        foreach ($items as $item) {
+            $returnItems[$item['id']] = $item;
+        }
+
+        return $returnItems;
+    }
+{% endif %}
 }

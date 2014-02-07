@@ -30,6 +30,18 @@ class Backend{{ moduleNameSafe }}Model
         // Insert tags
         BackendTagsModel::saveTags($id, $tags, '{{ moduleName }}');
 {% endif %}
+{% if searchable %}
+
+        // Make searchable
+        BackendSearchModel::saveIndex(
+            '{{ moduleName }}',
+            $id,
+            array(
+                'title' => $item['title'],
+                'text' => $item['description'],
+            )
+        );
+{% endif %}
 
         return $id;
     }
@@ -93,6 +105,18 @@ class Backend{{ moduleNameSafe }}Model
         // Insert tags
         BackendTagsModel::saveTags($id, $tags, '{{ moduleName }}');
 {% endif %}
+{% if searchable %}
+
+        // Make searchable
+        BackendSearchModel::saveIndex(
+            '{{ moduleName }}',
+            $item['id'],
+            array(
+                'title' => $item['title'],
+                'text' => $item['description'],
+            )
+        );
+{% endif %}
 
         return $result;
     }
@@ -113,6 +137,11 @@ class Backend{{ moduleNameSafe }}Model
 
         // Remove tags
         BackendTagsModel::saveTags($id, array(), '{{ moduleName }}');
+{% endif %}
+{% if searchable %}
+
+        // Delete search index
+        BackendSearchModel::removeIndex('{{ moduleName }}', $id);
 {% endif %}
 
         // Remove meta
