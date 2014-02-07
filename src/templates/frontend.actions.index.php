@@ -33,7 +33,11 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
         }
 
         // Get item
+{% if meta %}
         $this->item = Frontend{{ moduleNameSafe }}Model::getByURL($this->slug);
+{% else %}
+        $this->item = Frontend{{ moduleNameSafe }}Model::get($this->slug);
+{% endif %}
         if (empty($this->item)) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
@@ -60,6 +64,7 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
         );
 {% endif %}
 {% if action == 'detail' %}
+{% if meta %}
 
         // SEO
         $this->header->setPageTitle(
@@ -96,6 +101,7 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
             ($this->item['meta_description_overwrite'] == 'Y') ? $this->item['meta_description'] : $this->item['title'],
             true
         );
+{% endif %}
 
         // Assign item
         $this->tpl->assign('item', $this->item);

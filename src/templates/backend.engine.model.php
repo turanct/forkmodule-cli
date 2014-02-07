@@ -143,12 +143,15 @@ class Backend{{ moduleNameSafe }}Model
         // Delete search index
         BackendSearchModel::removeIndex('{{ moduleName }}', $id);
 {% endif %}
+{% if meta %}
 
         // Remove meta
         self::deleteMeta($id);
+{% endif %}
 
         return $db->delete('{{ moduleName }}', 'id = :id', array('id' => (int) $id));
     }
+{% if meta %}
 
 
     /**
@@ -210,4 +213,5 @@ class Backend{{ moduleNameSafe }}Model
         // Return
         return $url;
     }
+{% endif %}
 }

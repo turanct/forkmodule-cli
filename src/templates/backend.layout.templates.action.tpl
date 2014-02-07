@@ -14,6 +14,7 @@
             {$txtTitle}
             {$txtTitleError}
         </div>
+{% if meta %}
         <div id="pageUrl">
             <div class="oneLiner">
             {option:detailURL}
@@ -24,12 +25,15 @@
             {/option:!detailURL}
             </div>
         </div>
+{% endif %}
     </div>
 
     <div class="tabs">
         <ul>
             <li><a href="#tabContent">{$lblContent|ucfirst}</a></li>
+{% if meta %}
             <li><a href="#tabSEO">{$lblSEO|ucfirst}</a></li>
+{% endif %}
         </ul>
 
         <div id="tabContent">
@@ -37,10 +41,12 @@
             {* Your content goes here *}
 
         </div>
+{% if meta %}
 
         <div id="tabSEO">
             {include:{$BACKEND_CORE_PATH}/layout/templates/seo.tpl}
         </div>
+{% endif %}
     </div>
 
     <div class="fullwidthOptions">

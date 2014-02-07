@@ -17,6 +17,7 @@ class Frontend{{ moduleNameSafe }}Model
         $db = FrontendModel::get('database');
 
         $item = $db->getRecord(
+{% if meta %}
             'SELECT i.*,
             m.url AS url,
             m.title AS meta_title,
@@ -25,14 +26,20 @@ class Frontend{{ moduleNameSafe }}Model
             m.description_overwrite AS meta_description_overwrite,
             m.keywords AS meta_keywords,
             m.keywords_overwrite AS meta_keywords_overwrite
+{% else %}
+            'SELECT i.*
+{% endif %}
             FROM {{ moduleName }} i
+{% if meta %}
             INNER JOIN meta m ON m.id = i.meta_id
+{% endif %}
             WHERE i.id = ?',
             array((int) $id)
         );
 
         return $item;
     }
+{% if meta %}
 
 
     /**
@@ -64,6 +71,7 @@ class Frontend{{ moduleNameSafe }}Model
 
         return $item;
     }
+{% endif %}
 {% if searchable %}
 
 

@@ -64,6 +64,7 @@ class Forkmodule {
 			array(
 				'moduleName' => $this->app['module.name'],
 				'moduleNameSafe' => $this->app['module.name.safe'],
+				'meta' => $this->app['settings.meta'],
 				'searchable' => $this->app['settings.searchable'],
 			)
 		);
@@ -123,6 +124,7 @@ class Forkmodule {
 				'moduleName' => $this->app['module.name'],
 				'moduleNameSafe' => $this->app['module.name.safe'],
 				'tags' => $this->app['settings.tags'],
+				'meta' => $this->app['settings.meta'],
 				'searchable' => $this->app['settings.searchable'],
 			)
 		);
@@ -135,6 +137,7 @@ class Forkmodule {
 			'backendWidgets' => $this->safeNames($this->app['backend.widgets']),
 			'frontendActions' => $this->safeNames($this->app['frontend.actions']),
 			'frontendWidgets' => $this->safeNames($this->app['frontend.widgets']),
+			'meta' => $this->app['settings.meta'],
 		);
 
 		$content = $this->app['twig']->render('backend.installer.installer.php', $installerData);
@@ -143,7 +146,14 @@ class Forkmodule {
 		$content = $this->app['twig']->render('backend.installer.data.locale.xml', $installerData);
 		file_put_contents($this->app['module.dir.backend'] . 'installer/data/locale.xml', $content);
 
-		$content = $this->app['twig']->render('backend.installer.data.install.sql', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
+		$content = $this->app['twig']->render(
+			'backend.installer.data.install.sql',
+			array(
+				'moduleName' => $this->app['module.name'],
+				'moduleNameSafe' => $this->app['module.name.safe'],
+				'meta' => $this->app['settings.meta'],
+			)
+		);
 		file_put_contents($this->app['module.dir.backend'] . 'installer/data/install.sql', $content);
 
 		foreach ($this->app['backend.actions'] as $action) {

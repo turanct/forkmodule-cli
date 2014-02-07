@@ -18,6 +18,7 @@ class Widget extends Forkcontroller {
 				'moduleNameSafe' => $this->app['module.name.safe'],
 				'widget' => $this->name,
 				'widgetSafe' => $this->safeName,
+				'meta' => $this->app['settings.meta'],
 			)
 		);
 		file_put_contents($this->app['module.dir.backend'] . 'widgets/'.$this->name.'.php', $content);
@@ -29,6 +30,7 @@ class Widget extends Forkcontroller {
 				'moduleNameSafe' => $this->app['module.name.safe'],
 				'widget' => $this->name,
 				'widgetSafe' => $this->safeName,
+				'meta' => $this->app['settings.meta'],
 			)
 		);
 		file_put_contents($this->app['module.dir.backend'] . 'layout/widgets/'.$this->name.'.tpl', $content);

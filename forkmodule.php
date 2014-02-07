@@ -156,6 +156,8 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 	/**
 	 * Settings
 	 */
+	$app['output']('Do you want to use Meta/SEO in your module? (Y/n)', 'notice');
+	$app['settings.meta'] = (strtoupper(stream_get_line(STDIN, 1024, PHP_EOL)) !== 'N') ? true : false;
 	$app['output']('Do you want to use tags in your module? (Y/n)', 'notice');
 	$app['settings.tags'] = (strtoupper(stream_get_line(STDIN, 1024, PHP_EOL)) !== 'N') ? true : false;
 	$app['output']('Do you want to make your module searchable? (Y/n)', 'notice');

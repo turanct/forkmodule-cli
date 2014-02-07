@@ -18,6 +18,7 @@ class Action extends Forkcontroller {
 				'moduleNameSafe' => $this->app['module.name.safe'],
 				'action' => $this->name,
 				'actionSafe' => $this->safeName,
+				'meta' => $this->app['settings.meta'],
 			)
 		);
 		file_put_contents($this->app['module.dir.frontend'] . 'actions/'.$this->name.'.php', $content);
@@ -29,6 +30,7 @@ class Action extends Forkcontroller {
 				'moduleNameSafe' => $this->app['module.name.safe'],
 				'action' => $this->name,
 				'actionSafe' => $this->safeName,
+				'meta' => $this->app['settings.meta'],
 			)
 		);
 		file_put_contents($this->app['module.dir.frontend'] . 'layout/templates/'.$this->name.'.tpl', $content);
