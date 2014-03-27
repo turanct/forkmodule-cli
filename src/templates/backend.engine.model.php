@@ -46,7 +46,6 @@ class Backend{{ moduleNameSafe }}Model
         return $id;
     }
 
-
     /**
      * Get one item by id
      *
@@ -73,7 +72,6 @@ class Backend{{ moduleNameSafe }}Model
 
         return $item;
     }
-
 
     /**
      * Update an item
@@ -121,7 +119,6 @@ class Backend{{ moduleNameSafe }}Model
         return $result;
     }
 
-
     /**
      * Delete an item
      *
@@ -153,7 +150,6 @@ class Backend{{ moduleNameSafe }}Model
     }
 {% if meta %}
 
-
     /**
      * Delete an item's meta info
      *
@@ -170,7 +166,6 @@ class Backend{{ moduleNameSafe }}Model
         // Delete remaining meta records
         $db->delete('meta', 'id = :metaid', array('metaid' => (int) $item['meta_id']));
     }
-
 
     /**
      * Create a unique url for an item

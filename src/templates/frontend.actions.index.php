@@ -15,7 +15,6 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
         $this->parse();
     }
 
-
     /**
      * Load the data, don't forget to validate the incoming data
      */
@@ -39,7 +38,6 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
         }
 {% endif %}
     }
-
 
     /**
      * Parse the data into the template

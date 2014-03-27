@@ -41,7 +41,6 @@ class Frontend{{ moduleNameSafe }}Model
     }
 {% if meta %}
 
-
     /**
      * Get one item by URL
      *
@@ -73,7 +72,6 @@ class Frontend{{ moduleNameSafe }}Model
     }
 {% endif %}
 {% if searchable %}
-
 
     /**
      * Parse the search results for this module

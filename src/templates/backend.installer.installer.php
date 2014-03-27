@@ -12,14 +12,11 @@ class {{ moduleNameSafe }}Installer extends ModuleInstaller
         // Load install.sql
         $this->importSQL(__DIR__ . '/data/install.sql');
 
-
         // Add module
         $this->addModule('{{ moduleName }}');
 
-
         // Import locale
         $this->importLocale(__DIR__ . '/data/locale.xml');
-
 
         // Set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');

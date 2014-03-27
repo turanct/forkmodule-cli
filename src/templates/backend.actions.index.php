@@ -14,8 +14,8 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
     public function execute()
     {
         parent::execute();
-
 {% if action in ['edit', 'delete'] %}
+
         $this->id = $this->getParameter('id', 'int');
 {% endif %}
 
@@ -29,7 +29,6 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->display();
     }
 {% if action == 'index' %}
-
 
     /**
      * Loads the datagrids
@@ -49,7 +48,6 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         );
     }
 {% elseif action in ['add', 'edit'] %}
-
 
     /**
      * Load form
@@ -74,7 +72,6 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 {% endif %}
     }
 
-
     /**
      * Validate form
      */
@@ -97,7 +94,6 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
     }
 {% endif %}
 {% if action != 'delete' %}
-
 
     /**
      * Parse method
