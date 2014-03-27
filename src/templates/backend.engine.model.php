@@ -158,8 +158,6 @@ class Backend{{ moduleNameSafe }}Model
      * Delete an item's meta info
      *
      * @param int $id The id of the item that we want to delete
-     *
-     * @return void
      */
     public static function deleteMeta($id)
     {

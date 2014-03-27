@@ -6,8 +6,6 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
 {
     /**
      * Execute the extra
-     *
-     * @return void
      */
     public function execute()
     {
@@ -20,8 +18,6 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
 
     /**
      * Load the data, don't forget to validate the incoming data
-     *
-     * @return void
      */
     protected function getData()
     {
@@ -47,8 +43,6 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
 
     /**
      * Parse the data into the template
-     *
-     * @return void
      */
     protected function parse()
     {

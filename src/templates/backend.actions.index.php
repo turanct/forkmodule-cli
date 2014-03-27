@@ -10,8 +10,6 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 {
     /**
      * Execute the action
-     *
-     * @return void
      */
     public function execute()
     {
@@ -35,8 +33,6 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
     /**
      * Loads the datagrids
-     *
-     * @return void
      */
     protected function loadDataGrids()
     {
@@ -57,8 +53,6 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
     /**
      * Load form
-     *
-     * @return void
      */
     protected function loadForm()
     {
@@ -83,8 +77,6 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
     /**
      * Validate form
-     *
-     * @return void
      */
     protected function validateForm()
     {
@@ -109,8 +101,6 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
     /**
      * Parse method
-     *
-     * @return void
      */
     protected function parse()
     {

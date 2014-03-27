@@ -6,8 +6,6 @@ class Backend{{ moduleNameSafe }}Widget{{ widgetSafe }} extends BackendBaseWidge
 {
     /**
      * Execute the widget
-     *
-     * @return void
      */
     public function execute()
     {
@@ -20,8 +18,6 @@ class Backend{{ moduleNameSafe }}Widget{{ widgetSafe }} extends BackendBaseWidge
 
     /**
      * Load the data
-     *
-     * @return void
      */
     protected function loadData()
     {
@@ -30,8 +26,6 @@ class Backend{{ moduleNameSafe }}Widget{{ widgetSafe }} extends BackendBaseWidge
 
     /**
      * Parse into template
-     *
-     * @return void
      */
     protected function parse()
     {
