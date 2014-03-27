@@ -8,6 +8,7 @@ class Frontend{{ moduleNameSafe }}Model
      * Get one item by id
      *
      * @param int $id The item id
+     *
      * @return array The item
      */
     public static function get($id)
@@ -45,6 +46,7 @@ class Frontend{{ moduleNameSafe }}Model
      * Get one item by URL
      *
      * @param string $url The item's url
+     *
      * @return array The item
      */
     public static function getByURL($url)
@@ -81,6 +83,7 @@ class Frontend{{ moduleNameSafe }}Model
      *      - return only the entries that are allowed to be displayed, with their array's index being the entry's id
      *
      * @param array $ids The ids of the found results.
+     *
      * @return array An array of search results
      */
     public static function search(array $ids)
