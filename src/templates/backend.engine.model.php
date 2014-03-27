@@ -11,7 +11,6 @@ class Backend{{ moduleNameSafe }}Model
 {% if tags %}
      * @param mixed $tags The tags for this item
 {% endif %}
-     *
      * @return int The insert id
      */
 {% if tags %}
@@ -51,7 +50,6 @@ class Backend{{ moduleNameSafe }}Model
      * Get one item by id
      *
      * @param int $id The item id
-     *
      * @return array The item
      */
     public static function get($id)
@@ -82,7 +80,6 @@ class Backend{{ moduleNameSafe }}Model
 {% if tags %}
      * @param mixed $tags The tags for this item
 {% endif %}
-     *
      * @return int The number of affected rows
      */
 {% if tags %}
@@ -126,7 +123,6 @@ class Backend{{ moduleNameSafe }}Model
      * Delete an item
      *
      * @param int $id The id of the item that we want to delete
-     *
      * @return int The number of affected rows
      */
     public static function delete($id)
@@ -158,8 +154,6 @@ class Backend{{ moduleNameSafe }}Model
      * Delete an item's meta info
      *
      * @param int $id The id of the item that we want to delete
-     *
-     * @return void
      */
     public static function deleteMeta($id)
     {
@@ -179,7 +173,6 @@ class Backend{{ moduleNameSafe }}Model
      *
      * @param string $url The proposed url of the item
      * @param string $id  The id of the item
-     *
      * @return string
      */
     public static function getURL($url, $id = null)

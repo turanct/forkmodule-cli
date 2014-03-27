@@ -6,8 +6,6 @@ class Frontend{{ moduleNameSafe }}Widget{{ widgetSafe }} extends FrontendBaseWid
 {
     /**
      * Execute the extra
-     *
-     * @return void
      */
     public function execute()
     {
@@ -20,8 +18,6 @@ class Frontend{{ moduleNameSafe }}Widget{{ widgetSafe }} extends FrontendBaseWid
 
     /**
      * Load the data, don't forget to validate the incoming data
-     *
-     * @return void
      */
     protected function getData()
     {
@@ -31,8 +27,6 @@ class Frontend{{ moduleNameSafe }}Widget{{ widgetSafe }} extends FrontendBaseWid
 
     /**
      * Parse
-     *
-     * @return void
      */
     protected function parse()
     {
