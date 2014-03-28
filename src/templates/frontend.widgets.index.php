@@ -15,7 +15,6 @@ class Frontend{{ moduleNameSafe }}Widget{{ widgetSafe }} extends FrontendBaseWid
         $this->parse();
     }
 
-
     /**
      * Load the data, don't forget to validate the incoming data
      */
@@ -23,7 +22,6 @@ class Frontend{{ moduleNameSafe }}Widget{{ widgetSafe }} extends FrontendBaseWid
     {
 
     }
-
 
     /**
      * Parse
