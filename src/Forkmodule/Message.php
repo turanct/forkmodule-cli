@@ -25,7 +25,8 @@ class Message
      * @param string $message The message we want to send
      * @param string $type    The type of message we want to send
      */
-    public function __construct($message, $type = 'normal') {
+    public function __construct($message, $type = 'normal')
+    {
         $this->message = (string) $message;
         $this->type = (string) $type;
 
@@ -35,7 +36,8 @@ class Message
     /**
      * Output a formatted string
      */
-    protected function send() {
+    protected function send()
+    {
         switch ($this->type) {
             case 'welcome':
                 echo "\033[1;31m".$this->message."\033[0m\n";

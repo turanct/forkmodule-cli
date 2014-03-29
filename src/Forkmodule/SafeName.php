@@ -24,7 +24,8 @@ class SafeName
      *
      * @param string $snake The snake case name
      */
-    public function __construct($snake) {
+    public function __construct($snake)
+    {
         $this->snakeCase = (string) $snake;
         $this->camelCase = $this->convertToCamelCase($this->snakeCase);
     }
@@ -34,7 +35,8 @@ class SafeName
      *
      * @param string $snakeCase The snake case name
      */
-    protected function convertToCamelCase($snakeCase) {
+    protected function convertToCamelCase($snakeCase)
+    {
         $parts = explode('_', $snakeCase);
         $UppercaseParts = array_map('ucfirst', $parts);
         $camelCase = implode($UppercaseParts);
@@ -47,7 +49,8 @@ class SafeName
      *
      * @return string The safename/fork camel case string
      */
-    public function __toString() {
+    public function __toString()
+    {
         return $this->camelCase;
     }
 }

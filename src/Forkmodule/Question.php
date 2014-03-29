@@ -20,7 +20,8 @@ class Question extends Message
      * @param string $question The message we want to send
      * @param string $type     The type of message we want to send
      */
-    public function __construct($question, $type = 'notice') {
+    public function __construct($question, $type = 'notice')
+    {
         parent::__construct($question, $type);
 
         $this->listen();
@@ -29,7 +30,8 @@ class Question extends Message
     /**
      * Listen to the user's answer
      */
-    protected function listen() {
+    protected function listen()
+    {
         $this->answer = stream_get_line(STDIN, 1024, PHP_EOL);
         $this->answer = trim($this->answer);
     }
@@ -39,7 +41,8 @@ class Question extends Message
      *
      * @return string The user's answer to this question
      */
-    public function getAnswer() {
+    public function getAnswer()
+    {
         return $this->answer;
     }
 }
