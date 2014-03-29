@@ -4,190 +4,195 @@ namespace Forkmodule;
 /**
  * Forkmodule class
  */
-class Forkmodule {
-	/**
-	 * @var \Pimple
-	 */
-	protected $app;
+class Forkmodule
+{
+    /**
+     * @var \Pimple
+     */
+    protected $app;
 
 
 
-	/**
-	 * Constructor Method
-	 *
-	 * @param \Pimple   $app    The app container
-	 */
-	public function __construct($app) {
-		// Assign
-		$this->app = $app;
+    /**
+     * Constructor Method
+     *
+     * @param \Pimple   $app    The app container
+     */
+    public function __construct($app)
+    {
+        // Assign
+        $this->app = $app;
 
-		// Create the directory structure
-		$this->frontend();
-		$this->backend();
-	}
-
-
-	/**
-	 * Create the frontend directories & files
-	 */
-	protected function frontend() {
-		/**
-		 * Directories
-		 */
-		$this->app['output']('Creating frontend directories.', 'title');
-
-		$this->app['module.dir.frontend'] = $this->app['forkdir'] . '/frontend/modules/' . $this->app['module.name'] . '/';
-		mkdir($this->app['module.dir.frontend']);
-
-		$directories = array(
-			'actions',
-			'engine',
-			'layout',
-			'layout/templates',
-			'layout/widgets',
-			'widgets',
-		);
-
-		foreach ($directories as $directory) {
-			mkdir($this->app['module.dir.frontend'] . $directory);
-		}
+        // Create the directory structure
+        $this->frontend();
+        $this->backend();
+    }
 
 
-		/**
-		 * Files
-		 */
-		$content = $this->app['twig']->render('frontend.config.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
-		file_put_contents($this->app['module.dir.frontend'] . 'config.php', $content);
+    /**
+     * Create the frontend directories & files
+     */
+    protected function frontend()
+    {
+        /**
+         * Directories
+         */
+        $this->app['output']('Creating frontend directories.', 'title');
 
-		$content = $this->app['twig']->render(
-			'frontend.engine.model.php',
-			array(
-				'moduleName' => $this->app['module.name'],
-				'moduleNameSafe' => $this->app['module.name.safe'],
-				'meta' => $this->app['settings.meta'],
-				'searchable' => $this->app['settings.searchable'],
-			)
-		);
-		file_put_contents($this->app['module.dir.frontend'] . 'engine/model.php', $content);
+        $this->app['module.dir.frontend'] = $this->app['forkdir'] . '/frontend/modules/' . $this->app['module.name'] . '/';
+        mkdir($this->app['module.dir.frontend']);
 
-		foreach ($this->app['frontend.actions'] as $action) {
-			$currentAction = new Frontend\Action($this->app, $action);
-			$currentAction->create();
-		}
+        $directories = array(
+            'actions',
+            'engine',
+            'layout',
+            'layout/templates',
+            'layout/widgets',
+            'widgets',
+        );
 
-		foreach ($this->app['frontend.widgets'] as $widget) {
-			$currentWidget = new Frontend\Widget($this->app, $widget);
-			$currentWidget->create();
-		}
-	}
+        foreach ($directories as $directory) {
+            mkdir($this->app['module.dir.frontend'] . $directory);
+        }
 
 
-	/**
-	 * Create the backend directories & files
-	 */
-	protected function backend() {
-		/**
-		 * Directories
-		 */
-		$this->app['output']('Creating backend directories.', 'title');
+        /**
+         * Files
+         */
+        $content = $this->app['twig']->render('frontend.config.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
+        file_put_contents($this->app['module.dir.frontend'] . 'config.php', $content);
 
-		$this->app['module.dir.backend'] = $this->app['forkdir'] . '/backend/modules/' . $this->app['module.name'] . '/';
-		mkdir($this->app['module.dir.backend']);
+        $content = $this->app['twig']->render(
+            'frontend.engine.model.php',
+            array(
+                'moduleName' => $this->app['module.name'],
+                'moduleNameSafe' => $this->app['module.name.safe'],
+                'meta' => $this->app['settings.meta'],
+                'searchable' => $this->app['settings.searchable'],
+            )
+        );
+        file_put_contents($this->app['module.dir.frontend'] . 'engine/model.php', $content);
 
-		$directories = array(
-			'actions',
-			'ajax',
-			'engine',
-			'installer',
-			'installer/data',
-			'js',
-			'layout',
-			'layout/templates',
-			'layout/widgets',
-			'widgets',
-		);
+        foreach ($this->app['frontend.actions'] as $action) {
+            $currentAction = new Frontend\Action($this->app, $action);
+            $currentAction->create();
+        }
 
-		foreach ($directories as $directory) {
-			mkdir($this->app['module.dir.backend'] . $directory);
-		}
-
-
-		/**
-		 * Files
-		 */
-		$content = $this->app['twig']->render('backend.config.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
-		file_put_contents($this->app['module.dir.backend'] . 'config.php', $content);
-
-		$content = $this->app['twig']->render(
-			'backend.engine.model.php',
-			array(
-				'moduleName' => $this->app['module.name'],
-				'moduleNameSafe' => $this->app['module.name.safe'],
-				'tags' => $this->app['settings.tags'],
-				'meta' => $this->app['settings.meta'],
-				'searchable' => $this->app['settings.searchable'],
-			)
-		);
-		file_put_contents($this->app['module.dir.backend'] . 'engine/model.php', $content);
-
-		$installerData = array(
-			'moduleName' => $this->app['module.name'],
-			'moduleNameSafe' => $this->app['module.name.safe'],
-			'backendActions' => $this->safeNames($this->app['backend.actions']),
-			'backendWidgets' => $this->safeNames($this->app['backend.widgets']),
-			'frontendActions' => $this->safeNames($this->app['frontend.actions']),
-			'frontendWidgets' => $this->safeNames($this->app['frontend.widgets']),
-			'meta' => $this->app['settings.meta'],
-		);
-
-		$content = $this->app['twig']->render('backend.installer.installer.php', $installerData);
-		file_put_contents($this->app['module.dir.backend'] . 'installer/installer.php', $content);
-
-		$content = $this->app['twig']->render('backend.installer.data.locale.xml', $installerData);
-		file_put_contents($this->app['module.dir.backend'] . 'installer/data/locale.xml', $content);
-
-		$content = $this->app['twig']->render(
-			'backend.installer.data.install.sql',
-			array(
-				'moduleName' => $this->app['module.name'],
-				'moduleNameSafe' => $this->app['module.name.safe'],
-				'meta' => $this->app['settings.meta'],
-			)
-		);
-		file_put_contents($this->app['module.dir.backend'] . 'installer/data/install.sql', $content);
-
-		foreach ($this->app['backend.actions'] as $action) {
-			$currentAction = new Backend\Action($this->app, $action);
-			$currentAction->create();
-		}
-
-		foreach ($this->app['backend.widgets'] as $widget) {
-			$currentWidget = new Backend\Widget($this->app, $action);
-			$currentWidget->create();
-		}
-	}
+        foreach ($this->app['frontend.widgets'] as $widget) {
+            $currentWidget = new Frontend\Widget($this->app, $widget);
+            $currentWidget->create();
+        }
+    }
 
 
-	/**
-	 * Get safe names for an array of controllers
-	 *
-	 * @param array $controllers An array of controller names
-	 *
-	 * @return array
-	 */
-	protected function safeNames($controllers) {
-		foreach ($controllers as $key => $value) {
-			// Create a safe action name
-			$safe = explode('_', $value);
-			$safe = array_map('ucfirst', $safe);
-			$safe = implode($safe);
+    /**
+     * Create the backend directories & files
+     */
+    protected function backend()
+    {
+        /**
+         * Directories
+         */
+        $this->app['output']('Creating backend directories.', 'title');
 
-			$controllers[$key] = array(
-				'name' => $value,
-				'safe' => $safe,
-			);
-		}
+        $this->app['module.dir.backend'] = $this->app['forkdir'] . '/backend/modules/' . $this->app['module.name'] . '/';
+        mkdir($this->app['module.dir.backend']);
 
-		return $controllers;
-	}
+        $directories = array(
+            'actions',
+            'ajax',
+            'engine',
+            'installer',
+            'installer/data',
+            'js',
+            'layout',
+            'layout/templates',
+            'layout/widgets',
+            'widgets',
+        );
+
+        foreach ($directories as $directory) {
+            mkdir($this->app['module.dir.backend'] . $directory);
+        }
+
+
+        /**
+         * Files
+         */
+        $content = $this->app['twig']->render('backend.config.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
+        file_put_contents($this->app['module.dir.backend'] . 'config.php', $content);
+
+        $content = $this->app['twig']->render(
+            'backend.engine.model.php',
+            array(
+                'moduleName' => $this->app['module.name'],
+                'moduleNameSafe' => $this->app['module.name.safe'],
+                'tags' => $this->app['settings.tags'],
+                'meta' => $this->app['settings.meta'],
+                'searchable' => $this->app['settings.searchable'],
+            )
+        );
+        file_put_contents($this->app['module.dir.backend'] . 'engine/model.php', $content);
+
+        $installerData = array(
+            'moduleName' => $this->app['module.name'],
+            'moduleNameSafe' => $this->app['module.name.safe'],
+            'backendActions' => $this->safeNames($this->app['backend.actions']),
+            'backendWidgets' => $this->safeNames($this->app['backend.widgets']),
+            'frontendActions' => $this->safeNames($this->app['frontend.actions']),
+            'frontendWidgets' => $this->safeNames($this->app['frontend.widgets']),
+            'meta' => $this->app['settings.meta'],
+        );
+
+        $content = $this->app['twig']->render('backend.installer.installer.php', $installerData);
+        file_put_contents($this->app['module.dir.backend'] . 'installer/installer.php', $content);
+
+        $content = $this->app['twig']->render('backend.installer.data.locale.xml', $installerData);
+        file_put_contents($this->app['module.dir.backend'] . 'installer/data/locale.xml', $content);
+
+        $content = $this->app['twig']->render(
+            'backend.installer.data.install.sql',
+            array(
+                'moduleName' => $this->app['module.name'],
+                'moduleNameSafe' => $this->app['module.name.safe'],
+                'meta' => $this->app['settings.meta'],
+            )
+        );
+        file_put_contents($this->app['module.dir.backend'] . 'installer/data/install.sql', $content);
+
+        foreach ($this->app['backend.actions'] as $action) {
+            $currentAction = new Backend\Action($this->app, $action);
+            $currentAction->create();
+        }
+
+        foreach ($this->app['backend.widgets'] as $widget) {
+            $currentWidget = new Backend\Widget($this->app, $action);
+            $currentWidget->create();
+        }
+    }
+
+
+    /**
+     * Get safe names for an array of controllers
+     *
+     * @param array $controllers An array of controller names
+     *
+     * @return array
+     */
+    protected function safeNames($controllers)
+    {
+        foreach ($controllers as $key => $value) {
+            // Create a safe action name
+            $safe = explode('_', $value);
+            $safe = array_map('ucfirst', $safe);
+            $safe = implode($safe);
+
+            $controllers[$key] = array(
+                'name' => $value,
+                'safe' => $safe,
+            );
+        }
+
+        return $controllers;
+    }
 }
