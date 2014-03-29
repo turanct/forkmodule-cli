@@ -60,10 +60,9 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 
 	// Ask for it
 	else {
-		$app['output']('Name of the module:', 'notice');
-		$answer = stream_get_line(STDIN, 1024, PHP_EOL);
-		if (trim($answer) !== '') {
-			$app['module.name'] = mb_strtolower(trim($answer));
+		$question = new Forkmodule\Question('Name of the module:');
+		if ($question->getAnswer() !== '') {
+			$app['module.name'] = mb_strtolower($question->getAnswer());
 		}
 		else {
 			$app['module.name'] = 'demo';
@@ -122,10 +121,10 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 			$answer = 'index';
 
 			while (!empty($answer)) {
-				$app['output']('Create '.$application.' '.$controller.' (Empty answer to continue):', 'notice');
-				$answer = stream_get_line(STDIN, 1024, PHP_EOL);
-				if (trim($answer) !== '') {
-					$app[$application.'.'.$controller] = array_merge($app[$application.'.'.$controller], array(mb_strtolower(trim($answer))));
+				$question = new Forkmodule\Question('Create '.$application.' '.$controller.' (Empty answer to continue):');
+				$answer = $question->getAnswer();
+				if ($answer !== '') {
+					$app[$application.'.'.$controller] = array_merge($app[$application.'.'.$controller], array(mb_strtolower($answer)));
 				}
 			}
 		}
@@ -135,12 +134,12 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 	/**
 	 * Settings
 	 */
-	$app['output']('Do you want to use Meta/SEO in your module? (Y/n)', 'notice');
-	$app['settings.meta'] = (strtoupper(stream_get_line(STDIN, 1024, PHP_EOL)) !== 'N') ? true : false;
-	$app['output']('Do you want to use tags in your module? (Y/n)', 'notice');
-	$app['settings.tags'] = (strtoupper(stream_get_line(STDIN, 1024, PHP_EOL)) !== 'N') ? true : false;
-	$app['output']('Do you want to make your module searchable? (Y/n)', 'notice');
-	$app['settings.searchable'] = (strtoupper(stream_get_line(STDIN, 1024, PHP_EOL)) !== 'N') ? true : false;
+	$question = new Forkmodule\Question('Do you want to use Meta/SEO in your module? (Y/n)');
+	$app['settings.meta'] = (strtoupper($question->getAnswer()) !== 'N') ? true : false;
+	$question = new Forkmodule\Question('Do you want to use tags in your module? (Y/n)');
+	$app['settings.tags'] = (strtoupper($question->getAnswer()) !== 'N') ? true : false;
+	$question = new Forkmodule\Question('Do you want to make your module searchable? (Y/n)');
+	$app['settings.searchable'] = (strtoupper($question->getAnswer()) !== 'N') ? true : false;
 
 
 	/**
@@ -149,9 +148,9 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 	$app['output']('Summary', 'title');
 	$app['output']('Module name:    ' . $app['module.name'], 'normal');
 	$app['output']('Fork directory: ' . $app['forkdir'], 'normal');
-	$app['output']('Is this info correct? (Y/n)', 'notice');
-	$answer = stream_get_line(STDIN, 1024, PHP_EOL);
-	if (strtoupper($answer) === 'N') {
+
+	$question = new Forkmodule\Question('Is this info correct? (Y/n)');
+	if (strtoupper($question->getAnswer()) === 'N') {
 		$app['output']('Aborting...', 'error');
 		exit;
 	}
