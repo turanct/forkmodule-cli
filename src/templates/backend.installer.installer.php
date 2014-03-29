@@ -23,20 +23,20 @@ class {{ moduleNameSafe }}Installer extends ModuleInstaller
         $navigation{{ moduleNameSafe }}Id = $this->setNavigation($navigationModulesId, '{{ moduleNameSafe }}', '{{ moduleName }}/index');
 
 {% for action in backendActions %}
-{% if action == 'index' %}
+{% if action.name == 'index' %}
         $this->setNavigation(
             $navigation{{ moduleNameSafe }}Id,
             '{{ action.safe }}',
             '{{ moduleName }}/{{ action.name }}',
             array(
 {% for otheraction in backendActions %}
-{% if otheraction != 'index' %}
+{% if otheraction.name in ['add', 'edit', 'delete'] %}
                 '{{ moduleName }}/{{ otheraction.name }}',
 {% endif %}
 {% endfor %}
             )
         );
-{% elseif action not in ['index', 'add', 'edit', 'delete'] %}
+{% elseif action.name not in ['index', 'add', 'edit', 'delete'] %}
         $this->setNavigation($navigation{{ moduleNameSafe }}Id, '{{ action.safe }}', '{{ moduleName }}/{{ action.name }}');
 {% endif %}
 {% endfor %}
