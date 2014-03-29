@@ -182,14 +182,9 @@ class Forkmodule
     protected function safeNames($controllers)
     {
         foreach ($controllers as $key => $value) {
-            // Create a safe action name
-            $safe = explode('_', $value);
-            $safe = array_map('ucfirst', $safe);
-            $safe = implode($safe);
-
             $controllers[$key] = array(
                 'name' => $value,
-                'safe' => $safe,
+                'safe' => (string) new SafeName($value),
             );
         }
 

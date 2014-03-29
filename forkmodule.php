@@ -70,9 +70,7 @@ $app['init'] = $app->protect(function() use ($app, $argv) {
 	}
 
 	// Create a safe module name
-	$moduleNameSafe = explode('_', $app['module.name']);
-	$moduleNameSafe = array_map('ucfirst', $moduleNameSafe);
-	$app['module.name.safe'] = implode($moduleNameSafe);
+	$app['module.name.safe'] = (string) new Forkmodule\SafeName($app['module.name']);
 
 
 	/**

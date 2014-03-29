@@ -37,8 +37,6 @@ class Forkcontroller
         $this->name = (string) $name;
 
         // Create a safe action name
-        $safe = explode('_', $this->name);
-        $safe = array_map('ucfirst', $safe);
-        $this->safeName = implode($safe);
+        $this->safeName = (string) new SafeName($this->name);
     }
 }
