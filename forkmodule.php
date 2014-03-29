@@ -34,28 +34,7 @@ $app['forkmodule'] = $app->protect(function() use ($app) {
  * Output method
  */
 $app['output'] = $app->protect(function($string, $mode = 'normal') use ($app) {
-	switch ($mode) {
-		case 'welcome':
-			echo "\033[1;31m".$string."\033[0m\n";
-			break;
-
-		case 'title':
-			echo "\n--> \033[0;32m".$string."\033[0m\n";
-			break;
-
-		case 'notice':
-			echo "\033[0;36m".$string."\033[0m\n";
-			break;
-
-		case 'error':
-			echo "\033[0;31m".$string."\033[0m\n";
-			break;
-
-		case 'normal':
-		default:
-			echo $string."\n";
-			break;
-	}
+	new Forkmodule\Message($string, $mode);
 });
 
 
