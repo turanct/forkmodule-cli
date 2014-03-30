@@ -13,28 +13,22 @@ class Widget extends Forkcontroller
      */
     public function create()
     {
-        $content = $this->app['twig']->render(
+        $content = $this->twig->render(
             'backend.widgets.index.php',
-            array(
-                'moduleName' => $this->app['module.name'],
-                'moduleNameSafe' => $this->app['module.name.safe'],
-                'widget' => $this->name,
-                'widgetSafe' => $this->safeName,
-                'meta' => $this->app['settings.meta'],
-            )
+            $this->tplVars
         );
-        file_put_contents($this->app['module.dir.backend'] . 'widgets/'.$this->name.'.php', $content);
+        file_put_contents(
+            $this->config->getModuleDirBackend() . '/widgets/'.$this->name.'.php',
+            $content
+        );
 
-        $content = $this->app['twig']->render(
+        $content = $this->twig->render(
             'backend.layout.widgets.index.tpl',
-            array(
-                'moduleName' => $this->app['module.name'],
-                'moduleNameSafe' => $this->app['module.name.safe'],
-                'widget' => $this->name,
-                'widgetSafe' => $this->safeName,
-                'meta' => $this->app['settings.meta'],
-            )
+            $this->tplVars
         );
-        file_put_contents($this->app['module.dir.backend'] . 'layout/widgets/'.$this->name.'.tpl', $content);
+        file_put_contents(
+            $this->config->getModuleDirBackend() . '/layout/widgets/'.$this->name.'.tpl',
+            $content
+        );
     }
 }

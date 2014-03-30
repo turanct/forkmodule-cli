@@ -5,12 +5,17 @@ namespace Forkmodule;
 /**
  * Forkcontroller class
  */
-class Forkcontroller
+abstract class Forkcontroller
 {
     /**
-     * @var \Pimple
+     * @var \Twig
      */
-    protected $app;
+    protected $twig;
+
+    /**
+     * @var Configuration The configuration object
+     */
+    protected $config;
 
     /**
      * @var string
@@ -22,21 +27,42 @@ class Forkcontroller
      */
     protected $safeName;
 
-
+    /**
+     * @var array
+     */
+    protected $tplVars;
 
     /**
      * Constructor Method
      *
-     * @param \Pimple   $app    The app container
-     * @param string    $name   The action name
+     * @param Twig          $twig   The template renderer
+     * @param Configuration $config The configuration object
+     * @param string        $name   The action name
      */
-    public function __construct($app, $name)
+    public function __construct($twig, $config, $name)
     {
         // Assign
-        $this->app = $app;
+        $this->twig = $twig;
+        $this->config = $config;
         $this->name = (string) $name;
 
         // Create a safe action name
         $this->safeName = (string) new SafeName($this->name);
+
+        // Create an array of template variables
+        $this->tplVars = array(
+            'moduleName' => $this->config->getModuleName(),
+            'moduleNameSafe' => $this->config->getModuleNameSafe(),
+            'action' => $this->name,
+            'actionSafe' => $this->safeName,
+            'widget' => $this->name,
+            'widgetSafe' => $this->safeName,
+            'meta' => $this->config->getMeta(),
+        );
     }
+
+    /**
+     * Create method
+     */
+    abstract public function create();
 }

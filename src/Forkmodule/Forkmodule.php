@@ -7,21 +7,26 @@ namespace Forkmodule;
 class Forkmodule
 {
     /**
-     * @var \Pimple
+     * @var \Twig
      */
-    protected $app;
+    protected $twig;
 
-
+    /**
+     * @var Configuration
+     */
+    protected $config;
 
     /**
      * Constructor Method
      *
-     * @param \Pimple   $app    The app container
+     * @param Twig          $twig   The template renderer
+     * @param Configuration $config The configuration object
      */
-    public function __construct($app)
+    public function __construct($twig, $config)
     {
         // Assign
-        $this->app = $app;
+        $this->twig = $twig;
+        $this->config = $config;
 
         // Create the directory structure
         $this->frontend();
@@ -37,10 +42,9 @@ class Forkmodule
         /**
          * Directories
          */
-        $this->app['output']('Creating frontend directories.', 'title');
+        new Message('Creating frontend directories.', 'title');
 
-        $this->app['module.dir.frontend'] = $this->app['forkdir'] . '/frontend/modules/' . $this->app['module.name'] . '/';
-        mkdir($this->app['module.dir.frontend']);
+        mkdir($this->config->getModuleDirFrontend());
 
         $directories = array(
             'actions',
@@ -52,34 +56,40 @@ class Forkmodule
         );
 
         foreach ($directories as $directory) {
-            mkdir($this->app['module.dir.frontend'] . $directory);
+            mkdir($this->config->getModuleDirFrontend() . '/' . $directory);
         }
 
 
         /**
          * Files
          */
-        $content = $this->app['twig']->render('frontend.config.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
-        file_put_contents($this->app['module.dir.frontend'] . 'config.php', $content);
-
-        $content = $this->app['twig']->render(
-            'frontend.engine.model.php',
+        $content = $this->twig->render(
+            'frontend.config.php',
             array(
-                'moduleName' => $this->app['module.name'],
-                'moduleNameSafe' => $this->app['module.name.safe'],
-                'meta' => $this->app['settings.meta'],
-                'searchable' => $this->app['settings.searchable'],
+                'moduleName' => $this->config->getModuleName(),
+                'moduleNameSafe' => $this->config->getModuleNameSafe()
             )
         );
-        file_put_contents($this->app['module.dir.frontend'] . 'engine/model.php', $content);
+        file_put_contents($this->config->getModuleDirFrontend() . '/config.php', $content);
 
-        foreach ($this->app['frontend.actions'] as $action) {
-            $currentAction = new Frontend\Action($this->app, $action);
+        $content = $this->twig->render(
+            'frontend.engine.model.php',
+            array(
+                'moduleName' => $this->config->getModuleName(),
+                'moduleNameSafe' => $this->config->getModuleNameSafe(),
+                'meta' => $this->config->getMeta(),
+                'searchable' => $this->config->getSearchable(),
+            )
+        );
+        file_put_contents($this->config->getModuleDirFrontend() . '/engine/model.php', $content);
+
+        foreach ($this->config->getFrontendActions() as $action) {
+            $currentAction = new Frontend\Action($this->twig, $this->config, $action);
             $currentAction->create();
         }
 
-        foreach ($this->app['frontend.widgets'] as $widget) {
-            $currentWidget = new Frontend\Widget($this->app, $widget);
+        foreach ($this->config->getFrontendWidgets() as $widget) {
+            $currentWidget = new Frontend\Widget($this->twig, $this->config, $widget);
             $currentWidget->create();
         }
     }
@@ -93,10 +103,9 @@ class Forkmodule
         /**
          * Directories
          */
-        $this->app['output']('Creating backend directories.', 'title');
+        new Message('Creating backend directories.', 'title');
 
-        $this->app['module.dir.backend'] = $this->app['forkdir'] . '/backend/modules/' . $this->app['module.name'] . '/';
-        mkdir($this->app['module.dir.backend']);
+        mkdir($this->config->getModuleDirBackend());
 
         $directories = array(
             'actions',
@@ -112,61 +121,67 @@ class Forkmodule
         );
 
         foreach ($directories as $directory) {
-            mkdir($this->app['module.dir.backend'] . $directory);
+            mkdir($this->config->getModuleDirBackend() . '/' . $directory);
         }
 
 
         /**
          * Files
          */
-        $content = $this->app['twig']->render('backend.config.php', array('moduleName' => $this->app['module.name'], 'moduleNameSafe' => $this->app['module.name.safe']));
-        file_put_contents($this->app['module.dir.backend'] . 'config.php', $content);
+        $content = $this->twig->render(
+            'backend.config.php',
+            array(
+                'moduleName' => $this->config->getModuleName(),
+                'moduleNameSafe' => $this->config->getModuleNameSafe()
+            )
+        );
+        file_put_contents($this->config->getModuleDirBackend() . '/config.php', $content);
 
-        $content = $this->app['twig']->render(
+        $content = $this->twig->render(
             'backend.engine.model.php',
             array(
-                'moduleName' => $this->app['module.name'],
-                'moduleNameSafe' => $this->app['module.name.safe'],
-                'tags' => $this->app['settings.tags'],
-                'meta' => $this->app['settings.meta'],
-                'searchable' => $this->app['settings.searchable'],
+                'moduleName' => $this->config->getModuleName(),
+                'moduleNameSafe' => $this->config->getModuleNameSafe(),
+                'tags' => $this->config->getTags(),
+                'meta' => $this->config->getMeta(),
+                'searchable' => $this->config->getSearchable(),
             )
         );
-        file_put_contents($this->app['module.dir.backend'] . 'engine/model.php', $content);
+        file_put_contents($this->config->getModuleDirBackend() . '/engine/model.php', $content);
 
         $installerData = array(
-            'moduleName' => $this->app['module.name'],
-            'moduleNameSafe' => $this->app['module.name.safe'],
-            'backendActions' => $this->safeNames($this->app['backend.actions']),
-            'backendWidgets' => $this->safeNames($this->app['backend.widgets']),
-            'frontendActions' => $this->safeNames($this->app['frontend.actions']),
-            'frontendWidgets' => $this->safeNames($this->app['frontend.widgets']),
-            'meta' => $this->app['settings.meta'],
+            'moduleName' => $this->config->getModuleName(),
+            'moduleNameSafe' => $this->config->getModuleNameSafe(),
+            'backendActions' => $this->safeNames($this->config->getBackendActions()),
+            'backendWidgets' => $this->safeNames($this->config->getBackendWidgets()),
+            'frontendActions' => $this->safeNames($this->config->getFrontendActions()),
+            'frontendWidgets' => $this->safeNames($this->config->getFrontendWidgets()),
+            'meta' => $this->config->getMeta(),
         );
 
-        $content = $this->app['twig']->render('backend.installer.installer.php', $installerData);
-        file_put_contents($this->app['module.dir.backend'] . 'installer/installer.php', $content);
+        $content = $this->twig->render('backend.installer.installer.php', $installerData);
+        file_put_contents($this->config->getModuleDirBackend() . '/installer/installer.php', $content);
 
-        $content = $this->app['twig']->render('backend.installer.data.locale.xml', $installerData);
-        file_put_contents($this->app['module.dir.backend'] . 'installer/data/locale.xml', $content);
+        $content = $this->twig->render('backend.installer.data.locale.xml', $installerData);
+        file_put_contents($this->config->getModuleDirBackend() . '/installer/data/locale.xml', $content);
 
-        $content = $this->app['twig']->render(
+        $content = $this->twig->render(
             'backend.installer.data.install.sql',
             array(
-                'moduleName' => $this->app['module.name'],
-                'moduleNameSafe' => $this->app['module.name.safe'],
-                'meta' => $this->app['settings.meta'],
+                'moduleName' => $this->config->getModuleName(),
+                'moduleNameSafe' => $this->config->getModuleNameSafe(),
+                'meta' => $this->config->getMeta(),
             )
         );
-        file_put_contents($this->app['module.dir.backend'] . 'installer/data/install.sql', $content);
+        file_put_contents($this->config->getModuleDirBackend() . '/installer/data/install.sql', $content);
 
-        foreach ($this->app['backend.actions'] as $action) {
-            $currentAction = new Backend\Action($this->app, $action);
+        foreach ($this->config->getBackendActions() as $action) {
+            $currentAction = new Backend\Action($this->twig, $this->config, $action);
             $currentAction->create();
         }
 
-        foreach ($this->app['backend.widgets'] as $widget) {
-            $currentWidget = new Backend\Widget($this->app, $action);
+        foreach ($this->config->getBackendWidgets() as $widget) {
+            $currentWidget = new Backend\Widget($this->twig, $this->config, $action);
             $currentWidget->create();
         }
     }

@@ -13,31 +13,25 @@ class Action extends Forkcontroller
      */
     public function create()
     {
-        $content = $this->app['twig']->render(
+        $content = $this->twig->render(
             'backend.actions.index.php',
-            array(
-                'moduleName' => $this->app['module.name'],
-                'moduleNameSafe' => $this->app['module.name.safe'],
-                'action' => $this->name,
-                'actionSafe' => $this->safeName,
-                'meta' => $this->app['settings.meta'],
-            )
+            $this->tplVars
         );
-        file_put_contents($this->app['module.dir.backend'] . 'actions/'.$this->name.'.php', $content);
+        file_put_contents(
+            $this->config->getModuleDirBackend() . '/actions/'.$this->name.'.php',
+            $content
+        );
 
         if ($this->name != 'delete') {
             $templateFile = ($this->name == 'index') ? 'index' : 'action';
-            $content = $this->app['twig']->render(
+            $content = $this->twig->render(
                 'backend.layout.templates.'.$templateFile.'.tpl',
-                array(
-                    'moduleName' => $this->app['module.name'],
-                    'moduleNameSafe' => $this->app['module.name.safe'],
-                    'action' => $this->name,
-                    'actionSafe' => $this->safeName,
-                    'meta' => $this->app['settings.meta'],
-                )
+                $this->tplVars
             );
-            file_put_contents($this->app['module.dir.backend'] . 'layout/templates/'.$this->name.'.tpl', $content);
+            file_put_contents(
+                $this->config->getModuleDirBackend() . '/layout/templates/'.$this->name.'.tpl',
+                $content
+            );
         }
     }
 }
