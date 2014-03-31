@@ -33,7 +33,6 @@ class Forkmodule
         $this->backend();
     }
 
-
     /**
      * Create the frontend directories & files
      */
@@ -65,21 +64,13 @@ class Forkmodule
          */
         $content = $this->twig->render(
             'frontend.config.php',
-            array(
-                'moduleName' => $this->config->getModuleName(),
-                'moduleNameSafe' => $this->config->getModuleNameSafe()
-            )
+            $this->getTplVars()
         );
         file_put_contents($this->config->getModuleDirFrontend() . '/config.php', $content);
 
         $content = $this->twig->render(
             'frontend.engine.model.php',
-            array(
-                'moduleName' => $this->config->getModuleName(),
-                'moduleNameSafe' => $this->config->getModuleNameSafe(),
-                'meta' => $this->config->getMeta(),
-                'searchable' => $this->config->getSearchable(),
-            )
+            $this->getTplVars()
         );
         file_put_contents($this->config->getModuleDirFrontend() . '/engine/model.php', $content);
 
@@ -93,7 +84,6 @@ class Forkmodule
             $currentWidget->create();
         }
     }
-
 
     /**
      * Create the backend directories & files
@@ -130,48 +120,31 @@ class Forkmodule
          */
         $content = $this->twig->render(
             'backend.config.php',
-            array(
-                'moduleName' => $this->config->getModuleName(),
-                'moduleNameSafe' => $this->config->getModuleNameSafe()
-            )
+            $this->getTplVars()
         );
         file_put_contents($this->config->getModuleDirBackend() . '/config.php', $content);
 
         $content = $this->twig->render(
             'backend.engine.model.php',
-            array(
-                'moduleName' => $this->config->getModuleName(),
-                'moduleNameSafe' => $this->config->getModuleNameSafe(),
-                'tags' => $this->config->getTags(),
-                'meta' => $this->config->getMeta(),
-                'searchable' => $this->config->getSearchable(),
-            )
+            $this->getTplVars()
         );
         file_put_contents($this->config->getModuleDirBackend() . '/engine/model.php', $content);
 
-        $installerData = array(
-            'moduleName' => $this->config->getModuleName(),
-            'moduleNameSafe' => $this->config->getModuleNameSafe(),
-            'backendActions' => $this->safeNames($this->config->getBackendActions()),
-            'backendWidgets' => $this->safeNames($this->config->getBackendWidgets()),
-            'frontendActions' => $this->safeNames($this->config->getFrontendActions()),
-            'frontendWidgets' => $this->safeNames($this->config->getFrontendWidgets()),
-            'meta' => $this->config->getMeta(),
+        $content = $this->twig->render(
+            'backend.installer.installer.php',
+            $this->getTplVars()
         );
-
-        $content = $this->twig->render('backend.installer.installer.php', $installerData);
         file_put_contents($this->config->getModuleDirBackend() . '/installer/installer.php', $content);
 
-        $content = $this->twig->render('backend.installer.data.locale.xml', $installerData);
+        $content = $this->twig->render(
+            'backend.installer.data.locale.xml',
+            $this->getTplVars()
+        );
         file_put_contents($this->config->getModuleDirBackend() . '/installer/data/locale.xml', $content);
 
         $content = $this->twig->render(
             'backend.installer.data.install.sql',
-            array(
-                'moduleName' => $this->config->getModuleName(),
-                'moduleNameSafe' => $this->config->getModuleNameSafe(),
-                'meta' => $this->config->getMeta(),
-            )
+            $this->getTplVars()
         );
         file_put_contents($this->config->getModuleDirBackend() . '/installer/data/install.sql', $content);
 
@@ -185,7 +158,6 @@ class Forkmodule
             $currentWidget->create();
         }
     }
-
 
     /**
      * Get safe names for an array of controllers
@@ -204,5 +176,28 @@ class Forkmodule
         }
 
         return $controllers;
+    }
+
+    /**
+     * Method to get template variables
+     *
+     * @return array An array of template variables
+     */
+    public function getTplVars()
+    {
+        // Create an array of template variables
+        $tplVars = array(
+            'moduleName' => $this->config->getModuleName(),
+            'moduleNameSafe' => $this->config->getModuleNameSafe(),
+            'backendActions' => $this->safeNames($this->config->getBackendActions()),
+            'backendWidgets' => $this->safeNames($this->config->getBackendWidgets()),
+            'frontendActions' => $this->safeNames($this->config->getFrontendActions()),
+            'frontendWidgets' => $this->safeNames($this->config->getFrontendWidgets()),
+            'tags' => $this->config->getTags(),
+            'meta' => $this->config->getMeta(),
+            'searchable' => $this->config->getSearchable(),
+        );
+
+        return $tplVars;
     }
 }
