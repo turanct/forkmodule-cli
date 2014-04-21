@@ -26,7 +26,7 @@ class {{ moduleNameSafe }}Installer extends ModuleInstaller
 {% if action.name == 'index' %}
         $this->setNavigation(
             $navigation{{ moduleNameSafe }}Id,
-            '{{ action.safe }}',
+            'Overview',
             '{{ moduleName }}/{{ action.name }}',
             array(
 {% for otheraction in backendActions %}
