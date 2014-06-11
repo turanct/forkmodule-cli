@@ -29,8 +29,15 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->loadForm();
         $this->validateForm();
 {% endif %}
+{% if action != 'delete' %}
+
         $this->parse();
         $this->display();
+{% else %}
+
+        // Redirect
+        $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}ed');
+{% endif %}
     }
 {% if action == 'index' %}
 
