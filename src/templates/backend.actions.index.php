@@ -84,8 +84,13 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
             // Correct?
             if ($this->frm->isCorrect()) {
                 // Build item
+                $item = array();
+{% if tags %}
+                $tags = '';
+{% endif %}
 
                 // Save
+                Backend{{ moduleNameSafe }}Model::{{% if action == 'add' %}}create{{% endif %}}{{% if action == 'edit' %}}update{{% endif %}}($item{% if tags %}, $tags{% endif %});
 
                 // Redirect
                 $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}ed');
