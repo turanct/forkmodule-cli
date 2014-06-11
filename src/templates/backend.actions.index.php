@@ -18,6 +18,10 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
         $this->id = $this->getParameter('id', 'int');
 {% endif %}
+{% if action == 'delete'}
+
+        Backend{{ moduleNameSafe }}Model::delete($this->id);
+{% endif }
 
 {% if action == 'index' %}
         $this->loadDataGrids();
@@ -25,8 +29,15 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->loadForm();
         $this->validateForm();
 {% endif %}
+{% if action != 'delete' %}
+
         $this->parse();
         $this->display();
+{% else %}
+
+        // Redirect
+        $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}ed');
+{% endif %}
     }
 {% if action == 'index' %}
 
