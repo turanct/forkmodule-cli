@@ -18,10 +18,10 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
         $this->id = $this->getParameter('id', 'int');
 {% endif %}
-{% if action == 'delete'}
+{% if action == 'delete' %}
 
         Backend{{ moduleNameSafe }}Model::delete($this->id);
-{% endif }
+{% endif %}
 
 {% if action == 'index' %}
         $this->loadDataGrids();
@@ -34,9 +34,8 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->parse();
         $this->display();
 {% else %}
-
         // Redirect
-        $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}ed');
+        $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}{% if action == 'delete' %}d{% endif %}');
 {% endif %}
     }
 {% if action == 'index' %}
@@ -101,7 +100,9 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 {% endif %}
 
                 // Save
-                Backend{{ moduleNameSafe }}Model::{{% if action == 'add' %}}create{{% endif %}}{{% if action == 'edit' %}}update{{% endif %}}($item{% if tags %}, $tags{% endif %});
+{% if action in ['add', 'edit'] %}
+                Backend{{ moduleNameSafe }}Model::{% if action == 'add' %}create{% endif %}{% if action == 'edit' %}update{% endif %}($item{% if tags %}, $tags{% endif %});
+{% endif %}
 
                 // Redirect
                 $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}ed');

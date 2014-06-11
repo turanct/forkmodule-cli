@@ -57,7 +57,9 @@ abstract class Forkcontroller
             'actionSafe' => $this->safeName,
             'widget' => $this->name,
             'widgetSafe' => $this->safeName,
+            'tags' => $this->config->getTags(),
             'meta' => $this->config->getMeta(),
+            'searchable' => $this->config->getSearchable(),
         );
     }
 
