@@ -101,7 +101,7 @@ class Backend{{ moduleNameSafe }}Model
 {% if tags %}
 
         // Insert tags
-        BackendTagsModel::saveTags($id, $tags, '{{ moduleName }}');
+        BackendTagsModel::saveTags($item['id'], $tags, '{{ moduleName }}');
 {% endif %}
 {% if searchable %}
 
