@@ -18,6 +18,10 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
         $this->id = $this->getParameter('id', 'int');
 {% endif %}
+{% if action == 'delete'}
+
+        Backend{{ moduleNameSafe }}Model::delete($this->id);
+{% endif }
 
 {% if action == 'index' %}
         $this->loadDataGrids();
