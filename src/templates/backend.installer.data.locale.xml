@@ -3,9 +3,9 @@
     <backend>
         <core>
             <item type="label" name="{{ moduleNameSafe }}">
-                <translation language="nl"><![CDATA[{{ moduleName }}]]></translation>
-                <translation language="en"><![CDATA[{{ moduleName }}]]></translation>
-                <translation language="fr"><![CDATA[{{ moduleName }}]]></translation>
+                <translation language="nl"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
+                <translation language="en"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
+                <translation language="fr"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
             </item>
         </core>
         <{{ moduleName }}>
@@ -31,9 +31,9 @@
     <frontend>
         <core>
             <item type="label" name="{{ moduleNameSafe }}">
-                <translation language="nl"><![CDATA[{{ moduleName }}]]></translation>
-                <translation language="en"><![CDATA[{{ moduleName }}]]></translation>
-                <translation language="fr"><![CDATA[{{ moduleName }}]]></translation>
+                <translation language="nl"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
+                <translation language="en"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
+                <translation language="fr"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
             </item>
 {% for action in frontendActions if action.name != 'index' %}
             <item type="label" name="{{ action.safe }}">
