@@ -207,4 +207,15 @@ class Backend{{ moduleNameSafe }}Model
         return $url;
     }
 {% endif %}
+{% if 'index' in actions %}
+
+    public static function getAllForDataGrid()
+    {
+        return (array) BackendModel::get('database')->getRecords(
+            'SELECT i.id, i.title
+            FROM {{ moduleName }} AS i
+            ORDER BY i.title'
+        );
+    }
+{% endif %}
 }

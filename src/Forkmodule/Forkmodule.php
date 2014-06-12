@@ -126,6 +126,7 @@ class Forkmodule {
 				'tags' => $this->app['settings.tags'],
 				'meta' => $this->app['settings.meta'],
 				'searchable' => $this->app['settings.searchable'],
+                'actions' => $this->app['backend.actions'],
 			)
 		);
 		file_put_contents($this->app['module.dir.backend'] . 'engine/model.php', $content);

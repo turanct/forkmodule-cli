@@ -36,7 +36,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
     protected function loadDataGrids()
     {
         // Create datagrid
-        $this->dataGrid = new BackendDataGridDB($query, $params);
+        $this->dataGrid = new BackendDataGridArray(Backend{{ moduleNameSafe }}Model::getAllForDataGrid());
 
         // Add buttons
         $this->dataGrid->addColumn(
