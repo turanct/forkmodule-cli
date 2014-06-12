@@ -12,6 +12,15 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
      */
     protected $slug;
 
+{% if meta %}
+    /**
+     * Current item
+     *
+     * @var array
+     */
+    protected $item;
+
+{% endif %}
 {% endif %}
     /**
      * Execute the extra
