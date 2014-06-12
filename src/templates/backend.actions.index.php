@@ -22,6 +22,9 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 {% if action == 'index' %}
         $this->loadDataGrids();
 {% elseif action in ['add', 'edit'] %}
+{% if action == 'edit' %}
+        $this->getData();
+{% endif %}
         $this->loadForm();
         $this->validateForm();
 {% endif %}
@@ -48,6 +51,21 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         );
     }
 {% elseif action in ['add', 'edit'] %}
+{% if action == 'edit' %}
+    /**
+     * Get data
+     */
+    protected function getData()
+    {
+        $this->id = $this->getParameter('id', 'int');
+        $this->record = Backend{{ moduleNameSafe }}Model::get($this->id);
+
+        // validate
+        if (empty($this->record)) {
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+        }
+    }
+{% endif %}
 
     /**
      * Load form

@@ -58,7 +58,7 @@ class Backend{{ moduleNameSafe }}Model
         /** @var SpoonDatabase $db */
         $db = BackendModel::get('database');
 
-        $item = $db->getRecord(
+        $item = (array) $db->getRecord(
             'SELECT i.*
             FROM {{ moduleName }} i
             WHERE i.id = :id',
