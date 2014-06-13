@@ -70,7 +70,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->id = $this->getParameter('id', 'int');
         $this->record = Backend{{ moduleNameSafe }}Model::get($this->id);
 
-        // validate
+        // Validate
         if (empty($this->record)) {
             $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
