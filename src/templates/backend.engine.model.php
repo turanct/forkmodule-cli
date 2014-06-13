@@ -212,30 +212,15 @@ class Backend{{ moduleNameSafe }}Model
     /**
      * Get all items
      *
-     * @param array $selectedFields
-     *
      * @return array
      */
-    public static function getAll(array $selectedFields = array())
+    public static function getAll()
     {
-        $data = (array) BackendModel::get('database')->getRecords(
+        return (array) BackendModel::get('database')->getRecords(
             'SELECT *
             FROM {{ moduleName }}
             ORDER BY title'
         );
-
-        if (!empty($data) && !empty($selectedFields)) {
-            $allFields = array_keys(reset($data));
-            $unwantedFields = array_diff($allFields, $selectedFields);
-
-            foreach ($data as &$row) {
-                foreach ($unwantedFields as $unwantedField) {
-                    unset($row[$unwantedField]);
-                }
-            }
-        }
-
-        return $data;
     }
 {% endif %}
 }
