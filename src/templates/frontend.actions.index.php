@@ -12,7 +12,6 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
      */
     protected $slug;
 
-{% if meta %}
     /**
      * Current item
      *
@@ -20,7 +19,6 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
      */
     protected $item;
 
-{% endif %}
 {% endif %}
     /**
      * Execute the extra
