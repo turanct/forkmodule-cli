@@ -207,4 +207,22 @@ class Backend{{ moduleNameSafe }}Model
         return $url;
     }
 {% endif %}
+{% for action in backendActions %}
+{% if action.name == 'index' %}
+
+    /**
+     * Get all items
+     *
+     * @return array
+     */
+    public static function getAll()
+    {
+        return (array) BackendModel::get('database')->getRecords(
+            'SELECT *
+            FROM {{ moduleName }}
+            ORDER BY title'
+        );
+    }
+{% endif %}
+{% endfor %}
 }

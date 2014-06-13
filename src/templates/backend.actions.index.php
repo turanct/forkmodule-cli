@@ -49,7 +49,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
     protected function loadDataGrids()
     {
         // Create datagrid
-        $this->dataGrid = new BackendDataGridDB($query, $params);
+        $this->dataGrid = new BackendDataGridArray(Backend{{ moduleNameSafe }}Model::getAll());
 
         // Add buttons
         $this->dataGrid->addColumn(
@@ -59,6 +59,10 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
             BackendModel::createURLForAction('edit') . '&id=[id]',
             BL::lbl('Edit')
         );
+
+        // hide unnecessary columns
+        $hiddenColumns = array({% if meta %}'meta_id'{% endif %});
+        $this->dataGrid->setColumnsHidden($hiddenColumns);
     }
 {% elseif action in ['add', 'edit'] %}
 {% if action == 'edit' %}
