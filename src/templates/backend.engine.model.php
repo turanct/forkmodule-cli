@@ -214,7 +214,7 @@ class Backend{{ moduleNameSafe }}Model
      *
      * @param array $selectedFields
      *
-     * return array
+     * @return array
      */
     public static function getAll(array $selectedFields = array())
     {
