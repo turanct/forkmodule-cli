@@ -209,6 +209,13 @@ class Backend{{ moduleNameSafe }}Model
 {% endif %}
 {% if 'index' in actions %}
 
+    /**
+     * Get all items
+     *
+     * @param array $selectedFields
+     *
+     * return array
+     */
     public static function getAll(array $selectedFields = array())
     {
         $data = (array) BackendModel::get('database')->getRecords(
