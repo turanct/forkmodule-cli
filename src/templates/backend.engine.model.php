@@ -60,8 +60,8 @@ class Backend{{ moduleNameSafe }}Model
 
         $item = (array) $db->getRecord(
             'SELECT i.*
-            FROM {{ moduleName }} i
-            WHERE i.id = :id',
+             FROM {{ moduleName }} i
+             WHERE i.id = :id',
             array('id' => (int) $id)
         );
 {% if tags %}
@@ -219,8 +219,8 @@ class Backend{{ moduleNameSafe }}Model
     {
         return (array) BackendModel::get('database')->getRecords(
             'SELECT *
-            FROM {{ moduleName }}
-            ORDER BY title'
+             FROM {{ moduleName }}
+             ORDER BY title'
         );
     }
 {% endif %}

@@ -60,7 +60,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
             BL::lbl('Edit')
         );
 
-        // hide unnecessary columns
+        // Hide unnecessary columns
         $hiddenColumns = array({% if meta %}'meta_id'{% endif %});
         $this->dataGrid->setColumnsHidden($hiddenColumns);
     }
