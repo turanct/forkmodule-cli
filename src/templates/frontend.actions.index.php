@@ -4,6 +4,22 @@
  */
 class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
 {
+{% if action == 'detail' %}
+    /**
+     * Slug of current item
+     *
+     * @var string
+     */
+    protected $slug;
+
+    /**
+     * Current item
+     *
+     * @var array
+     */
+    protected $item;
+
+{% endif %}
     /**
      * Execute the extra
      */
