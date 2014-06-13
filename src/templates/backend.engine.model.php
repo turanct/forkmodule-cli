@@ -209,13 +209,26 @@ class Backend{{ moduleNameSafe }}Model
 {% endif %}
 {% if 'index' in actions %}
 
-    public static function getAllForDataGrid()
+    public static function getAll(array $selectedFields = array())
     {
-        return (array) BackendModel::get('database')->getRecords(
-            'SELECT i.id, i.title
-            FROM {{ moduleName }} AS i
-            ORDER BY i.title'
+        $data = (array) BackendModel::get('database')->getRecords(
+            'SELECT *
+            FROM {{ moduleName }}
+            ORDER BY title'
         );
+
+        if (!empty($data) && !empty($selectedFields)) {
+            $allFields = array_keys(reset($data));
+            $unwantedFields = array_diff($allFields, $selectedFields);
+
+            foreach ($data as &$row) {
+                foreach ($unwantedFields as $unwantedField) {
+                    unset($row[$unwantedField]);
+                }
+            }
+        }
+
+        return $data;
     }
 {% endif %}
 }
