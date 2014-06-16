@@ -90,6 +90,9 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->frm = new BackendForm('{{ action }}');
 
         // Add fields
+{% if tags and action in ['add', 'edit'] %}
+        $this->frm->addText('tags', {% if action == 'edit' %}$this->record['tags']{% else %}null{% endif %}, null, 'inputText tagBox', 'inputTextError tagBox');
+{% endif %}
 {% if meta %}
 
         // Meta
@@ -118,7 +121,8 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
                 // Build item
                 $item = array();
 {% if tags %}
-                $tags = '';
+
+                $tags = $this->frm->getField('tags')->getValue();
 {% endif %}
 
                 // Save
