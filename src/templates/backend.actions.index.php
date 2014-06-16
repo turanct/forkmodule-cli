@@ -86,6 +86,13 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->frm = new BackendForm('{{ action }}');
 
         // Add fields
+{% if tags %}
+{% if action == 'add' %}
+        $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
+{% elseif action == 'edit' %}
+        $this->frm->addText('tags', $this->record['tags'], null, 'inputText tagBox', 'inputTextError tagBox');
+{% endif %}
+{% endif %}
 {% if meta %}
 
         // Meta
@@ -114,7 +121,8 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
                 // Build item
                 $item = array();
 {% if tags %}
-                $tags = '';
+
+                $tags = $this->frm->getField('tags')->getValue();
 {% endif %}
 
                 // Save
