@@ -86,12 +86,8 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->frm = new BackendForm('{{ action }}');
 
         // Add fields
-{% if tags %}
-{% if action == 'add' %}
-        $this->frm->addText('tags', null, null, 'inputText tagBox', 'inputTextError tagBox');
-{% elseif action == 'edit' %}
-        $this->frm->addText('tags', $this->record['tags'], null, 'inputText tagBox', 'inputTextError tagBox');
-{% endif %}
+{% if tags and action in ['add', 'edit'] %}
+        $this->frm->addText('tags', {% if action == 'edit' %}$this->record['tags']{% else %}null{% endif %}, null, 'inputText tagBox', 'inputTextError tagBox');
 {% endif %}
 {% if meta %}
 
