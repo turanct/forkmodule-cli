@@ -11,7 +11,7 @@ $application = new Application();
 
 // Services
 $twigService = new Forkmodule\Service\Twig(__DIR__ . '/src/templates');
-$updateService = new Forkmodule\Service\Update();
+$updateService = new Forkmodule\Service\Update(__DIR__);
 
 // Add update command
 $application->add(new Forkmodule\Command\Create('create', getcwd(), $twigService));
