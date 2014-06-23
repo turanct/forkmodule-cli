@@ -46,7 +46,7 @@ This will fetch the latest commits on the master branch of this repo.
 
 Alternatively if you're using a recent version of forkmodule-cli, you can just run this command from anywhere in your terminal to update your current install to the newest version:
 
-	forkmodule --update
+	forkmodule update
 
 
 

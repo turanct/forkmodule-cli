@@ -41,8 +41,6 @@ class Forkmodule
         /**
          * Directories
          */
-        new Message('Creating frontend directories.', 'title');
-
         mkdir($this->config->getModuleDirFrontend());
 
         $directories = array(
@@ -93,8 +91,6 @@ class Forkmodule
         /**
          * Directories
          */
-        new Message('Creating backend directories.', 'title');
-
         mkdir($this->config->getModuleDirBackend());
 
         $directories = array(
