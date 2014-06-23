@@ -40,7 +40,7 @@ You can now run the `forkmodule` command from your command line.
 
 Run this in your terminal, assuming you used the installer to install forkmodule-cli
 
-	cd /usr/local/forkmodule-cli/ && git pull origin master && cd -
+	cd /usr/local/forkmodule-cli/ && git pull origin master && php composer.phar install && cd -
 
 This will fetch the latest commits on the master branch of this repo.
 
