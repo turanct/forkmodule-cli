@@ -16,6 +16,6 @@ class Update
      */
     public function run($basedir)
     {
-        passthru('cd ' . realpath($basedir) . ' && git pull origin master && git remote update && cd -');
+        passthru('cd ' . realpath($basedir) . ' && git pull origin master && curl -sS https://getcomposer.org/installer | php && php composer.phar install && git remote update && cd -');
     }
 }
