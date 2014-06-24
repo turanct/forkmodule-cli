@@ -50,7 +50,20 @@ Alternatively if you're using a recent version of forkmodule-cli, you can just r
 
 
 
-5. License
+5. Usage
+----------------------------------------
+
+You can use forkmodule-cli to create a module by running it, like this:
+
+	forkmodule
+
+Alternatively, you can specify the name of the module as a parameter, like this:
+
+	forkmodule create module_name_here
+
+
+
+6. License
 ----------------------------------------
 
 Forkmodule-cli is licensed under the *MIT License*
