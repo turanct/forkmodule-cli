@@ -11,6 +11,9 @@ Forkmodule-cli is a simple php command line program that helps you create new pl
 
 Currently Forkmodule-cli only supports creating a module from scratch. It will create all frontend and backend actions and widgets files that you need. You can then get started with writing code instead of creating directories for half an hour.
 
+* Based on Symfony Console
+* Twig templates for easy templating
+* Built-in support for fork tags, fork search engine, fork meta/seo
 
 
 2. Configuration
