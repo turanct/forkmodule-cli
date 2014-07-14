@@ -155,6 +155,10 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         if ($url404 != $url) {
             $this->tpl->assign('detailURL', SITE_URL . $url);
         }
+{% if action == 'edit' %}
+
+        $this->tpl->assign('item', $this->record);
+{% endif %}
 {% endif %}
     }
 {% endif %}
