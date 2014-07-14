@@ -127,7 +127,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
                 // Save
 {% if action in ['add', 'edit'] %}
-                {% if action == 'add' %}$item['id'] = {% endif %}Backend{{ moduleNameSafe }}Model::{% if action == 'add' %}create{% endif %}{% if action == 'edit' %}update{% endif %}($item{% if tags %}, $tags{% endif %});
+                {% if action == 'add' %}$id = {% endif %}Backend{{ moduleNameSafe }}Model::{% if action == 'add' %}create{% endif %}{% if action == 'edit' %}update{% endif %}($item{% if tags %}, $tags{% endif %});
 {% endif %}
 
                 // Redirect
