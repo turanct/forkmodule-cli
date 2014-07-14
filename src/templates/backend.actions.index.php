@@ -132,9 +132,9 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
                 // Redirect
                 $redirectURL = BackendModel::createURLForAction('index');
-                {% if action in ['add', 'edit'] %}
-                $redirectURL .= '&highlight=row-' . {% if action == 'add' %}$item['id']{% elseif action == 'edit' %}$this->record['id']{% endif %};
-                {% endif %}
+{% if action in ['add', 'edit'] %}
+                $redirectURL .= '&highlight=row-' . {% if action == 'add' %}$id{% elseif action == 'edit' %}$this->record['id']{% endif %};
+{% endif %}
                 $redirectURL .= '&report={{ action }}ed';
                 $this->redirect($redirectURL);
             }
