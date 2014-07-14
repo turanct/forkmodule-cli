@@ -127,11 +127,16 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
                 // Save
 {% if action in ['add', 'edit'] %}
-                Backend{{ moduleNameSafe }}Model::{% if action == 'add' %}create{% endif %}{% if action == 'edit' %}update{% endif %}($item{% if tags %}, $tags{% endif %});
+                {% if action == 'add' %}$id = {% endif %}Backend{{ moduleNameSafe }}Model::{% if action == 'add' %}create{% endif %}{% if action == 'edit' %}update{% endif %}($item{% if tags %}, $tags{% endif %});
 {% endif %}
 
                 // Redirect
-                $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}ed');
+                $redirectURL = BackendModel::createURLForAction('index');
+{% if action in ['add', 'edit'] %}
+                $redirectURL .= '&highlight=row-' . {% if action == 'add' %}$id{% elseif action == 'edit' %}$this->record['id']{% endif %};
+{% endif %}
+                $redirectURL .= '&report={{ action }}ed';
+                $this->redirect($redirectURL);
             }
         }
     }
