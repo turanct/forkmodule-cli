@@ -124,6 +124,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
                 // Build item
                 $item = array(
                     'title' => $txtTitle->getValue(),
+                    'meta_id' => $this->meta->save(),
                 );
 {% if tags %}
 
