@@ -91,6 +91,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
         // Add fields
 {% if tags and action in ['add', 'edit'] %}
+        $this->frm->addText('title', {% if action == 'edit' %}$this->record['title']{% else %}null{% endif %}, 255, 'inputText title', 'inputTextError title');
         $this->frm->addText('tags', {% if action == 'edit' %}$this->record['tags']{% else %}null{% endif %}, null, 'inputText tagBox', 'inputTextError tagBox');
 {% endif %}
 {% if meta %}
@@ -114,12 +115,16 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
     {
         // Submitted?
         if ($this->frm->isSubmitted()) {
-            // Check fields
+            // Fields
+            /** @var SpoonFormText $txtTitle */
+            $txtTitle = $this->frm->getField('title');
 
             // Correct?
             if ($this->frm->isCorrect()) {
                 // Build item
-                $item = array();
+                $item = array(
+                    'title' => $txtTitle->getValue(),
+                );
 {% if tags %}
 
                 $tags = $this->frm->getField('tags')->getValue();
