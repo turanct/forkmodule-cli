@@ -119,6 +119,9 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
             /** @var SpoonFormText $txtTitle */
             $txtTitle = $this->frm->getField('title');
 
+            // Validation
+            $txtTitle->isFilled(BL::err('FieldIsRequired'));
+
             // Correct?
             if ($this->frm->isCorrect()) {
                 // Build item
