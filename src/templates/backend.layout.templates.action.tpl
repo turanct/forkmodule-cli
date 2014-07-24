@@ -9,7 +9,7 @@
 {form:{{ action }}}
 
     <div class="form-group title">
-        <label for="title">{$lblTitle|ucfirst}<abbr title="{$msgRequired}">*</abbr></label>
+        <label for="title">{$lblTitle|ucfirst}<abbr title="{$lblRequiredField}">*</abbr></label>
         <div>
             {$txtTitle}
             {$txtTitleError}
