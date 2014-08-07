@@ -91,6 +91,9 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
         // Add fields
 {% if tags and action in ['add', 'edit'] %}
+{% if meta %}
+        $this->frm->addText('title', {% if action == 'edit' %}$this->record['title']{% else %}null{% endif %}, 255, 'inputText title', 'inputTextError title');
+{% endif %}
         $this->frm->addText('tags', {% if action == 'edit' %}$this->record['tags']{% else %}null{% endif %}, null, 'inputText tagBox', 'inputTextError tagBox');
 {% endif %}
 {% if meta %}
@@ -114,12 +117,26 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
     {
         // Submitted?
         if ($this->frm->isSubmitted()) {
-            // Check fields
+            // Fields
+{% if meta %}
+            /** @var SpoonFormText $txtTitle */
+            $txtTitle = $this->frm->getField('title');
+{% endif %}
+
+            // Validation
+{% if meta %}
+            $txtTitle->isFilled(BL::err('FieldIsRequired'));
+{% endif %}
 
             // Correct?
             if ($this->frm->isCorrect()) {
                 // Build item
-                $item = array();
+                $item = array(
+{% if meta %}
+                    'title' => $txtTitle->getValue(),
+                    'meta_id' => $this->meta->save(),
+{% endif %}
+                );
 {% if tags %}
 
                 $tags = $this->frm->getField('tags')->getValue();
