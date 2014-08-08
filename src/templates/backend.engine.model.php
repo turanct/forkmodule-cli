@@ -59,8 +59,12 @@ class Backend{{ moduleNameSafe }}Model
         $db = BackendModel::get('database');
 
         $item = (array) $db->getRecord(
-            'SELECT i.*
+            'SELECT i.*{% if meta %}, m.url
+{% endif %}
              FROM {{ moduleName }} i
+{% if meta %}
+             INNER JOIN meta AS m on m.id = i.meta_id
+{% endif %}
              WHERE i.id = :id',
             array('id' => (int) $id)
         );

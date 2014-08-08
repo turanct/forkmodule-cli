@@ -18,7 +18,7 @@
         <div id="pageUrl">
             <div class="oneLiner">
             {option:detailURL}
-                <p><span><a href="{$detailURL}">{$detailURL}/<span id="generatedUrl"></span></a></span></p>
+                <p><span><a href="{$detailURL}{% if action == 'edit' %}/{$item.url}{% endif %}">{$detailURL}/<span id="generatedUrl">{% if action == 'edit' %}{$item.url}{% endif %}</span></a></span></p>
             {/option:detailURL}
             {option:!detailURL}
                 <p class="infoMessage">{$errNoModuleLinked}</p>
