@@ -128,8 +128,8 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
                 // Build item
                 $item = array();
 {% if meta %}
-                $item['title'] => $this->frm->getField('title')->getValue();
-                $item['meta_id'] => $this->meta->save();
+                $item['title'] = $this->frm->getField('title')->getValue();
+                $item['meta_id'] = $this->meta->save();
 {% endif %}
 {% if tags %}
 
