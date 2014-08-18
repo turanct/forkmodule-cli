@@ -121,6 +121,10 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 {% if meta %}
             /** @var SpoonFormText $txtTitle */
             $txtTitle = $this->frm->getField('title');
+{% if tags %}
+            /** @var SpoonFormText $txtTags */
+            $txtTags = $this->frm->getField('tags');
+{% endif %}
 {% endif %}
 
             // Validate fields
@@ -140,7 +144,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
                 );
 {% if tags %}
 
-                $tags = $this->frm->getField('tags')->getValue();
+                $tags = $txtTags->getValue();
 {% endif %}
 
                 // Save
