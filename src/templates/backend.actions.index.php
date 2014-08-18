@@ -117,10 +117,15 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
     {
         // Submitted?
         if ($this->frm->isSubmitted()) {
-            // Check fields
+            // Get fields
 {% if meta %}
             /** @var SpoonFormText $txtTitle */
-            $this->frm->getField('title')->isFilled(BL::err('FieldIsRequired'));
+            $txtTitle = $this->frm->getField('title');
+{% endif %}
+
+            // Validate fields
+{% if meta %}
+            $txtTitle->isFilled(BL::err('FieldIsRequired'));
 {% endif %}
 
             // Correct?
@@ -128,7 +133,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
                 // Build item
                 $item = array();
 {% if meta %}
-                $item['title'] => $this->frm->getField('title')->getValue(),
+                $item['title'] => $txtTitle->getValue(),
                 $item['meta_id'] => $this->meta->save(),
 {% endif %}
 {% if tags %}
