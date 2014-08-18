@@ -132,11 +132,12 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
             // Correct?
             if ($this->frm->isCorrect()) {
                 // Build item
-                $item = array();
+                $item = array(
 {% if meta %}
-                $item['title'] => $txtTitle->getValue(),
-                $item['meta_id'] => $this->meta->save(),
+                    'title' => $txtTitle->getValue(),
+                    'meta_id' => $this->meta->save(),
 {% endif %}
+                );
 {% if tags %}
 
                 $tags = $this->frm->getField('tags')->getValue();
