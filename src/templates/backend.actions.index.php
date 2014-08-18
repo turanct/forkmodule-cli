@@ -125,6 +125,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
             // Validate fields
 {% if meta %}
+            $this->meta->validate();
             $txtTitle->isFilled(BL::err('FieldIsRequired'));
 {% endif %}
 
