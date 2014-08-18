@@ -118,7 +118,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         if ($this->frm->isSubmitted()) {
             // Check fields
 {% if meta %}
-            /** @var SpoonFormText $txtTitle */
+            $this->meta->validate();
             $this->frm->getField('title')->isFilled(BL::err('FieldIsRequired'));
 {% endif %}
 
