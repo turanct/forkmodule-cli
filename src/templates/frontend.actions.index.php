@@ -15,6 +15,12 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
      */
     protected $item;
 
+{% elseif action == 'index' %}
+    /**
+     * @var array All items
+     */
+    protected $items;
+
 {% endif %}
     /**
      * Execute the extra
@@ -48,6 +54,8 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
         if (empty($this->item)) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
+{% elseif action == 'index' %}
+        $this->items = Frontend{{ moduleNameSafe }}Model::getAll();
 {% endif %}
     }
 
@@ -109,6 +117,10 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
 
         // Assign item
         $this->tpl->assign('item', $this->item);
+{% elseif action == 'index' %}
+
+        // Assign items
+        $this->tpl->assign('items', $this->items);
 {% endif %}
     }
 }
