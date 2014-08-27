@@ -71,7 +71,6 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
      */
     protected function getData()
     {
-        $this->id = $this->getParameter('id', 'int');
         $this->record = Backend{{ moduleNameSafe }}Model::get($this->id);
 
         // Validate
