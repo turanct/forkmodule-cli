@@ -89,10 +89,10 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->frm = new BackendForm('{{ action }}');
 
         // Add fields
-{% if tags and action in ['add', 'edit'] %}
 {% if meta %}
         $this->frm->addText('title', {% if action == 'edit' %}$this->record['title']{% else %}null{% endif %}, 255, 'inputText title', 'inputTextError title');
 {% endif %}
+{% if tags and action in ['add', 'edit'] %}
         $this->frm->addText('tags', {% if action == 'edit' %}$this->record['tags']{% else %}null{% endif %}, null, 'inputText tagBox', 'inputTextError tagBox');
 {% endif %}
 {% if meta %}
@@ -116,23 +116,34 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
     {
         // Submitted?
         if ($this->frm->isSubmitted()) {
-            // Check fields
+            // Get fields
 {% if meta %}
             /** @var SpoonFormText $txtTitle */
-            $this->frm->getField('title')->isFilled(BL::err('FieldIsRequired'));
+            $txtTitle = $this->frm->getField('title');
+{% if tags %}
+            /** @var SpoonFormText $txtTags */
+            $txtTags = $this->frm->getField('tags');
+{% endif %}
+{% endif %}
+
+            // Validate fields
+{% if meta %}
+            $this->meta->validate();
+            $txtTitle->isFilled(BL::err('FieldIsRequired'));
 {% endif %}
 
             // Correct?
             if ($this->frm->isCorrect()) {
                 // Build item
-                $item = array();
+                $item = array(
 {% if meta %}
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['meta_id'] = $this->meta->save();
+                    'title' => $txtTitle->getValue(),
+                    'meta_id' => $this->meta->save(),
 {% endif %}
+                );
 {% if tags %}
 
-                $tags = $this->frm->getField('tags')->getValue();
+                $tags = $txtTags->getValue();
 {% endif %}
 
                 // Save
