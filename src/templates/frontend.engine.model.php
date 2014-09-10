@@ -71,6 +71,32 @@ class Frontend{{ moduleNameSafe }}Model
         return $item;
     }
 {% endif %}
+
+    /**
+     * Get all items
+     *
+     * @return array All items
+     */
+    public static function getAll()
+    {
+        /** @var SpoonDatabase $db */
+        $db = FrontendModel::get('database');
+
+        $items = (array) $db->getRecords(
+{% if meta %}
+            'SELECT i.*, m.url
+            FROM {{ moduleName }} AS i
+            INNER JOIN meta AS m ON m.id = i.meta_id
+            ORDER BY i.title'
+{% else %}
+            'SELECT i.*
+            FROM {{ moduleName }} AS i
+            ORDER BY i.id'
+{% endif %}
+        );
+
+        return $items;
+    }
 {% if searchable %}
 
     /**
