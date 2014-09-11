@@ -89,10 +89,10 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->frm = new BackendForm('{{ action }}');
 
         // Add fields
-{% if tags and action in ['add', 'edit'] %}
 {% if meta %}
         $this->frm->addText('title', {% if action == 'edit' %}$this->record['title']{% else %}null{% endif %}, 255, 'inputText title', 'inputTextError title');
 {% endif %}
+{% if tags and action in ['add', 'edit'] %}
         $this->frm->addText('tags', {% if action == 'edit' %}$this->record['tags']{% else %}null{% endif %}, null, 'inputText tagBox', 'inputTextError tagBox');
 {% endif %}
 {% if meta %}
@@ -118,7 +118,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         if ($this->frm->isSubmitted()) {
             // Check fields
 {% if meta %}
-            /** @var SpoonFormText $txtTitle */
+            $this->meta->validate();
             $this->frm->getField('title')->isFilled(BL::err('FieldIsRequired'));
 {% endif %}
 
