@@ -36,8 +36,12 @@ class {{ moduleNameSafe }}Installer extends ModuleInstaller
 {% endfor %}
             )
         );
-{% elseif action.name not in ['index', 'add', 'edit', 'delete'] %}
+{% elseif action.name not in ['index', 'add', 'edit', 'delete', 'settings'] %}
         $this->setNavigation($navigation{{ moduleNameSafe }}Id, '{{ action.safe }}', '{{ moduleName }}/{{ action.name }}');
+{% elseif action.name == 'settings' %}
+        $navigationSettingsId = $this->setNavigation(null, 'Settings');
+        $navigationModulesId = $this->setNavigation($navigationSettingsId, 'Modules');
+        $this->setNavigation($navigationModulesId, {{ moduleNameSafe }}, '{{ moduleName }}/settings');
 {% endif %}
 {% endfor %}
 
