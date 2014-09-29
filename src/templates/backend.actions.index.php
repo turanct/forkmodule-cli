@@ -60,7 +60,9 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
             $editURL,
             BL::lbl('Edit')
         );
+{% if meta %}
         $this->dataGrid->setColumnURL('title', $editURL);
+{% endif %}
 
         // Hide unnecessary columns
         $hiddenColumns = array({% if meta %}'meta_id'{% endif %});
