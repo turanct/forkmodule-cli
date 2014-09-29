@@ -126,6 +126,9 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
             if ($this->frm->isCorrect()) {
                 // Build item
                 $item = array();
+{% if action == 'edit' %}
+                $item['id'] = $this->id;
+{% endif %}
 {% if meta %}
                 $item['title'] = $this->frm->getField('title')->getValue();
                 $item['meta_id'] = $this->meta->save();
