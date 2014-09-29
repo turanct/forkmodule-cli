@@ -15,9 +15,9 @@ class Backend{{ moduleNameSafe }}Model
      * @return int The insert id
      */
 {% if tags %}
-    public static function create($item, $tags)
+    public static function create(array $item, $tags)
 {% else %}
-    public static function create($item)
+    public static function create(array $item)
 {% endif %}
     {
         /** @var SpoonDatabase $db */
@@ -88,9 +88,9 @@ class Backend{{ moduleNameSafe }}Model
      * @return int The number of affected rows
      */
 {% if tags %}
-    public static function update($item, $tags)
+    public static function update(array $item, $tags)
 {% else %}
-    public static function update($item)
+    public static function update(array $item)
 {% endif %}
     {
         /** @var SpoonDatabase $db */
