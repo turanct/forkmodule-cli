@@ -52,13 +52,17 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->dataGrid = new BackendDataGridArray(Backend{{ moduleNameSafe }}Model::getAll());
 
         // Add buttons
+        $editURL = BackendModel::createURLForAction('edit') . '&id=[id]';
         $this->dataGrid->addColumn(
             'edit',
             null,
             BL::lbl('Edit'),
-            BackendModel::createURLForAction('edit') . '&id=[id]',
+            $editURL,
             BL::lbl('Edit')
         );
+{% if meta %}
+        $this->dataGrid->setColumnURL('title', $editURL);
+{% endif %}
 
         // Hide unnecessary columns
         $hiddenColumns = array({% if meta %}'meta_id'{% endif %});
