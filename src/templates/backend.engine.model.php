@@ -60,6 +60,8 @@ class Backend{{ moduleNameSafe }}Model
 
         $item = (array) $db->getRecord(
             'SELECT i.*{% if meta %}, m.url
+{% else %}
+
 {% endif %}
              FROM {{ moduleName }} i
 {% if meta %}
