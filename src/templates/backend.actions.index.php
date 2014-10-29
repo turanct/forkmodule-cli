@@ -29,8 +29,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 {% if action == 'edit' %}
         $this->getData();
 {% endif %}
-        $this->loadForm();
-        $this->validateForm();
+        $this->handleForm();
 {% endif %}
 {% if action != 'delete' %}
 
@@ -85,61 +84,55 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 {% endif %}
 
     /**
-     * Load form
+     * Handle form
      */
-    protected function loadForm()
+    protected function handleForm()
     {
         // Create the form
-        $this->frm = new BackendForm('{{ action }}');
+        $form = new BackendForm('{{ action }}');
 
         // Add fields
 {% if meta %}
-        $this->frm->addText('title', {% if action == 'edit' %}$this->record['title']{% else %}null{% endif %}, 255, 'inputText title', 'inputTextError title');
+        $fieldTitle = $form->addText('title', {% if action == 'edit' %}$this->record['title']{% else %}null{% endif %}, 255, 'inputText title', 'inputTextError title');
 {% endif %}
 {% if tags and action in ['add', 'edit'] %}
-        $this->frm->addText('tags', {% if action == 'edit' %}$this->record['tags']{% else %}null{% endif %}, null, 'inputText tagBox', 'inputTextError tagBox');
+        $fieldTags = $form->addText('tags', {% if action == 'edit' %}$this->record['tags']{% else %}null{% endif %}, null, 'inputText tagBox', 'inputTextError tagBox');
 {% endif %}
 {% if meta %}
 
         // Meta
 {% if action == 'add' %}
-        $this->meta = new BackendMeta($this->frm, null, 'title', true);
+        $meta = new BackendMeta($form, null, 'title', true);
 {% elseif action == 'edit' %}
-        $this->meta = new BackendMeta($this->frm, $this->record['meta_id'], 'title', true);
+        $meta = new BackendMeta($form, $this->record['meta_id'], 'title', true);
 
         // Set callback for generating a unique URL
-        $this->meta->setUrlCallback('Backend{{ moduleNameSafe }}Model', 'getURL', array($this->record['id']));
+        $meta->setUrlCallback('Backend{{ moduleNameSafe }}Model', 'getURL', array($this->record['id']));
 {% endif %}
 {% endif %}
-    }
 
-    /**
-     * Validate form
-     */
-    protected function validateForm()
-    {
         // Submitted?
-        if ($this->frm->isSubmitted()) {
+        if ($form->isSubmitted()) {
             // Check fields
 {% if meta %}
-            $this->meta->validate();
-            $this->frm->getField('title')->isFilled(BL::err('FieldIsRequired'));
+            $meta->validate();
+            $fieldTitle->isFilled(BL::err('FieldIsRequired'));
 {% endif %}
 
             // Correct?
-            if ($this->frm->isCorrect()) {
+            if ($form->isCorrect()) {
                 // Build item
                 $item = array();
 {% if action == 'edit' %}
                 $item['id'] = $this->id;
 {% endif %}
 {% if meta %}
-                $item['title'] = $this->frm->getField('title')->getValue();
-                $item['meta_id'] = $this->meta->save();
+                $item['title'] = $fieldTitle->getValue();
+                $item['meta_id'] = $meta->save();
 {% endif %}
 {% if tags %}
 
-                $tags = $this->frm->getField('tags')->getValue();
+                $tags = $fieldTags->getValue();
 {% endif %}
 
                 // Save
@@ -156,6 +149,8 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
                 $this->redirect($redirectURL);
             }
         }
+
+        $form->parse($this->tpl);
     }
 {% endif %}
 {% if action != 'delete' %}
