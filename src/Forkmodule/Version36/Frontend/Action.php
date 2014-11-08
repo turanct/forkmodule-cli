@@ -1,5 +1,6 @@
 <?php
-namespace Forkmodule\Frontend;
+
+namespace Forkmodule\Version36\Frontend;
 
 use \Forkmodule\Forkcontroller;
 
@@ -18,7 +19,7 @@ class Action extends Forkcontroller
             $this->tplVars
         );
         file_put_contents(
-            $this->config->getModuleDirFrontend() . '/actions/'.$this->name.'.php',
+            $this->moduleDir . '/actions/' . $this->name . '.php',
             $content
         );
 
@@ -27,7 +28,7 @@ class Action extends Forkcontroller
             $this->tplVars
         );
         file_put_contents(
-            $this->config->getModuleDirFrontend() . '/layout/templates/'.$this->name.'.tpl',
+            $this->moduleDir . '/layout/templates/' . $this->name . '.tpl',
             $content
         );
     }

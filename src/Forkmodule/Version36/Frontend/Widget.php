@@ -1,5 +1,6 @@
 <?php
-namespace Forkmodule\Frontend;
+
+namespace Forkmodule\Version36\Frontend;
 
 use \Forkmodule\Forkcontroller;
 
@@ -18,7 +19,7 @@ class Widget extends Forkcontroller
             $this->tplVars
         );
         file_put_contents(
-            $this->config->getModuleDirFrontend() . '/widgets/'.$this->name.'.php',
+            $this->moduleDir . '/widgets/' . $this->name . '.php',
             $content
         );
 
@@ -27,7 +28,7 @@ class Widget extends Forkcontroller
             $this->tplVars
         );
         file_put_contents(
-            $this->config->getModuleDirFrontend() . '/layout/widgets/'.$this->name.'.tpl',
+            $this->moduleDir . '/layout/widgets/' . $this->name . '.tpl',
             $content
         );
     }
