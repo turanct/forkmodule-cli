@@ -37,7 +37,8 @@ class Module implements Forkmodule
      */
     public function frontend()
     {
-        $frontendDirectory = $this->config->getForkDir() . '/frontend/modules/' . $this->config->getModuleName();
+        $frontendDirectory = $this->config->getForkDir() . '/frontend/modules/';
+        $frontendDirectory .= ucfirst($this->config->getModuleName());
 
         /**
          * Directories
@@ -89,7 +90,8 @@ class Module implements Forkmodule
      */
     public function backend()
     {
-        $backendDirectory = $this->config->getForkDir() . '/Backend/Modules/' . $this->config->getModuleName();
+        $backendDirectory = $this->config->getForkDir() . '/Backend/Modules/';
+        $backendDirectory .= ucfirst($this->config->getModuleName());
 
         /**
          * Directories
