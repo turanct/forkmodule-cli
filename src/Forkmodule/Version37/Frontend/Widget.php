@@ -1,7 +1,8 @@
 <?php
-namespace Forkmodule\Frontend;
 
-use \Forkmodule\Forkcontroller;
+namespace Forkmodule\Version37\Frontend;
+
+use Forkmodule\Forkcontroller;
 
 /**
  * Frontend Widget class
@@ -18,7 +19,7 @@ class Widget extends Forkcontroller
             $this->tplVars
         );
         file_put_contents(
-            $this->config->getModuleDirFrontend() . '/widgets/'.$this->name.'.php',
+            $this->moduleDir . '/Widgets/' . ucfirst($this->name) . '.php',
             $content
         );
 
@@ -27,7 +28,7 @@ class Widget extends Forkcontroller
             $this->tplVars
         );
         file_put_contents(
-            $this->config->getModuleDirFrontend() . '/layout/widgets/'.$this->name.'.tpl',
+            $this->moduleDir . '/Layout/Widgets/' . ucfirst($this->name) . '.tpl',
             $content
         );
     }

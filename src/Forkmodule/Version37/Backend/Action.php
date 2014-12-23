@@ -1,7 +1,8 @@
 <?php
-namespace Forkmodule\Backend;
 
-use \Forkmodule\Forkcontroller;
+namespace Forkmodule\Version37\Backend;
+
+use Forkmodule\Forkcontroller;
 
 /**
  * Backend Action class
@@ -18,18 +19,18 @@ class Action extends Forkcontroller
             $this->tplVars
         );
         file_put_contents(
-            $this->config->getModuleDirBackend() . '/actions/'.$this->name.'.php',
+            $this->moduleDir . '/Actions/' . ucfirst($this->name) . '.php',
             $content
         );
 
         if ($this->name != 'delete') {
             $templateFile = ($this->name == 'index') ? 'index' : 'action';
             $content = $this->twig->render(
-                'backend.layout.templates.'.$templateFile.'.tpl',
+                'backend.layout.templates.' . $templateFile . '.tpl',
                 $this->tplVars
             );
             file_put_contents(
-                $this->config->getModuleDirBackend() . '/layout/templates/'.$this->name.'.tpl',
+                $this->moduleDir . '/Layout/Templates/' . ucfirst($this->name) . '.tpl',
                 $content
             );
         }

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+    <Backend>
+        <Core>
+            <item type="label" name="{{ moduleNameSafe }}">
+                <translation language="nl"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
+                <translation language="en"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
+                <translation language="fr"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
+            </item>
+        </Core>
+        <{{ moduleName }}>
+            <item type="label" name="Overview">
+                <translation language="nl"><![CDATA[overzicht]]></translation>
+                <translation language="en"><![CDATA[overview]]></translation>
+                <translation language="fr"><![CDATA[overview]]></translation>
+            </item>
+{% for action in backendActions if action.name != 'index' %}
+            <item type="label" name="{{ action.safe }}">
+                <translation language="nl"><![CDATA[{{ action.name }}]]></translation>
+                <translation language="en"><![CDATA[{{ action.name }}]]></translation>
+                <translation language="fr"><![CDATA[{{ action.name }}]]></translation>
+            </item>
+{% endfor %}
+            <item type="message" name="AreYouSure">
+                <translation language="nl"><![CDATA[Bent u zeker?]]></translation>
+                <translation language="en"><![CDATA[Are you sure?]]></translation>
+                <translation language="fr"><![CDATA[Êtes-vous sûr?]]></translation>
+            </item>
+        </{{ moduleName }}>
+    </Backend>
+    <Frontend>
+        <Core>
+            <item type="label" name="{{ moduleNameSafe }}">
+                <translation language="nl"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
+                <translation language="en"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
+                <translation language="fr"><![CDATA[{{ moduleName|replace({'_':' '}) }}]]></translation>
+            </item>
+{% for action in frontendActions if action.name != 'index' %}
+            <item type="label" name="{{ action.safe }}">
+                <translation language="nl"><![CDATA[{{ action.name }}]]></translation>
+                <translation language="en"><![CDATA[{{ action.name }}]]></translation>
+                <translation language="fr"><![CDATA[{{ action.name }}]]></translation>
+            </item>
+{% endfor %}
+        </Core>
+    </Frontend>
+</locale>

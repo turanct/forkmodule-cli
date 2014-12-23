@@ -13,7 +13,7 @@ use Symfony\Component\Console\Formatter\OutputFormatterStyle;
 use Forkmodule\Service\Twig;
 use Forkmodule\Configuration;
 use Forkmodule\SafeName;
-use Forkmodule\Forkmodule;
+use Forkmodule\ForkVersionFactory;
 
 class Create extends Command
 {
@@ -23,7 +23,7 @@ class Create extends Command
     protected $workingDirectory;
 
     /**
-     * @var \Twig_Environment Twig service
+     * @var Twig Twig service
      */
     protected $twig;
 
@@ -39,9 +39,10 @@ class Create extends Command
         parent::__construct($name);
 
         $this->workingDirectory = $workingDirectory;
-        $this->twig = $twig->getTemplateEngine();
+        $this->twig = $twig;
 
         $this->addArgument('name', InputArgument::OPTIONAL, 'Name of the module');
+        $this->addOption('fork', null, InputOption::VALUE_REQUIRED, 'The fork version');
     }
 
     /**
@@ -52,6 +53,14 @@ class Create extends Command
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        // Get the correct version class
+        $versionNumber = trim($input->getOption('fork'));
+        if (empty($versionNumber)) {
+            $versionNumber = '3.6';
+        }
+        $versionFactory = new ForkVersionFactory();
+        $version = $versionFactory->getVersion($versionNumber);
+
         // Create title color
         $titleStyle = new OutputFormatterStyle('red', null, array('bold'));
         $output->getFormatter()->setStyle('title', $titleStyle);
@@ -64,11 +73,7 @@ class Create extends Command
         $output->writeln('--> <info>Initializing...</info>' . "\n");
 
         // Get fork dir
-        $forkDirectory = $this->getForkDirectory($this->workingDirectory);
-
-        if (empty($forkDirectory)) {
-            throw new \InvalidArgumentException('This is not a fork directory');
-        }
+        $forkDirectory = $version->getForkDirectory($this->workingDirectory);
 
         // Get module name
         $moduleName = $input->getArgument('name');
@@ -78,12 +83,7 @@ class Create extends Command
         }
 
         // Check if module exists
-        if (
-            is_dir($forkDirectory . '/frontend/modules/' . $moduleName)
-            || is_dir($forkDirectory . '/backend/modules/' . $moduleName)
-        ) {
-            throw new \InvalidArgumentException('A module with this name already exists');
-        }
+        $version->moduleExists($forkDirectory, $moduleName);
 
         // Get actions
         list($frontendActions, $frontendWidgets, $backendActions, $backendWidgets) = $this->getActions(
@@ -120,34 +120,13 @@ class Create extends Command
         }
 
         // Create module
+        $forkmodule = $version->getAdapter($this->twig, $configuration);
+
         $output->writeln('--> <info>Creating directory structure...</info>' . "\n");
         $output->writeln('--> <info>Creating frontend directories.</info>' . "\n");
+        $forkmodule->frontend();
         $output->writeln('--> <info>Creating backend directories.</info>' . "\n");
-        $forkmodule = new Forkmodule($this->twig, $configuration);
-    }
-
-    /**
-     * Get fork directory, starting from a given working directory
-     *
-     * @param string $workingDirectory The given working directory
-     *
-     * @return string The path to the fork directory
-     */
-    protected function getForkDirectory($workingDirectory)
-    {
-        $forkDir = '';
-
-        // Is this a forkcms directory? Or any of the above directories?
-        while (empty($forkDir) && $workingDirectory !== '/') {
-            // Is this a forkcms directory?
-            if (is_dir($workingDirectory . '/frontend/modules') && is_dir($workingDirectory . '/backend/modules')) {
-                $forkDir = $workingDirectory;
-            } else {
-                $workingDirectory = dirname($workingDirectory);
-            }
-        }
-
-        return $forkDir;
+        $forkmodule->backend();
     }
 
     /**

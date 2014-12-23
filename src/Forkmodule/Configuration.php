@@ -25,16 +25,6 @@ class Configuration
     protected $moduleNameSafe;
 
     /**
-     * @var string The module's frontend dir
-     */
-    protected $moduleDirFrontend;
-
-    /**
-     * @var string The module's backend dir
-     */
-    protected $moduleDirBackend;
-
-    /**
      * @var bool Should the module implement Meta?
      */
     protected $meta;
@@ -105,13 +95,10 @@ class Configuration
         $this->frontendWidgets = $frontendWidgets;
         $this->backendActions = $backendActions;
         $this->backendWidgets = $backendWidgets;
-
-        $this->moduleDirFrontend = $this->forkDir . '/frontend/modules/' . $this->moduleName;
-        $this->moduleDirBackend = $this->forkDir . '/backend/modules/' . $this->moduleName;
     }
 
     /**
-     * Setter for forkDir
+     * Getter for forkDir
      *
      * @return string The Fork directory
      */
@@ -121,7 +108,7 @@ class Configuration
     }
 
     /**
-     * Setter for moduleName
+     * Getter for moduleName
      *
      * @return string The module name
      */
@@ -131,7 +118,7 @@ class Configuration
     }
 
     /**
-     * Setter for moduleNameSafe
+     * Getter for moduleNameSafe
      *
      * @return string The module safe name
      */
@@ -141,27 +128,7 @@ class Configuration
     }
 
     /**
-     * Setter for moduleDirFrontend
-     *
-     * @return string The module's frontend dir
-     */
-    public function getModuleDirFrontend()
-    {
-        return $this->moduleDirFrontend;
-    }
-
-    /**
-     * Setter for moduleDirBackend
-     *
-     * @return string The module's backend dir
-     */
-    public function getModuleDirBackend()
-    {
-        return $this->moduleDirBackend;
-    }
-
-    /**
-     * Setter for meta
+     * Getter for meta
      *
      * @return bool Should the module implement Meta?
      */
@@ -171,7 +138,7 @@ class Configuration
     }
 
     /**
-     * Setter for tags
+     * Getter for tags
      *
      * @return bool Should the module implement Tags?
      */
@@ -181,7 +148,7 @@ class Configuration
     }
 
     /**
-     * Setter for searchable
+     * Getter for searchable
      *
      * @return bool Should the module implement Search?
      */

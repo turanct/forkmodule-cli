@@ -1,7 +1,8 @@
 <?php
-namespace Forkmodule\Frontend;
 
-use \Forkmodule\Forkcontroller;
+namespace Forkmodule\Version37\Frontend;
+
+use Forkmodule\Forkcontroller;
 
 /**
  * Frontend Action class
@@ -18,7 +19,7 @@ class Action extends Forkcontroller
             $this->tplVars
         );
         file_put_contents(
-            $this->config->getModuleDirFrontend() . '/actions/'.$this->name.'.php',
+            $this->moduleDir . '/Actions/' . ucfirst($this->name) . '.php',
             $content
         );
 
@@ -27,7 +28,7 @@ class Action extends Forkcontroller
             $this->tplVars
         );
         file_put_contents(
-            $this->config->getModuleDirFrontend() . '/layout/templates/'.$this->name.'.tpl',
+            $this->moduleDir . '/Layout/Templates/' . ucfirst($this->name) . '.tpl',
             $content
         );
     }

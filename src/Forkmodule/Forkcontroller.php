@@ -28,6 +28,11 @@ abstract class Forkcontroller
     protected $safeName;
 
     /**
+     * @var string
+     */
+    protected $moduleDir;
+
+    /**
      * @var array
      */
     protected $tplVars;
@@ -35,32 +40,29 @@ abstract class Forkcontroller
     /**
      * Constructor Method
      *
-     * @param Twig          $twig   The template renderer
-     * @param Configuration $config The configuration object
-     * @param string        $name   The action name
+     * @param Twig          $twig      The template renderer
+     * @param Configuration $config    The configuration object
+     * @param string        $name      The action name
+     * @param string        $moduleDir The module directory
+     * @param array         $tplVars   The template variables
      */
-    public function __construct($twig, $config, $name)
+    public function __construct($twig, $config, $name, $moduleDir, array $tplVars)
     {
         // Assign
         $this->twig = $twig;
         $this->config = $config;
         $this->name = (string) $name;
+        $this->moduleDir = (string) $moduleDir;
 
         // Create a safe action name
         $this->safeName = (string) new SafeName($this->name);
 
         // Create an array of template variables
-        $this->tplVars = array(
-            'moduleName' => $this->config->getModuleName(),
-            'moduleNameSafe' => $this->config->getModuleNameSafe(),
-            'action' => $this->name,
-            'actionSafe' => $this->safeName,
-            'widget' => $this->name,
-            'widgetSafe' => $this->safeName,
-            'tags' => $this->config->getTags(),
-            'meta' => $this->config->getMeta(),
-            'searchable' => $this->config->getSearchable(),
-        );
+        $this->tplVars = $tplVars;
+        $this->tplVars['action'] = $this->name;
+        $this->tplVars['actionSafe'] = $this->safeName;
+        $this->tplVars['widget'] = $this->name;
+        $this->tplVars['widgetSafe'] = $this->safeName;
     }
 
     /**
