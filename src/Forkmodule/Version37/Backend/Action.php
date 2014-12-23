@@ -2,7 +2,7 @@
 
 namespace Forkmodule\Version37\Backend;
 
-use \Forkmodule\Forkcontroller;
+use Forkmodule\Forkcontroller;
 
 /**
  * Backend Action class

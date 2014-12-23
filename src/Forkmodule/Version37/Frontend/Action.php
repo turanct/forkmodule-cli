@@ -2,7 +2,7 @@
 
 namespace Forkmodule\Version37\Frontend;
 
-use \Forkmodule\Forkcontroller;
+use Forkmodule\Forkcontroller;
 
 /**
  * Frontend Action class
