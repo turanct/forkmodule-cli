@@ -29,7 +29,7 @@ class Version implements ForkVersion
         // Is this a forkcms directory? Or any of the above directories?
         while (empty($forkDir) && $cwd !== '/') {
             // Is this a forkcms directory?
-            if (is_dir($cwd . '/Frontend/Modules') && is_dir($cwd . '/Backend/Modules')) {
+            if (basename($cwd) == 'src' && is_dir($cwd . '/Frontend/Modules') && is_dir($cwd . '/Backend/Modules')) {
                 $forkDir = $cwd;
             } elseif (is_dir($cwd . '/src/Frontend/Modules') && is_dir($cwd . '/src/Backend/Modules')) {
                 $forkDir = $cwd . '/src';
