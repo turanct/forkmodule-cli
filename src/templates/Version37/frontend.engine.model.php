@@ -24,21 +24,21 @@ class Model
         $item = $db->getRecord(
 {% if meta %}
             'SELECT i.*,
-            m.url AS url,
-            m.title AS meta_title,
-            m.title_overwrite AS meta_title_overwrite,
-            m.description AS meta_description,
-            m.description_overwrite AS meta_description_overwrite,
-            m.keywords AS meta_keywords,
-            m.keywords_overwrite AS meta_keywords_overwrite
+             m.url AS url,
+             m.title AS meta_title,
+             m.title_overwrite AS meta_title_overwrite,
+             m.description AS meta_description,
+             m.description_overwrite AS meta_description_overwrite,
+             m.keywords AS meta_keywords,
+             m.keywords_overwrite AS meta_keywords_overwrite
 {% else %}
             'SELECT i.*
 {% endif %}
-            FROM {{ moduleName|lower }} i
+             FROM {{ moduleName|lower }} i
 {% if meta %}
-            INNER JOIN meta m ON m.id = i.meta_id
+             INNER JOIN meta m ON m.id = i.meta_id
 {% endif %}
-            WHERE i.id = ?',
+             WHERE i.id = ?',
             array((int) $id)
         );
 
@@ -60,16 +60,16 @@ class Model
 
         $item = $db->getRecord(
             'SELECT i.*,
-            m.url AS url,
-            m.title AS meta_title,
-            m.title_overwrite AS meta_title_overwrite,
-            m.description AS meta_description,
-            m.description_overwrite AS meta_description_overwrite,
-            m.keywords AS meta_keywords,
-            m.keywords_overwrite AS meta_keywords_overwrite
-            FROM {{ moduleName|lower }} i
-            INNER JOIN meta m ON m.id = i.meta_id
-            WHERE m.url = ?',
+             m.url AS url,
+             m.title AS meta_title,
+             m.title_overwrite AS meta_title_overwrite,
+             m.description AS meta_description,
+             m.description_overwrite AS meta_description_overwrite,
+             m.keywords AS meta_keywords,
+             m.keywords_overwrite AS meta_keywords_overwrite
+             FROM {{ moduleName|lower }} i
+             INNER JOIN meta m ON m.id = i.meta_id
+             WHERE m.url = ?',
             array($url)
         );
 
@@ -90,13 +90,13 @@ class Model
         $items = (array) $db->getRecords(
 {% if meta %}
             'SELECT i.*, m.url
-            FROM {{ moduleName|lower }} AS i
-            INNER JOIN meta AS m ON m.id = i.meta_id
-            ORDER BY i.title'
+             FROM {{ moduleName|lower }} AS i
+             INNER JOIN meta AS m ON m.id = i.meta_id
+             ORDER BY i.title'
 {% else %}
             'SELECT i.*
-            FROM {{ moduleName|lower }} AS i
-            ORDER BY i.id'
+             FROM {{ moduleName|lower }} AS i
+             ORDER BY i.id'
 {% endif %}
         );
 
@@ -122,9 +122,9 @@ class Model
 
         $items = (array) $db->getRecords(
             'SELECT i.id, i.title, i.description as text, m.url
-            FROM {{ moduleName|lower }} i
-            INNER JOIN meta m ON m.id = i.meta_id
-            WHERE i.id IN (' . implode(',', $ids) . ')'
+             FROM {{ moduleName|lower }} i
+             INNER JOIN meta m ON m.id = i.meta_id
+             WHERE i.id IN (' . implode(',', $ids) . ')'
         );
 
         $returnItems = array();
