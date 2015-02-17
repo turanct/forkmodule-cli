@@ -74,12 +74,8 @@ class {{ actionSafe }} extends FrontendBaseBlock
      */
     protected function parse()
     {
-        // Breadcrumbs
-        $this->breadcrumb->addElement(
-            \SpoonFilter::ucfirst(FL::lbl('{{ moduleNameSafe }}')),
-            FrontendNavigation::getURLForBlock('{{ moduleName }}', 'Index')
-        );
 {% if action != 'index' %}
+        // Breadcrumbs
         $this->breadcrumb->addElement(
             \SpoonFilter::ucfirst(FL::lbl('{{ actionSafe }}')),
             FrontendNavigation::getURLForBlock('{{ moduleName }}', '{{ action }}')
