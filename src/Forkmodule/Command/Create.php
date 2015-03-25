@@ -56,7 +56,7 @@ class Create extends Command
         // Get the correct version class
         $versionNumber = trim($input->getOption('fork'));
         if (empty($versionNumber)) {
-            $versionNumber = '3.6';
+            $versionNumber = '3.7';
         }
         $versionFactory = new ForkVersionFactory();
         $version = $versionFactory->getVersion($versionNumber);
