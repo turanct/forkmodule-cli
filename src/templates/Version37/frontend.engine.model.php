@@ -124,15 +124,17 @@ class Model
             'SELECT i.id, i.title, i.description as text, m.url
              FROM {{ moduleName|lower }} i
              INNER JOIN meta m ON m.id = i.meta_id
-             WHERE i.id IN (' . implode(',', $ids) . ')'
+             WHERE i.id IN (' . implode(',', $ids) . ')',
+            array(),
+            'id'
         );
 
-        $returnItems = array();
-        foreach ($items as $item) {
-            $returnItems[$item['id']] = $item;
+        $detailUrl = FrontendNavigation::getURLForBlock('{{ moduleName }}', 'Detail');
+        foreach ($items as &$item) {
+            $item['full_url'] = $detailUrl . '/' . $item['url'];
         }
 
-        return $returnItems;
+        return $items;
     }
 {% endif %}
 }
