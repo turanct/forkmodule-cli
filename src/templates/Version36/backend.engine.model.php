@@ -186,27 +186,25 @@ class Backend{{ moduleNameSafe }}Model
         /** @var SpoonDatabase $db */
         $db = BackendModel::get('database');
 
-        $q = 'SELECT 1
-              FROM {{ moduleName }} i
-              INNER JOIN meta AS m ON m.id = i.meta_id
-              WHERE m.url = ?';
+        $query = 'SELECT 1
+                  FROM {{ moduleName }} i
+                  INNER JOIN meta AS m ON m.id = i.meta_id
+                  WHERE m.url = ?';
 
         $params = array($url);
 
         if ($id !== null) {
-            $q .= ' AND i.id != ?';
+            $query .= ' AND i.id != ?';
             $params[] = $id;
         }
 
-        $q .= ' LIMIT 1';
+        $query .= ' LIMIT 1';
 
-        $exists = (bool) $db->getVar($q, $params);
+        $exists = (bool) $db->getVar($query, $params);
 
-        // Already exists
+        // Already exists: append or increment a number after the url
         if ($exists === true) {
-            $new = BackendModel::addNumber($url);
-
-            return self::getURL($new);
+            return self::getURL(BackendModel::addNumber($url));
         }
 
         // Return

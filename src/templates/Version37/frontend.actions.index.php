@@ -106,7 +106,7 @@ class {{ actionSafe }} extends FrontendBaseBlock
         $this->header->addOpenGraphData('type', 'article', true);
         $this->header->addOpenGraphData(
             'url',
-            SITE_URL . FrontendNavigation::getURLForBlock('{{ moduleName }}', 'detail') . '/' . $this->item['url'],
+            SITE_URL . FrontendNavigation::getURLForBlock('{{ moduleName }}', 'Detail') . '/' . $this->item['url'],
             true
         );
         $this->header->addOpenGraphData(

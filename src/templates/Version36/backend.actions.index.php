@@ -19,6 +19,10 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->id = $this->getParameter('id', 'int');
 {% endif %}
 {% if action == 'delete' %}
+        $item = Backend{{ moduleNameSafe }}Model::get($this->id);
+        if (empty($item)) {
+            $this->redirect(BackendModel::createURLForAction('index') . '&report=non-existing');
+        }
 
         Backend{{ moduleNameSafe }}Model::delete($this->id);
 {% endif %}
@@ -162,7 +166,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
     {
         parent::parse();
 {% if action == 'index' %}
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 {% elseif action in ['add', 'edit'] and meta %}
         // Get url
         $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
