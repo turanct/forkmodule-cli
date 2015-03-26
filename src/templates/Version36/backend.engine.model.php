@@ -202,11 +202,9 @@ class Backend{{ moduleNameSafe }}Model
 
         $exists = (bool) $db->getVar($query, $params);
 
-        // Already exists
+        // Already exists: append or increment a number after the url
         if ($exists === true) {
-            $new = BackendModel::addNumber($url);
-
-            return self::getURL($new);
+            return self::getURL(BackendModel::addNumber($url));
         }
 
         // Return
