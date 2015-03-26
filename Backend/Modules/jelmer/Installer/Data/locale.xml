@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<locale>
+    <Backend>
+        <Core>
+            <item type="label" name="Jelmer">
+                <translation language="nl"><![CDATA[Jelmer]]></translation>
+                <translation language="en"><![CDATA[Jelmer]]></translation>
+                <translation language="fr"><![CDATA[Jelmer]]></translation>
+            </item>
+        </Core>
+        <Jelmer>
+            <item type="label" name="Overview">
+                <translation language="nl"><![CDATA[overzicht]]></translation>
+                <translation language="en"><![CDATA[overview]]></translation>
+                <translation language="fr"><![CDATA[overview]]></translation>
+            </item>
+            <item type="label" name="Index">
+                <translation language="nl"><![CDATA[Index]]></translation>
+                <translation language="en"><![CDATA[Index]]></translation>
+                <translation language="fr"><![CDATA[Index]]></translation>
+            </item>
+            <item type="label" name="Add">
+                <translation language="nl"><![CDATA[Add]]></translation>
+                <translation language="en"><![CDATA[Add]]></translation>
+                <translation language="fr"><![CDATA[Add]]></translation>
+            </item>
+            <item type="label" name="Edit">
+                <translation language="nl"><![CDATA[Edit]]></translation>
+                <translation language="en"><![CDATA[Edit]]></translation>
+                <translation language="fr"><![CDATA[Edit]]></translation>
+            </item>
+            <item type="label" name="Delete">
+                <translation language="nl"><![CDATA[Delete]]></translation>
+                <translation language="en"><![CDATA[Delete]]></translation>
+                <translation language="fr"><![CDATA[Delete]]></translation>
+            </item>
+            <item type="label" name="Settings">
+                <translation language="nl"><![CDATA[Settings]]></translation>
+                <translation language="en"><![CDATA[Settings]]></translation>
+                <translation language="fr"><![CDATA[Settings]]></translation>
+            </item>
+            <item type="label" name="Dummy">
+                <translation language="nl"><![CDATA[Dummy]]></translation>
+                <translation language="en"><![CDATA[Dummy]]></translation>
+                <translation language="fr"><![CDATA[Dummy]]></translation>
+            </item>
+            <item type="message" name="AreYouSure">
+                <translation language="nl"><![CDATA[Bent u zeker?]]></translation>
+                <translation language="en"><![CDATA[Are you sure?]]></translation>
+                <translation language="fr"><![CDATA[Êtes-vous sûr?]]></translation>
+            </item>
+        </Jelmer>
+    </Backend>
+    <Frontend>
+        <Core>
+            <item type="label" name="Jelmer">
+                <translation language="nl"><![CDATA[Jelmer]]></translation>
+                <translation language="en"><![CDATA[Jelmer]]></translation>
+                <translation language="fr"><![CDATA[Jelmer]]></translation>
+            </item>
+            <item type="label" name="Index">
+                <translation language="nl"><![CDATA[Index]]></translation>
+                <translation language="en"><![CDATA[Index]]></translation>
+                <translation language="fr"><![CDATA[Index]]></translation>
+            </item>
+            <item type="label" name="Detail">
+                <translation language="nl"><![CDATA[Detail]]></translation>
+                <translation language="en"><![CDATA[Detail]]></translation>
+                <translation language="fr"><![CDATA[Detail]]></translation>
+            </item>
+        </Core>
+    </Frontend>
+</locale>

@@ -1,10 +1,19 @@
 <?php
+
+namespace Frontend\Modules\Jelmer\Actions;
+
+use Common\Form;
+use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
+use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Model as FrontendModel;
+use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Modules\Jelmer\Engine\Model;
+
 /**
- * Frontend {{ moduleName }} {{ action }} action
+ * Frontend Jelmer detail action
  */
-class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
+class Detail extends FrontendBaseBlock
 {
-{% if action == 'detail' %}
     /**
      * @var string Slug of current item
      */
@@ -15,13 +24,6 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
      */
     protected $item;
 
-{% elseif action == 'index' %}
-    /**
-     * @var array All items
-     */
-    protected $items;
-
-{% endif %}
     /**
      * Execute the extra
      */
@@ -38,7 +40,6 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
      */
     protected function getData()
     {
-{% if action == 'detail' %}
         // Get slug
         $this->slug = $this->URL->getParameter(1);
         if ($this->slug === null) {
@@ -46,17 +47,10 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
         }
 
         // Get item
-{% if meta %}
-        $this->item = Frontend{{ moduleNameSafe }}Model::getByURL($this->slug);
-{% else %}
-        $this->item = Frontend{{ moduleNameSafe }}Model::get($this->slug);
-{% endif %}
+        $this->item = Model::getByURL($this->slug);
         if (empty($this->item)) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
-{% elseif action == 'index' %}
-        $this->items = Frontend{{ moduleNameSafe }}Model::getAll();
-{% endif %}
     }
 
     /**
@@ -64,15 +58,15 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
      */
     protected function parse()
     {
-{% if action != 'index' %}
         // Breadcrumbs
         $this->breadcrumb->addElement(
-            SpoonFilter::ucfirst(FL::lbl('{{ actionSafe }}')),
-            FrontendNavigation::getURLForBlock('{{ moduleName }}', '{{ action }}')
+            \SpoonFilter::ucfirst(FL::lbl('Jelmer')),
+            FrontendNavigation::getURLForBlock('Jelmer', 'Index')
         );
-{% endif %}
-{% if action == 'detail' %}
-{% if meta %}
+        $this->breadcrumb->addElement(
+            \SpoonFilter::ucfirst(FL::lbl('Detail')),
+            FrontendNavigation::getURLForBlock('Jelmer', 'detail')
+        );
 
         // SEO
         $this->header->setPageTitle(
@@ -96,7 +90,7 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
         $this->header->addOpenGraphData('type', 'article', true);
         $this->header->addOpenGraphData(
             'url',
-            SITE_URL . FrontendNavigation::getURLForBlock('{{ moduleName }}', 'Detail') . '/' . $this->item['url'],
+            SITE_URL . FrontendNavigation::getURLForBlock('Jelmer', 'detail') . '/' . $this->item['url'],
             true
         );
         $this->header->addOpenGraphData(
@@ -109,14 +103,8 @@ class Frontend{{ moduleNameSafe }}{{ actionSafe }} extends FrontendBaseBlock
             ($this->item['meta_description_overwrite'] == 'Y') ? $this->item['meta_description'] : $this->item['title'],
             true
         );
-{% endif %}
 
         // Assign item
         $this->tpl->assign('item', $this->item);
-{% elseif action == 'index' %}
-
-        // Assign items
-        $this->tpl->assign('items', $this->items);
-{% endif %}
     }
 }

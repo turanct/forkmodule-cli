@@ -1,8 +1,13 @@
 <?php
+
+namespace Frontend\Modules\Jelmer;
+
+use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+
 /**
- * Backend {{ moduleName }} config
+ * Frontend Jelmer config
  */
-class Backend{{ moduleNameSafe }}Config extends BackendBaseConfig
+class Config extends FrontendBaseConfig
 {
     /**
      * The default action
