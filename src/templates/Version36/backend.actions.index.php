@@ -19,6 +19,10 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->id = $this->getParameter('id', 'int');
 {% endif %}
 {% if action == 'delete' %}
+        $item = Backend{{ moduleNameSafe }}Model::get($this->id);
+        if (empty($item)) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&report=non-existing');
+        }
 
         Backend{{ moduleNameSafe }}Model::delete($this->id);
 {% endif %}
