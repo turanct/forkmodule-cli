@@ -21,7 +21,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 {% if action == 'delete' %}
         $item = Backend{{ moduleNameSafe }}Model::get($this->id);
         if (empty($item)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&report=non-existing');
+            $this->redirect(BackendModel::createURLForAction('index') . '&report=non-existing');
         }
 
         Backend{{ moduleNameSafe }}Model::delete($this->id);
@@ -41,7 +41,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->display();
 {% else %}
         // Redirect
-        $this->redirect(BackendModel::createURLForAction('Index') . '&report={{ action }}{% if action == 'delete' %}d{% endif %}');
+        $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}{% if action == 'delete' %}d{% endif %}');
 {% endif %}
     }
 {% if action == 'index' %}
@@ -55,7 +55,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->dataGrid = new BackendDataGridArray(Backend{{ moduleNameSafe }}Model::getAll());
 
         // Add buttons
-        $editURL = BackendModel::createURLForAction('Edit') . '&id=[id]';
+        $editURL = BackendModel::createURLForAction('edit') . '&id=[id]';
         $this->dataGrid->addColumn(
             'edit',
             null,
@@ -82,7 +82,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 
         // Validate
         if (empty($this->record)) {
-            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
         }
     }
 {% endif %}
@@ -145,7 +145,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
 {% endif %}
 
                 // Redirect
-                $redirectURL = BackendModel::createURLForAction('Index');
+                $redirectURL = BackendModel::createURLForAction('index');
 {% if action in ['add', 'edit'] %}
                 $redirectURL .= '&highlight=row-' . {% if action == 'add' %}$id{% elseif action == 'edit' %}$this->record['id']{% endif %};
 {% endif %}
@@ -169,7 +169,7 @@ class Backend{{ moduleNameSafe }}{{ actionSafe }} extends BackendBaseAction
         $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 {% elseif action in ['add', 'edit'] and meta %}
         // Get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Detail');
+        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
         $url404 = BackendModel::getURL(404);
 
         // Parse additional variables

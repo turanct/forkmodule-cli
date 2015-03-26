@@ -9,7 +9,7 @@ class Backend{{ moduleNameSafe }}Config extends BackendBaseConfig
      *
      * @var    string
      */
-    protected $defaultAction = 'Index';
+    protected $defaultAction = 'index';
 
     /**
      * The disabled actions
