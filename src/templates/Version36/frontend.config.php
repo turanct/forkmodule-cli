@@ -9,7 +9,7 @@ class Frontend{{ moduleNameSafe }}Config extends FrontendBaseConfig
      *
      * @var    string
      */
-    protected $defaultAction = 'Index';
+    protected $defaultAction = 'index';
 
     /**
      * The disabled actions
