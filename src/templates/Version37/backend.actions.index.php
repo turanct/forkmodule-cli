@@ -40,6 +40,10 @@ class {{ actionSafe }} extends BackendBaseAction
         $this->id = $this->getParameter('id', 'int');
 {% endif %}
 {% if action == 'delete' %}
+        $item = Model::get($this->id);
+        if (empty($item)) {
+            $this->redirect(BackendModel::createURLForAction('Index') . '&report=non-existing');
+        }
 
         Model::delete($this->id);
 {% endif %}
