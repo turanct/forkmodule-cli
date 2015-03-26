@@ -51,7 +51,7 @@
 
     <div class="fullwidthOptions">
 {% if action == 'edit' %}
-        <a href="{$var|geturl:'delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
+        <a href="{$var|geturl:'Delete'}&amp;id={$item.id}" data-message-id="confirmDelete" class="askConfirmation button linkButton icon iconDelete">
             <span>{$lblDelete|ucfirst}</span>
         </a>
 
