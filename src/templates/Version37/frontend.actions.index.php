@@ -111,7 +111,7 @@ class {{ actionSafe }} extends FrontendBaseBlock
         );
         $this->header->addOpenGraphData(
             'site_name',
-            FrontendModel::getModuleSetting('core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE),
+            FrontendModel::getModuleSetting('Core', 'site_title_' . FRONTEND_LANGUAGE, SITE_DEFAULT_TITLE),
             true
         );
         $this->header->addOpenGraphData(
