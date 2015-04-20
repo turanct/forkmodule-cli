@@ -51,14 +51,14 @@ class Installer extends ModuleInstaller
 {% endfor %}
 
         // Set rights for admin
-        $this->setModuleRights(1, '{{ moduleName }}');
+        $this->setModuleRights(1, $this->getModule());
 {% for action in backendActions %}
-        $this->setActionRights(1, '{{ moduleName }}', '{{ action.name }}');
+        $this->setActionRights(1, $this->getModule(), '{{ action.name }}');
 {% endfor %}
         // Set rights for users
-        $this->setModuleRights(2, '{{ moduleName }}');
+        $this->setModuleRights(2, $this->getModule());
 {% for action in backendActions %}
-        $this->setActionRights(2, '{{ moduleName }}', '{{ action.name }}');
+        $this->setActionRights(2, $this->getModule(), '{{ action.name }}');
 {% endfor %}
 
 {% if backendWidgets %}
@@ -72,17 +72,17 @@ class Installer extends ModuleInstaller
         );
 
 {% for widget in backendWidgets %}
-        $this->insertDashboardWidget('{{ moduleName }}', '{{ widget.name }}', $widgetSettings);
+        $this->insertDashboardWidget($this->getModule(), '{{ widget.name }}', $widgetSettings);
 {% endfor %}
 
 {% endif %}
 {% if frontendActions or frontendWidgets %}
         // Insert extras
-        $id = $this->insertExtra('{{ moduleName }}', 'block', '{{ moduleNameSafe }}', null, null, 'N', 1000);
+        $id = $this->insertExtra($this->getModule(), 'block', '{{ moduleNameSafe }}', null, null, 'N', 1000);
 
 {% endif %}
 {% for widget in frontendWidgets %}
-        $this->insertExtra('{{ moduleName }}', 'widget', '{{ widget.safe }}', '{{ widget.name }}', null, 'N', 1001);
+        $this->insertExtra($this->getModule(), 'widget', '{{ widget.safe }}', '{{ widget.name }}', null, 'N', 1001);
 {% endfor %}
     }
 }

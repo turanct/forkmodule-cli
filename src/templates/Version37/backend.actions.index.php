@@ -57,8 +57,7 @@ class {{ actionSafe }} extends BackendBaseAction
         $this->parse();
         $this->display();
 {% else %}
-        // Redirect
-        $this->redirect(BackendModel::createURLForAction('index') . '&report={{ action }}{% if action == 'delete' %}d{% endif %}');
+        $this->redirect(BackendModel::createURLForAction('Index') . '&report={{ action }}{% if action == 'delete' %}d{% endif %}');
 {% endif %}
     }
 {% if action == 'index' %}
@@ -72,7 +71,7 @@ class {{ actionSafe }} extends BackendBaseAction
         $this->dataGrid = new BackendDataGridArray(Model::getAll());
 
         // Add buttons
-        $editURL = BackendModel::createURLForAction('edit') . '&id=[id]';
+        $editURL = BackendModel::createURLForAction('Edit') . '&id=[id]';
         $this->dataGrid->addColumn(
             'edit',
             null,
@@ -100,7 +99,7 @@ class {{ actionSafe }} extends BackendBaseAction
 
         // Validate
         if (empty($this->record)) {
-            $this->redirect(BackendModel::createURLForAction('index') . '&error=non-existing');
+            $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 {% endif %}
@@ -162,8 +161,7 @@ class {{ actionSafe }} extends BackendBaseAction
                 {% if action == 'add' %}$id = {% endif %}Model::{% if action == 'add' %}create{% endif %}{% if action == 'edit' %}update{% endif %}($item{% if tags %}, $tags{% endif %});
 {% endif %}
 
-                // Redirect
-                $redirectURL = BackendModel::createURLForAction('index');
+                $redirectURL = BackendModel::createURLForAction('Index');
 {% if action in ['add', 'edit'] %}
                 $redirectURL .= '&highlight=row-' . {% if action == 'add' %}$id{% elseif action == 'edit' %}$this->record['id']{% endif %};
 {% endif %}
@@ -184,10 +182,10 @@ class {{ actionSafe }} extends BackendBaseAction
     {
         parent::parse();
 {% if action == 'index' %}
-        $this->tpl->assign('dataGrid', ($this->dataGrid->getNumResults() != 0) ? $this->dataGrid->getContent() : false);
+        $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 {% elseif action in ['add', 'edit'] and meta %}
         // Get url
-        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'detail');
+        $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Detail');
         $url404 = BackendModel::getURL(404);
 
         // Parse additional variables
