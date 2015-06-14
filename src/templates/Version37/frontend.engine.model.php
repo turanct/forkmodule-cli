@@ -38,8 +38,8 @@ class Model
 {% if meta %}
              INNER JOIN meta m ON m.id = i.meta_id
 {% endif %}
-             WHERE i.id = ?',
-            array((int) $id)
+             WHERE i.id = :id',
+            array('id' => (int) $id)
         );
 
         return $item;
@@ -69,8 +69,8 @@ class Model
              m.keywords_overwrite AS meta_keywords_overwrite
              FROM {{ moduleName|lower }} i
              INNER JOIN meta m ON m.id = i.meta_id
-             WHERE m.url = ?',
-            array($url)
+             WHERE m.url = :url',
+            array('url' => $url)
         );
 
         return $item;

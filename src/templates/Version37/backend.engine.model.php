@@ -201,13 +201,13 @@ class Model
         $query = 'SELECT 1
                   FROM {{ moduleName|lower }} i
                   INNER JOIN meta AS m ON m.id = i.meta_id
-                  WHERE m.url = ?';
+                  WHERE m.url = :url';
 
-        $params = array($url);
+        $params = array('url' => $url);
 
         if ($id !== null) {
-            $query .= ' AND i.id != ?';
-            $params[] = $id;
+            $query .= ' AND i.id != :id';
+            $params['id'] = $id;
         }
 
         $query .= ' LIMIT 1';
