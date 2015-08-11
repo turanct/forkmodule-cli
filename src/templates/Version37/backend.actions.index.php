@@ -58,7 +58,7 @@ class {{ actionSafe }} extends BackendBaseAction
         $this->parse();
         $this->display();
 {% else %}
-        // Redirect
+        // redirect
         $this->redirect(BackendModel::createURLForAction('Index') . '&report={{ action }}{% if action == 'delete' %}d{% endif %}');
 {% endif %}
     }
@@ -66,10 +66,10 @@ class {{ actionSafe }} extends BackendBaseAction
 
     protected function loadDataGrids()
     {
-        // Create datagrid
+        // create datagrid
         $this->dataGrid = new BackendDataGridArray(Model::getAll());
 
-        // Add buttons
+        // add buttons
         $editURL = BackendModel::createURLForAction('Edit') . '&id=[id]';
         $this->dataGrid->addColumn(
             'edit',
@@ -82,7 +82,7 @@ class {{ actionSafe }} extends BackendBaseAction
         $this->dataGrid->setColumnURL('title', $editURL);
 {% endif %}
 
-        // Hide unnecessary columns
+        // hide unnecessary columns
         $hiddenColumns = array({% if meta %}'meta_id'{% endif %});
         $this->dataGrid->setColumnsHidden($hiddenColumns);
     }
@@ -93,7 +93,7 @@ class {{ actionSafe }} extends BackendBaseAction
     {
         $this->record = Model::get($this->id);
 
-        // Validate
+        // validate
         if (empty($this->record)) {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
@@ -102,10 +102,10 @@ class {{ actionSafe }} extends BackendBaseAction
 
     protected function handleForm()
     {
-        // Create the form
+        // create the form
         $form = new BackendForm('{{ action }}');
 
-        // Add fields
+        // add fields
 {% if meta %}
         $fieldTitle = $form->addText('title', {% if action == 'edit' %}$this->record['title']{% else %}null{% endif %}, 255, 'inputText title', 'inputTextError title');
 {% endif %}
@@ -114,28 +114,28 @@ class {{ actionSafe }} extends BackendBaseAction
 {% endif %}
 {% if meta %}
 
-        // Meta
+        // meta
 {% if action == 'add' %}
         $meta = new BackendMeta($form, null, 'title', true);
 {% elseif action == 'edit' %}
         $meta = new BackendMeta($form, $this->record['meta_id'], 'title', true);
 
-        // Set callback for generating a unique URL
+        // set callback for generating a unique URL
         $meta->setUrlCallback('Backend\Modules\{{ moduleNameSafe }}\Engine\Model', 'getURL', array($this->record['id']));
 {% endif %}
 {% endif %}
 
-        // Submitted?
+        // submitted?
         if ($form->isSubmitted()) {
-            // Check fields
+            // check fields
 {% if meta %}
             $meta->validate();
             $fieldTitle->isFilled(BL::err('FieldIsRequired'));
 {% endif %}
 
-            // Correct?
+            // correct?
             if ($form->isCorrect()) {
-                // Build item
+                // build item
                 $item = array();
 {% if action == 'edit' %}
                 $item['id'] = $this->id;
@@ -149,12 +149,12 @@ class {{ actionSafe }} extends BackendBaseAction
                 $tags = $fieldTags->getValue();
 {% endif %}
 
-                // Save
+                // save
 {% if action in ['add', 'edit'] %}
                 {% if action == 'add' %}$id = {% endif %}Model::{% if action == 'add' %}create{% endif %}{% if action == 'edit' %}update{% endif %}($item{% if tags %}, $tags{% endif %});
 {% endif %}
 
-                // Redirect
+                // redirect
                 $redirectURL = BackendModel::createURLForAction('Index');
 {% if action in ['add', 'edit'] %}
                 $redirectURL .= '&highlight=row-' . {% if action == 'add' %}$id{% elseif action == 'edit' %}$this->record['id']{% endif %};
@@ -175,11 +175,11 @@ class {{ actionSafe }} extends BackendBaseAction
 {% if action == 'index' %}
         $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 {% elseif action in ['add', 'edit'] and meta %}
-        // Get url
+        // get url
         $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Detail');
         $url404 = BackendModel::getURL(404);
 
-        // Parse additional variables
+        // parse additional variables
         if ($url404 != $url) {
             $this->tpl->assign('detailURL', SITE_URL . $url);
         }

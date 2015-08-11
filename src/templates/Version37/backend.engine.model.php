@@ -35,16 +35,16 @@ class Model
         /** @var \SpoonDatabase $db */
         $db = BackendModel::get('database');
 
-        // Insert into the database
+        // insert into the database
         $id = $db->insert('{{ moduleName|lower }}', $item);
 {% if tags %}
 
-        // Insert tags
+        // insert tags
         BackendTagsModel::saveTags($id, $tags, '{{ moduleName|lower }}');
 {% endif %}
 {% if searchable %}
 
-        // Make searchable
+        // make searchable
         BackendSearchModel::saveIndex(
             '{{ moduleName|lower }}',
             $id,
@@ -84,7 +84,7 @@ class Model
         );
 {% if tags %}
 
-        // Get tags
+        // get tags
         $item['tags'] = BackendTagsModel::getTags('{{ moduleName|lower }}', $id);
 {% endif %}
 
@@ -114,16 +114,16 @@ class Model
             return false;
         }
 
-        // Insert into the database
+        // insert into the database
         $result = $db->update('{{ moduleName|lower }}', $item, 'id = ?', array((int) $item['id']));
 {% if tags %}
 
-        // Insert tags
+        // insert tags
         BackendTagsModel::saveTags($item['id'], $tags, '{{ moduleName|lower }}');
 {% endif %}
 {% if searchable %}
 
-        // Make searchable
+        // make searchable
         BackendSearchModel::saveIndex(
             '{{ moduleName|lower }}',
             $item['id'],
@@ -150,17 +150,17 @@ class Model
         $db = BackendModel::get('database');
 {% if tags %}
 
-        // Remove tags
+        // remove tags
         BackendTagsModel::saveTags($id, array(), '{{ moduleName|lower }}');
 {% endif %}
 {% if searchable %}
 
-        // Delete search index
+        // delete search index
         BackendSearchModel::removeIndex('{{ moduleName|lower }}', $id);
 {% endif %}
 {% if meta %}
 
-        // Remove meta
+        // remove meta
         self::deleteMeta($id);
 {% endif %}
 
@@ -178,10 +178,10 @@ class Model
         /** @var \SpoonDatabase $db */
         $db = BackendModel::get('database');
 
-        // Get the item details
+        // get the item details
         $item = self::get($id);
 
-        // Delete remaining meta records
+        // delete remaining meta records
         $db->delete('meta', 'id = :metaid', array('metaid' => (int) $item['meta_id']));
     }
 
@@ -214,12 +214,12 @@ class Model
 
         $exists = (bool) $db->getVar($query, $params);
 
-        // Already exists: append or increment a number after the url
+        // already exists: append or increment a number after the url
         if ($exists === true) {
             return self::getURL(BackendModel::addNumber($url));
         }
 
-        // Return
+        // return
         return $url;
     }
 {% endif %}

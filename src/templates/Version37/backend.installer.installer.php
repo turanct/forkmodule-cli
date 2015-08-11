@@ -14,16 +14,16 @@ class Installer extends ModuleInstaller
      */
     public function install()
     {
-        // Load install.sql
+        // load install.sql
         $this->importSQL(__DIR__ . '/Data/install.sql');
 
-        // Add module
+        // add module
         $this->addModule('{{ moduleName }}');
 
-        // Import locale
+        // import locale
         $this->importLocale(__DIR__ . '/Data/locale.xml');
 
-        // Set navigation
+        // set navigation
         $navigationModulesId = $this->setNavigation(null, 'Modules');
         $navigation{{ moduleNameSafe }}Id = $this->setNavigation($navigationModulesId, '{{ moduleNameSafe }}', '{{ moduleName|lower }}/index');
 
@@ -50,12 +50,12 @@ class Installer extends ModuleInstaller
 {% endif %}
 {% endfor %}
 
-        // Set rights for admin
+        // set rights for admin
         $this->setModuleRights(1, '{{ moduleName }}');
 {% for action in backendActions %}
         $this->setActionRights(1, '{{ moduleName }}', '{{ action.name }}');
 {% endfor %}
-        // Set rights for users
+        // set rights for users
         $this->setModuleRights(2, '{{ moduleName }}');
 {% for action in backendActions %}
         $this->setActionRights(2, '{{ moduleName }}', '{{ action.name }}');
@@ -63,7 +63,7 @@ class Installer extends ModuleInstaller
 
 {% if backendWidgets %}
 
-        // Insert backend widgets
+        // insert backend widgets
         $widgetSettings = array(
             'column' => 'right',
             'position' => 1,
@@ -77,7 +77,7 @@ class Installer extends ModuleInstaller
 
 {% endif %}
 {% if frontendActions or frontendWidgets %}
-        // Insert extras
+        // insert extras
         $id = $this->insertExtra('{{ moduleName }}', 'block', '{{ moduleNameSafe }}', null, null, 'N', 1000);
 
 {% endif %}

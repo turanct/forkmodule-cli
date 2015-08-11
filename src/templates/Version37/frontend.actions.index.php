@@ -43,13 +43,13 @@ class {{ actionSafe }} extends FrontendBaseBlock
     protected function getData()
     {
 {% if action == 'detail' %}
-        // Get slug
+        // get slug
         $this->slug = $this->URL->getParameter(1);
         if ($this->slug === null) {
             $this->redirect(FrontendNavigation::getURL(404));
         }
 
-        // Get item
+        // get item
 {% if meta %}
         $this->item = Model::getByURL($this->slug);
 {% else %}
@@ -66,7 +66,7 @@ class {{ actionSafe }} extends FrontendBaseBlock
     protected function parse()
     {
 {% if action != 'index' %}
-        // Breadcrumbs
+        // breadcrumbs
         $this->breadcrumb->addElement(
             \SpoonFilter::ucfirst(FL::lbl('{{ actionSafe }}')),
             FrontendNavigation::getURLForBlock('{{ moduleName }}', '{{ action }}')
@@ -112,11 +112,11 @@ class {{ actionSafe }} extends FrontendBaseBlock
         );
 {% endif %}
 
-        // Assign item
+        // assign item
         $this->tpl->assign('item', $this->item);
 {% elseif action == 'index' %}
 
-        // Assign items
+        // assign items
         $this->tpl->assign('items', $this->items);
 {% endif %}
     }
