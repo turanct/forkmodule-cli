@@ -29,9 +29,6 @@ class {{ actionSafe }} extends BackendBaseAction{{ actionSafe }}
 class {{ actionSafe }} extends BackendBaseAction
 {% endif %}
 {
-    /**
-     * Execute the action
-     */
     public function execute()
     {
         parent::execute();
@@ -67,9 +64,6 @@ class {{ actionSafe }} extends BackendBaseAction
     }
 {% if action == 'index' %}
 
-    /**
-     * Loads the datagrids
-     */
     protected function loadDataGrids()
     {
         // Create datagrid
@@ -95,9 +89,6 @@ class {{ actionSafe }} extends BackendBaseAction
 {% elseif action in ['add', 'edit'] %}
 {% if action == 'edit' %}
 
-    /**
-     * Get data
-     */
     protected function getData()
     {
         $this->record = Model::get($this->id);
@@ -109,9 +100,6 @@ class {{ actionSafe }} extends BackendBaseAction
     }
 {% endif %}
 
-    /**
-     * Handle form
-     */
     protected function handleForm()
     {
         // Create the form
@@ -181,9 +169,6 @@ class {{ actionSafe }} extends BackendBaseAction
 {% endif %}
 {% if action != 'delete' %}
 
-    /**
-     * Parse method
-     */
     protected function parse()
     {
         parent::parse();

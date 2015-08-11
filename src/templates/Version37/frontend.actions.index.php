@@ -32,9 +32,6 @@ class {{ actionSafe }} extends FrontendBaseBlock
     protected $items;
 
 {% endif %}
-    /**
-     * Execute the extra
-     */
     public function execute()
     {
         parent::execute();
@@ -43,9 +40,6 @@ class {{ actionSafe }} extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
     protected function getData()
     {
 {% if action == 'detail' %}
@@ -69,9 +63,6 @@ class {{ actionSafe }} extends FrontendBaseBlock
 {% endif %}
     }
 
-    /**
-     * Parse the data into the template
-     */
     protected function parse()
     {
 {% if action != 'index' %}
