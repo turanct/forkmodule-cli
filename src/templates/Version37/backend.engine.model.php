@@ -32,11 +32,8 @@ class Model
     public static function create(array $item)
 {% endif %}
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
-
         // insert into the database
-        $id = $db->insert('{{ moduleName|lower }}', $item);
+        $id = BackendModel::get('database')->insert('{{ moduleName|lower }}', $item);
 {% if tags %}
 
         // insert tags
@@ -67,10 +64,7 @@ class Model
      */
     public static function get($id)
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
-
-        $item = (array) $db->getRecord(
+        $item = (array) BackendModel::get('database')->getRecord(
             'SELECT i.*{% if meta %}, m.url
 {% else %}
 
@@ -107,15 +101,12 @@ class Model
     public static function update(array $item)
 {% endif %}
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
-
         if (!isset($item['id'])) {
             return false;
         }
 
         // insert into the database
-        $result = $db->update('{{ moduleName|lower }}', $item, 'id = ?', array((int) $item['id']));
+        $result = BackendModel::get('database')->update('{{ moduleName|lower }}', $item, 'id = ?', array((int) $item['id']));
 {% if tags %}
 
         // insert tags
@@ -146,8 +137,6 @@ class Model
      */
     public static function delete($id)
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
 {% if tags %}
 
         // remove tags
@@ -164,7 +153,7 @@ class Model
         self::deleteMeta($id);
 {% endif %}
 
-        return $db->delete('{{ moduleName|lower }}', 'id = :id', array('id' => (int) $id));
+        return BackendModel::get('database')->delete('{{ moduleName|lower }}', 'id = :id', array('id' => (int) $id));
     }
 {% if meta %}
 
@@ -175,14 +164,11 @@ class Model
      */
     public static function deleteMeta($id)
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
-
         // get the item details
         $item = self::get($id);
 
         // delete remaining meta records
-        $db->delete('meta', 'id = :metaid', array('metaid' => (int) $item['meta_id']));
+        BackendModel::get('database')->delete('meta', 'id = :metaid', array('metaid' => (int) $item['meta_id']));
     }
 
     /**
@@ -195,9 +181,6 @@ class Model
      */
     public static function getURL($url, $id = null)
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
-
         $query = 'SELECT 1
                   FROM {{ moduleName|lower }} i
                   INNER JOIN meta AS m ON m.id = i.meta_id
@@ -212,7 +195,7 @@ class Model
 
         $query .= ' LIMIT 1';
 
-        $exists = (bool) $db->getVar($query, $params);
+        $exists = (bool) BackendModel::get('database')->getVar($query, $params);
 
         // already exists: append or increment a number after the url
         if ($exists === true) {
