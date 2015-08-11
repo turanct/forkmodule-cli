@@ -2,12 +2,12 @@
 
 namespace Frontend\Modules\{{ moduleNameSafe }};
 
-use Frontend\Core\Engine\Base\Config as FrontendBaseConfig;
+use Frontend\Core\Engine\Base\Config as BaseConfig;
 
 /**
  * Frontend {{ moduleName }} config
  */
-class Config extends FrontendBaseConfig
+class Config extends BaseConfig
 {
     /**
      * The default action

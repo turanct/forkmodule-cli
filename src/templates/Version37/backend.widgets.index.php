@@ -1,12 +1,12 @@
 <?php
 namespace Backend\Modules\{{ moduleNameSafe }}\Widgets;
 
-use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use Backend\Core\Engine\Base\Widget;
 
 /**
  * Backend {{ moduleName }} {{ widget }} widget
  */
-class {{ widgetSafe }} extends BackendBaseWidget
+class {{ widgetSafe }} extends Widget
 {
     public function execute()
     {

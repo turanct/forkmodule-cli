@@ -2,17 +2,16 @@
 
 namespace Frontend\Modules\{{ moduleNameSafe }}\Actions;
 
-use Common\Form;
-use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Base\Block;
+use Frontend\Core\Engine\Language;
 use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Navigation;
 use Frontend\Modules\{{ moduleNameSafe }}\Engine\Model;
 
 /**
  * Frontend {{ moduleName }} {{ action }} action
  */
-class {{ actionSafe }} extends FrontendBaseBlock
+class {{ actionSafe }} extends Block
 {
 {% if action == 'detail' %}
     /**
@@ -46,7 +45,7 @@ class {{ actionSafe }} extends FrontendBaseBlock
         // get slug
         $this->slug = $this->URL->getParameter(1);
         if ($this->slug === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(Navigation::getURL(404));
         }
 
         // get item
@@ -56,7 +55,7 @@ class {{ actionSafe }} extends FrontendBaseBlock
         $this->item = Model::get($this->slug);
 {% endif %}
         if (empty($this->item)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(Navigation::getURL(404));
         }
 {% elseif action == 'index' %}
         $this->items = Model::getAll();
@@ -68,8 +67,8 @@ class {{ actionSafe }} extends FrontendBaseBlock
 {% if action != 'index' %}
         // breadcrumbs
         $this->breadcrumb->addElement(
-            \SpoonFilter::ucfirst(FL::lbl('{{ actionSafe }}')),
-            FrontendNavigation::getURLForBlock('{{ moduleName }}', '{{ action }}')
+            \SpoonFilter::ucfirst(Language::lbl('{{ actionSafe }}')),
+            Navigation::getURLForBlock('{{ moduleName }}', '{{ action }}')
         );
 {% endif %}
 {% if action == 'detail' %}
@@ -97,7 +96,7 @@ class {{ actionSafe }} extends FrontendBaseBlock
         $this->header->addOpenGraphData('type', 'article', true);
         $this->header->addOpenGraphData(
             'url',
-            SITE_URL . FrontendNavigation::getURLForBlock('{{ moduleName }}', 'Detail') . '/' . $this->item['url'],
+            SITE_URL . Navigation::getURLForBlock('{{ moduleName }}', 'Detail') . '/' . $this->item['url'],
             true
         );
         $this->header->addOpenGraphData(

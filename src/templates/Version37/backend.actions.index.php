@@ -3,20 +3,20 @@
 namespace Backend\Modules\{{ moduleNameSafe }}\Actions;
 
 {% if action in ['add', 'edit', 'delete'] %}
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Form;
+use Backend\Core\Engine\Meta;
 {% endif %}
 {% if action in ['index', 'add', 'edit', 'delete'] %}
-use Backend\Core\Engine\Base\Action{{ actionSafe }} as BackendBaseAction{{ actionSafe }};
+use Backend\Core\Engine\Base\Action{{ actionSafe }};
 {% else %}
-use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Base\Action;
+use Backend\Core\Engine\Form;
 {% endif %}
 {% if action in ['index'] %}
-use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\DataGridArray;
+use Backend\Core\Engine\DataGridFunctions;
 {% endif %}
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Language;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\{{ moduleNameSafe }}\Engine\Model;
 
@@ -24,9 +24,9 @@ use Backend\Modules\{{ moduleNameSafe }}\Engine\Model;
  * Backend {{ moduleName }} {{ action }} action
  */
 {% if action in ['index', 'add', 'edit', 'delete'] %}
-class {{ actionSafe }} extends BackendBaseAction{{ actionSafe }}
+class {{ actionSafe }} extends Action{{ actionSafe }}
 {% else %}
-class {{ actionSafe }} extends BackendBaseAction
+class {{ actionSafe }} extends Action
 {% endif %}
 {
     public function execute()
@@ -67,16 +67,16 @@ class {{ actionSafe }} extends BackendBaseAction
     protected function loadDataGrids()
     {
         // create datagrid
-        $this->dataGrid = new BackendDataGridArray(Model::getAll());
+        $this->dataGrid = new DataGridArray(Model::getAll());
 
         // add buttons
         $editURL = BackendModel::createURLForAction('Edit') . '&id=[id]';
         $this->dataGrid->addColumn(
             'edit',
             null,
-            BL::lbl('Edit'),
+            Language::lbl('Edit'),
             $editURL,
-            BL::lbl('Edit')
+            Language::lbl('Edit')
         );
 {% if meta %}
         $this->dataGrid->setColumnURL('title', $editURL);
@@ -103,7 +103,7 @@ class {{ actionSafe }} extends BackendBaseAction
     protected function handleForm()
     {
         // create the form
-        $form = new BackendForm('{{ action }}');
+        $form = new Form('{{ action }}');
 
         // add fields
 {% if meta %}
@@ -116,9 +116,9 @@ class {{ actionSafe }} extends BackendBaseAction
 
         // meta
 {% if action == 'add' %}
-        $meta = new BackendMeta($form, null, 'title', true);
+        $meta = new Meta($form, null, 'title', true);
 {% elseif action == 'edit' %}
-        $meta = new BackendMeta($form, $this->record['meta_id'], 'title', true);
+        $meta = new Meta($form, $this->record['meta_id'], 'title', true);
 
         // set callback for generating a unique URL
         $meta->setUrlCallback('Backend\Modules\{{ moduleNameSafe }}\Engine\Model', 'getURL', array($this->record['id']));
@@ -130,7 +130,7 @@ class {{ actionSafe }} extends BackendBaseAction
             // check fields
 {% if meta %}
             $meta->validate();
-            $fieldTitle->isFilled(BL::err('FieldIsRequired'));
+            $fieldTitle->isFilled(Language::err('FieldIsRequired'));
 {% endif %}
 
             // correct?

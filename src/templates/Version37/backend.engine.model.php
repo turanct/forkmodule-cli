@@ -3,12 +3,12 @@
 namespace Backend\Modules\{{ moduleNameSafe }}\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Language;
 {% if tags %}
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Backend\Modules\Tags\Engine\Model as TagsModel;
 {% endif %}
 {% if searchable %}
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Modules\Search\Engine\Model as SearchModel;
 {% endif %}
 
 /**
@@ -37,12 +37,12 @@ class Model
 {% if tags %}
 
         // insert tags
-        BackendTagsModel::saveTags($id, $tags, '{{ moduleName|lower }}');
+        TagsModel::saveTags($id, $tags, '{{ moduleName|lower }}');
 {% endif %}
 {% if searchable %}
 
         // make searchable
-        BackendSearchModel::saveIndex(
+        SearchModel::saveIndex(
             '{{ moduleName|lower }}',
             $id,
             array(
@@ -79,7 +79,7 @@ class Model
 {% if tags %}
 
         // get tags
-        $item['tags'] = BackendTagsModel::getTags('{{ moduleName|lower }}', $id);
+        $item['tags'] = TagsModel::getTags('{{ moduleName|lower }}', $id);
 {% endif %}
 
         return $item;
@@ -110,12 +110,12 @@ class Model
 {% if tags %}
 
         // insert tags
-        BackendTagsModel::saveTags($item['id'], $tags, '{{ moduleName|lower }}');
+        TagsModel::saveTags($item['id'], $tags, '{{ moduleName|lower }}');
 {% endif %}
 {% if searchable %}
 
         // make searchable
-        BackendSearchModel::saveIndex(
+        SearchModel::saveIndex(
             '{{ moduleName|lower }}',
             $item['id'],
             array(
@@ -140,12 +140,12 @@ class Model
 {% if tags %}
 
         // remove tags
-        BackendTagsModel::saveTags($id, array(), '{{ moduleName|lower }}');
+        TagsModel::saveTags($id, array(), '{{ moduleName|lower }}');
 {% endif %}
 {% if searchable %}
 
         // delete search index
-        BackendSearchModel::removeIndex('{{ moduleName|lower }}', $id);
+        SearchModel::removeIndex('{{ moduleName|lower }}', $id);
 {% endif %}
 {% if meta %}
 

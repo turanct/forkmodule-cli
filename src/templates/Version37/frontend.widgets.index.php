@@ -2,12 +2,12 @@
 
 namespace Frontend\Modules\{{ moduleName }}\Widgets;
 
-use Frontend\Core\Engine\Base\Widget as FrontendBaseWidget;
+use Frontend\Core\Engine\Base\Widget;
 
 /**
  * Frontend {{ moduleName }} {{ widget }} widget
  */
-class {{ widgetSafe }} extends FrontendBaseWidget
+class {{ widgetSafe }} extends Widget
 {
     public function execute()
     {
