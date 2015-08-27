@@ -2,17 +2,16 @@
 
 namespace Frontend\Modules\{{ moduleNameSafe }}\Actions;
 
-use Common\Form;
-use Frontend\Core\Engine\Base\Block as FrontendBaseBlock;
-use Frontend\Core\Engine\Language as FL;
+use Frontend\Core\Engine\Base\Block;
+use Frontend\Core\Engine\Language;
 use Frontend\Core\Engine\Model as FrontendModel;
-use Frontend\Core\Engine\Navigation as FrontendNavigation;
+use Frontend\Core\Engine\Navigation;
 use Frontend\Modules\{{ moduleNameSafe }}\Engine\Model;
 
 /**
  * Frontend {{ moduleName }} {{ action }} action
  */
-class {{ actionSafe }} extends FrontendBaseBlock
+class {{ actionSafe }} extends Block
 {
 {% if action == 'detail' %}
     /**
@@ -32,9 +31,6 @@ class {{ actionSafe }} extends FrontendBaseBlock
     protected $items;
 
 {% endif %}
-    /**
-     * Execute the extra
-     */
     public function execute()
     {
         parent::execute();
@@ -43,42 +39,36 @@ class {{ actionSafe }} extends FrontendBaseBlock
         $this->parse();
     }
 
-    /**
-     * Load the data, don't forget to validate the incoming data
-     */
     protected function getData()
     {
 {% if action == 'detail' %}
-        // Get slug
+        // get slug
         $this->slug = $this->URL->getParameter(1);
         if ($this->slug === null) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(Navigation::getURL(404));
         }
 
-        // Get item
+        // get item
 {% if meta %}
         $this->item = Model::getByURL($this->slug);
 {% else %}
         $this->item = Model::get($this->slug);
 {% endif %}
         if (empty($this->item)) {
-            $this->redirect(FrontendNavigation::getURL(404));
+            $this->redirect(Navigation::getURL(404));
         }
 {% elseif action == 'index' %}
         $this->items = Model::getAll();
 {% endif %}
     }
 
-    /**
-     * Parse the data into the template
-     */
     protected function parse()
     {
 {% if action != 'index' %}
-        // Breadcrumbs
+        // breadcrumbs
         $this->breadcrumb->addElement(
-            \SpoonFilter::ucfirst(FL::lbl('{{ actionSafe }}')),
-            FrontendNavigation::getURLForBlock('{{ moduleName }}', '{{ action }}')
+            \SpoonFilter::ucfirst(Language::lbl('{{ actionSafe }}')),
+            Navigation::getURLForBlock('{{ moduleName }}', '{{ action }}')
         );
 {% endif %}
 {% if action == 'detail' %}
@@ -106,7 +96,7 @@ class {{ actionSafe }} extends FrontendBaseBlock
         $this->header->addOpenGraphData('type', 'article', true);
         $this->header->addOpenGraphData(
             'url',
-            SITE_URL . FrontendNavigation::getURLForBlock('{{ moduleName }}', 'Detail') . '/' . $this->item['url'],
+            SITE_URL . Navigation::getURLForBlock('{{ moduleName }}', 'Detail') . '/' . $this->item['url'],
             true
         );
         $this->header->addOpenGraphData(
@@ -121,11 +111,11 @@ class {{ actionSafe }} extends FrontendBaseBlock
         );
 {% endif %}
 
-        // Assign item
+        // assign item
         $this->tpl->assign('item', $this->item);
 {% elseif action == 'index' %}
 
-        // Assign items
+        // assign items
         $this->tpl->assign('items', $this->items);
 {% endif %}
     }

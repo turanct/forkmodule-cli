@@ -3,12 +3,12 @@
 namespace Backend\Modules\{{ moduleNameSafe }}\Engine;
 
 use Backend\Core\Engine\Model as BackendModel;
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Language;
 {% if tags %}
-use Backend\Modules\Tags\Engine\Model as BackendTagsModel;
+use Backend\Modules\Tags\Engine\Model as TagsModel;
 {% endif %}
 {% if searchable %}
-use Backend\Modules\Search\Engine\Model as BackendSearchModel;
+use Backend\Modules\Search\Engine\Model as SearchModel;
 {% endif %}
 
 /**
@@ -32,20 +32,17 @@ class Model
     public static function create(array $item)
 {% endif %}
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
-
-        // Insert into the database
-        $id = $db->insert('{{ moduleName|lower }}', $item);
+        // insert into the database
+        $id = BackendModel::get('database')->insert('{{ moduleName|lower }}', $item);
 {% if tags %}
 
-        // Insert tags
-        BackendTagsModel::saveTags($id, $tags, '{{ moduleName|lower }}');
+        // insert tags
+        TagsModel::saveTags($id, $tags, '{{ moduleName|lower }}');
 {% endif %}
 {% if searchable %}
 
-        // Make searchable
-        BackendSearchModel::saveIndex(
+        // make searchable
+        SearchModel::saveIndex(
             '{{ moduleName|lower }}',
             $id,
             array(
@@ -67,10 +64,7 @@ class Model
      */
     public static function get($id)
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
-
-        $item = (array) $db->getRecord(
+        $item = (array) BackendModel::get('database')->getRecord(
             'SELECT i.*{% if meta %}, m.url
 {% else %}
 
@@ -84,8 +78,8 @@ class Model
         );
 {% if tags %}
 
-        // Get tags
-        $item['tags'] = BackendTagsModel::getTags('{{ moduleName|lower }}', $id);
+        // get tags
+        $item['tags'] = TagsModel::getTags('{{ moduleName|lower }}', $id);
 {% endif %}
 
         return $item;
@@ -107,24 +101,21 @@ class Model
     public static function update(array $item)
 {% endif %}
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
-
         if (!isset($item['id'])) {
             return false;
         }
 
-        // Insert into the database
-        $result = $db->update('{{ moduleName|lower }}', $item, 'id = ?', array((int) $item['id']));
+        // insert into the database
+        $result = BackendModel::get('database')->update('{{ moduleName|lower }}', $item, 'id = ?', array((int) $item['id']));
 {% if tags %}
 
-        // Insert tags
-        BackendTagsModel::saveTags($item['id'], $tags, '{{ moduleName|lower }}');
+        // insert tags
+        TagsModel::saveTags($item['id'], $tags, '{{ moduleName|lower }}');
 {% endif %}
 {% if searchable %}
 
-        // Make searchable
-        BackendSearchModel::saveIndex(
+        // make searchable
+        SearchModel::saveIndex(
             '{{ moduleName|lower }}',
             $item['id'],
             array(
@@ -146,25 +137,23 @@ class Model
      */
     public static function delete($id)
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
 {% if tags %}
 
-        // Remove tags
-        BackendTagsModel::saveTags($id, array(), '{{ moduleName|lower }}');
+        // remove tags
+        TagsModel::saveTags($id, array(), '{{ moduleName|lower }}');
 {% endif %}
 {% if searchable %}
 
-        // Delete search index
-        BackendSearchModel::removeIndex('{{ moduleName|lower }}', $id);
+        // delete search index
+        SearchModel::removeIndex('{{ moduleName|lower }}', $id);
 {% endif %}
 {% if meta %}
 
-        // Remove meta
+        // remove meta
         self::deleteMeta($id);
 {% endif %}
 
-        return $db->delete('{{ moduleName|lower }}', 'id = :id', array('id' => (int) $id));
+        return BackendModel::get('database')->delete('{{ moduleName|lower }}', 'id = :id', array('id' => (int) $id));
     }
 {% if meta %}
 
@@ -175,14 +164,11 @@ class Model
      */
     public static function deleteMeta($id)
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
-
-        // Get the item details
+        // get the item details
         $item = self::get($id);
 
-        // Delete remaining meta records
-        $db->delete('meta', 'id = :metaid', array('metaid' => (int) $item['meta_id']));
+        // delete remaining meta records
+        BackendModel::get('database')->delete('meta', 'id = :metaid', array('metaid' => (int) $item['meta_id']));
     }
 
     /**
@@ -195,9 +181,6 @@ class Model
      */
     public static function getURL($url, $id = null)
     {
-        /** @var \SpoonDatabase $db */
-        $db = BackendModel::get('database');
-
         $query = 'SELECT 1
                   FROM {{ moduleName|lower }} i
                   INNER JOIN meta AS m ON m.id = i.meta_id
@@ -212,14 +195,14 @@ class Model
 
         $query .= ' LIMIT 1';
 
-        $exists = (bool) $db->getVar($query, $params);
+        $exists = (bool) BackendModel::get('database')->getVar($query, $params);
 
-        // Already exists: append or increment a number after the url
+        // already exists: append or increment a number after the url
         if ($exists === true) {
             return self::getURL(BackendModel::addNumber($url));
         }
 
-        // Return
+        // return
         return $url;
     }
 {% endif %}

@@ -1,16 +1,13 @@
 <?php
 namespace Backend\Modules\{{ moduleNameSafe }}\Widgets;
 
-use Backend\Core\Engine\Base\Widget as BackendBaseWidget;
+use Backend\Core\Engine\Base\Widget;
 
 /**
  * Backend {{ moduleName }} {{ widget }} widget
  */
-class {{ widgetSafe }} extends BackendBaseWidget
+class {{ widgetSafe }} extends Widget
 {
-    /**
-     * Execute the widget
-     */
     public function execute()
     {
         $this->setColumn('middle');
@@ -20,17 +17,11 @@ class {{ widgetSafe }} extends BackendBaseWidget
         $this->display();
     }
 
-    /**
-     * Load the data
-     */
     protected function loadData()
     {
 
     }
 
-    /**
-     * Parse into template
-     */
     protected function parse()
     {
 

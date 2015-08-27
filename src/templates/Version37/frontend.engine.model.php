@@ -18,10 +18,7 @@ class Model
      */
     public static function get($id)
     {
-        /** @var \SpoonDatabase $db */
-        $db = FrontendModel::get('database');
-
-        $item = $db->getRecord(
+        return FrontendModel::get('database')->getRecord(
 {% if meta %}
             'SELECT i.*,
              m.url AS url,
@@ -41,8 +38,6 @@ class Model
              WHERE i.id = :id',
             array('id' => (int) $id)
         );
-
-        return $item;
     }
 {% if meta %}
 
@@ -55,10 +50,7 @@ class Model
      */
     public static function getByURL($url)
     {
-        /** @var \SpoonDatabase $db */
-        $db = FrontendModel::get('database');
-
-        $item = $db->getRecord(
+        return FrontendModel::get('database')->getRecord(
             'SELECT i.*,
              m.url AS url,
              m.title AS meta_title,
@@ -72,8 +64,6 @@ class Model
              WHERE m.url = :url',
             array('url' => $url)
         );
-
-        return $item;
     }
 {% endif %}
 
@@ -84,10 +74,7 @@ class Model
      */
     public static function getAll()
     {
-        /** @var \SpoonDatabase $db */
-        $db = FrontendModel::get('database');
-
-        $items = (array) $db->getRecords(
+        return (array) FrontendModel::get('database')->getRecords(
 {% if meta %}
             'SELECT i.*, m.url
              FROM {{ moduleName|lower }} AS i
@@ -99,8 +86,6 @@ class Model
              ORDER BY i.id'
 {% endif %}
         );
-
-        return $items;
     }
 {% if searchable %}
 
@@ -117,10 +102,7 @@ class Model
      */
     public static function search(array $ids)
     {
-        /** @var \SpoonDatabase $db */
-        $db = FrontendModel::get('database');
-
-        $items = (array) $db->getRecords(
+        $items = (array) FrontendModel::get('database')->getRecords(
             'SELECT i.id, i.title, i.description as text, m.url
              FROM {{ moduleName|lower }} i
              INNER JOIN meta m ON m.id = i.meta_id

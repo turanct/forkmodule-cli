@@ -2,12 +2,12 @@
 
 namespace Backend\Modules\{{ moduleNameSafe }};
 
-use Backend\Core\Engine\Base\Config as BackendBaseConfig;
+use Backend\Core\Engine\Base\Config as BaseConfig;
 
 /**
  * Backend {{ moduleName }} config
  */
-class Config extends BackendBaseConfig
+class Config extends BaseConfig
 {
     /**
      * The default action

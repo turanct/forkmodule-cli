@@ -3,20 +3,20 @@
 namespace Backend\Modules\{{ moduleNameSafe }}\Actions;
 
 {% if action in ['add', 'edit', 'delete'] %}
-use Backend\Core\Engine\Form as BackendForm;
-use Backend\Core\Engine\Meta as BackendMeta;
+use Backend\Core\Engine\Form;
+use Backend\Core\Engine\Meta;
 {% endif %}
 {% if action in ['index', 'add', 'edit', 'delete'] %}
-use Backend\Core\Engine\Base\Action{{ actionSafe }} as BackendBaseAction{{ actionSafe }};
+use Backend\Core\Engine\Base\Action{{ actionSafe }};
 {% else %}
-use Backend\Core\Engine\Base\Action as BackendBaseAction;
-use Backend\Core\Engine\Form as BackendForm;
+use Backend\Core\Engine\Base\Action;
+use Backend\Core\Engine\Form;
 {% endif %}
 {% if action in ['index'] %}
-use Backend\Core\Engine\DataGridArray as BackendDataGridArray;
-use Backend\Core\Engine\DataGridFunctions as BackendDataGridFunctions;
+use Backend\Core\Engine\DataGridArray;
+use Backend\Core\Engine\DataGridFunctions;
 {% endif %}
-use Backend\Core\Engine\Language as BL;
+use Backend\Core\Engine\Language;
 use Backend\Core\Engine\Model as BackendModel;
 use Backend\Modules\{{ moduleNameSafe }}\Engine\Model;
 
@@ -24,14 +24,11 @@ use Backend\Modules\{{ moduleNameSafe }}\Engine\Model;
  * Backend {{ moduleName }} {{ action }} action
  */
 {% if action in ['index', 'add', 'edit', 'delete'] %}
-class {{ actionSafe }} extends BackendBaseAction{{ actionSafe }}
+class {{ actionSafe }} extends Action{{ actionSafe }}
 {% else %}
-class {{ actionSafe }} extends BackendBaseAction
+class {{ actionSafe }} extends Action
 {% endif %}
 {
-    /**
-     * Execute the action
-     */
     public function execute()
     {
         parent::execute();
@@ -61,63 +58,54 @@ class {{ actionSafe }} extends BackendBaseAction
         $this->parse();
         $this->display();
 {% else %}
-        // Redirect
+        // redirect
         $this->redirect(BackendModel::createURLForAction('Index') . '&report={{ action }}{% if action == 'delete' %}d{% endif %}');
 {% endif %}
     }
 {% if action == 'index' %}
 
-    /**
-     * Loads the datagrids
-     */
     protected function loadDataGrids()
     {
-        // Create datagrid
-        $this->dataGrid = new BackendDataGridArray(Model::getAll());
+        // create datagrid
+        $this->dataGrid = new DataGridArray(Model::getAll());
 
-        // Add buttons
+        // add buttons
         $editURL = BackendModel::createURLForAction('Edit') . '&id=[id]';
         $this->dataGrid->addColumn(
             'edit',
             null,
-            BL::lbl('Edit'),
+            Language::lbl('Edit'),
             $editURL,
-            BL::lbl('Edit')
+            Language::lbl('Edit')
         );
 {% if meta %}
         $this->dataGrid->setColumnURL('title', $editURL);
 {% endif %}
 
-        // Hide unnecessary columns
+        // hide unnecessary columns
         $hiddenColumns = array({% if meta %}'meta_id'{% endif %});
         $this->dataGrid->setColumnsHidden($hiddenColumns);
     }
 {% elseif action in ['add', 'edit'] %}
 {% if action == 'edit' %}
 
-    /**
-     * Get data
-     */
     protected function getData()
     {
         $this->record = Model::get($this->id);
 
-        // Validate
+        // validate
         if (empty($this->record)) {
             $this->redirect(BackendModel::createURLForAction('Index') . '&error=non-existing');
         }
     }
 {% endif %}
 
-    /**
-     * Handle form
-     */
     protected function handleForm()
     {
-        // Create the form
-        $form = new BackendForm('{{ action }}');
+        // create the form
+        $form = new Form('{{ action }}');
 
-        // Add fields
+        // add fields
 {% if meta %}
         $fieldTitle = $form->addText('title', {% if action == 'edit' %}$this->record['title']{% else %}null{% endif %}, 255, 'inputText title', 'inputTextError title');
 {% endif %}
@@ -126,28 +114,28 @@ class {{ actionSafe }} extends BackendBaseAction
 {% endif %}
 {% if meta %}
 
-        // Meta
+        // meta
 {% if action == 'add' %}
-        $meta = new BackendMeta($form, null, 'title', true);
+        $meta = new Meta($form, null, 'title', true);
 {% elseif action == 'edit' %}
-        $meta = new BackendMeta($form, $this->record['meta_id'], 'title', true);
+        $meta = new Meta($form, $this->record['meta_id'], 'title', true);
 
-        // Set callback for generating a unique URL
+        // set callback for generating a unique URL
         $meta->setUrlCallback('Backend\Modules\{{ moduleNameSafe }}\Engine\Model', 'getURL', array($this->record['id']));
 {% endif %}
 {% endif %}
 
-        // Submitted?
+        // submitted?
         if ($form->isSubmitted()) {
-            // Check fields
+            // check fields
 {% if meta %}
             $meta->validate();
-            $fieldTitle->isFilled(BL::err('FieldIsRequired'));
+            $fieldTitle->isFilled(Language::err('FieldIsRequired'));
 {% endif %}
 
-            // Correct?
+            // correct?
             if ($form->isCorrect()) {
-                // Build item
+                // build item
                 $item = array();
 {% if action == 'edit' %}
                 $item['id'] = $this->id;
@@ -161,12 +149,12 @@ class {{ actionSafe }} extends BackendBaseAction
                 $tags = $fieldTags->getValue();
 {% endif %}
 
-                // Save
+                // save
 {% if action in ['add', 'edit'] %}
                 {% if action == 'add' %}$id = {% endif %}Model::{% if action == 'add' %}create{% endif %}{% if action == 'edit' %}update{% endif %}($item{% if tags %}, $tags{% endif %});
 {% endif %}
 
-                // Redirect
+                // redirect
                 $redirectURL = BackendModel::createURLForAction('Index');
 {% if action in ['add', 'edit'] %}
                 $redirectURL .= '&highlight=row-' . {% if action == 'add' %}$id{% elseif action == 'edit' %}$this->record['id']{% endif %};
@@ -181,20 +169,17 @@ class {{ actionSafe }} extends BackendBaseAction
 {% endif %}
 {% if action != 'delete' %}
 
-    /**
-     * Parse method
-     */
     protected function parse()
     {
         parent::parse();
 {% if action == 'index' %}
         $this->tpl->assign('dataGrid', (string) $this->dataGrid->getContent());
 {% elseif action in ['add', 'edit'] and meta %}
-        // Get url
+        // get url
         $url = BackendModel::getURLForBlock($this->URL->getModule(), 'Detail');
         $url404 = BackendModel::getURL(404);
 
-        // Parse additional variables
+        // parse additional variables
         if ($url404 != $url) {
             $this->tpl->assign('detailURL', SITE_URL . $url);
         }
